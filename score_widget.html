@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スコアウィジェット</title>
+  <style>
+    :root {
+      --bg: #f0f4f8; --surface: #ffffff; --surface2: #f5f7fa;
+      --border: #dde3ed; --text: #1a1d27; --text-dim: #555;
+      --accent: #1d6fd8; --updated: #dc2626;
+      --win: #16a34a; --lose: #6b7280;
+      --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: transparent;
+      color: var(--text);
+      font-family: "Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+      font-size: 13px;
+    }
+
+    /* ── ウィジェットヘッダー ── */
+    .widget-header {
+      background: var(--accent);
+      color: #fff;
+      padding: 7px 12px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .widget-header .title { font-size: 13px; }
+    .widget-header .meta  { font-size: 11px; opacity: .85; }
+
+    /* ── ローディング / エラー ── */
+    .state-box {
+      padding: 24px;
+      text-align: center;
+      color: var(--text-dim);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+    .spinner-ring {
+      display: inline-block;
+      width: 22px; height: 22px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin-bottom: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 試合カード ── */
+    .game-list {
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .game-item { border-top: 1px solid var(--border); }
+    .game-item:first-child { border-top: none; }
+
+    /* ラウンド・バッジ行 */
+    .game-meta {
+      padding: 6px 12px 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+    }
+    .round-label { font-size: 11px; font-weight: 700; color: var(--text-dim); }
+    .badge {
+      display: inline-block; padding: 1px 7px; border-radius: 4px;
+      font-size: 10px; font-weight: 700;
+    }
+    .badge.playing { background: rgba(52,211,153,.15); color: #16a34a; border: 1px solid rgba(52,211,153,.4); }
+    .badge.ended   { background: rgba(107,114,128,.12); color: #6b7280; border: 1px solid rgba(107,114,128,.3); }
+    .badge.new     { background: rgba(29,111,216,.1);   color: var(--accent); border: 1px solid rgba(29,111,216,.4); }
+    .venue-label   { font-size: 10px; color: var(--text-dim); margin-left: auto; }
+
+    /* スコアテーブル */
+    .score-table { width: 100%; border-collapse: collapse; }
+    .score-table th {
+      text-align: center; padding: 4px 3px;
+      font-size: 11px; color: var(--text-dim); font-weight: 600;
+      background: var(--surface2); border-top: 1px solid var(--border);
+      min-width: 22px;
+    }
+    .score-table td {
+      text-align: center; padding: 5px 3px;
+      border-top: 1px solid var(--border);
+      font-size: 13px; font-weight: 600;
+      min-width: 22px;
+    }
+    .score-table td.team-name {
+      text-align: left; padding-left: 12px;
+      font-weight: 700; font-size: 14px;
+      min-width: 100px; max-width: 160px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      color: var(--text);
+    }
+    .score-table td.inn       { color: var(--text-dim); }
+    .score-table td.inn.ok    { color: var(--text); }
+    .score-table td.total     {
+      font-size: 18px; font-weight: 800;
+      border-left: 1px solid var(--border);
+    }
+    .score-table td.total.win  { color: var(--win); }
+    .score-table td.total.lose { color: var(--lose); }
+
+    /* フッター */
+    .widget-footer {
+      padding: 5px 12px;
+      font-size: 10px; color: var(--text-dim);
+      text-align: right;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      background: var(--surface2);
+    }
+    .no-match {
+      padding: 20px; text-align: center; color: var(--text-dim);
+      font-size: 13px; line-height: 1.8;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+  </style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  設定
+// ═══════════════════════════════════════════════════════════════
+const BASE_URL  = 'http://www.hyogo-koyaren.or.jp';
+const INDEX_URL = BASE_URL + '/taikai/result.php';
+
+const PROXY_LIST = [
+  u => 'https://corsproxy.io/?' + encodeURIComponent(u),
+  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  u => 'https://thingproxy.freeboard.io/fetch/' + u,
+  u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
+];
+
+// ── URLパラメータ解析 ──
+const params   = new URLSearchParams(location.search);
+const P_REGION = (params.get('region') || '').trim();   // 例: 阪神
+const P_ROUND  = (params.get('round')  || '').trim();   // 例: 決勝
+const P_TEAM   = (params.get('team')   || '').trim();   // 例: 神戸
+const P_LIMIT  = parseInt(params.get('limit') || '0');  // 最大表示数 0=無制限
+const P_THEME  = params.get('theme') || 'light';        // light / dark
+const REFRESH  = parseInt(params.get('refresh') || '5') * 60 * 1000; // 更新間隔(分)
+
+// ── ダークテーマ ──
+if (P_THEME === 'dark') {
+  document.documentElement.style.setProperty('--bg',      '#1a1d27');
+  document.documentElement.style.setProperty('--surface',  '#22263a');
+  document.documentElement.style.setProperty('--surface2', '#1e2235');
+  document.documentElement.style.setProperty('--border',   '#333a55');
+  document.documentElement.style.setProperty('--text',     '#e8eaf0');
+  document.documentElement.style.setProperty('--text-dim', '#8a93b2');
+  document.body.style.background = 'var(--surface)';
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  フェッチ
+// ═══════════════════════════════════════════════════════════════
+let workingProxyIdx = 0;
+let lastProxyResults = null; // 最後のプロキシテスト結果を保持
+
+const PROXY_NAMES = ['corsproxy.io', 'allorigins.win', 'thingproxy', 'codetabs.com'];
+
+async function fetchRaw(url) {
+  const order = [workingProxyIdx, ...PROXY_LIST.map((_,i)=>i).filter(i=>i!==workingProxyIdx)];
+  const results = Array(PROXY_LIST.length).fill(null).map((_,i)=>({name: PROXY_NAMES[i]||'proxy'+i, ok:false, error:'未試行'}));
+  for (const i of order) {
+    try {
+      const res = await fetch(PROXY_LIST[i](url));
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      workingProxyIdx = i;
+      results[i] = { name: PROXY_NAMES[i], ok: true, error: null };
+      lastProxyResults = results;
+      return await res.arrayBuffer();
+    } catch(e) {
+      results[i] = { name: PROXY_NAMES[i]||'proxy'+i, ok: false, error: e.message || String(e) };
+    }
+  }
+  lastProxyResults = results;
+  throw new Error('全プロキシ失敗 — ネットワーク接続またはプロキシサービスを確認してください');
+}
+async function fetchHtml(url) {
+  const buf = await fetchRaw(url);
+  const utf8 = new TextDecoder('utf-8').decode(buf);
+  const m = utf8.match(/charset=["\s]*([\w-]+)/i);
+  const cs = m ? m[1].toLowerCase() : '';
+  if (cs === 'utf-8' || cs === 'utf8') return utf8;
+  for (const enc of ['euc-jp', 'shift-jis']) {
+    try { return new TextDecoder(enc).decode(buf); } catch(e) {}
+  }
+  return utf8;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  スクレイピング（monitor_index.html と同一ロジック）
+// ═══════════════════════════════════════════════════════════════
+async function fetchGameLinks() {
+  const html = await fetchHtml(INDEX_URL);
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const results = [];
+  doc.querySelectorAll('dl').forEach(dl => {
+    const region = dl.querySelector('dt')?.textContent.trim() || '不明';
+    dl.querySelectorAll('dd a[href]').forEach(a => {
+      let href = a.getAttribute('href') || '';
+      const round = a.textContent.trim();
+      if (!href || !round) return;
+      if (href.startsWith('../'))       href = BASE_URL + '/' + href.slice(3);
+      else if (href.startsWith('/'))    href = BASE_URL + href;
+      else if (!href.startsWith('http'))href = BASE_URL + '/baseball/' + href;
+      results.push({ region, round, url: href });
+    });
+  });
+  return results;
+}
+
+function parseScorePage(html, region, round, url) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  let venue = '';
+  for (const span of doc.querySelectorAll('span.px16')) {
+    const t = span.textContent.trim();
+    if (t.includes('会場')) { venue = t.replace(/試合会場[：:]/,'').trim(); break; }
+  }
+  const allTables = [...doc.querySelectorAll('table')];
+  if (!allTables.length) return null;
+  let scoreTable = null, scoreRows = [];
+  for (const tbl of allTables) {
+    const dataRows = [...tbl.querySelectorAll('tr[bgcolor="#000000"]')]
+      .filter(r => r.querySelectorAll('td,th').length >= 10);
+    if (dataRows.length >= 2) { scoreTable = tbl; scoreRows = dataRows.slice(0, 2); break; }
+  }
+  if (!scoreRows.length) return null;
+  const c1 = [...scoreRows[0].querySelectorAll('td,th')];
+  const c2 = [...scoreRows[1].querySelectorAll('td,th')];
+  let team1 = c1[0]?.textContent.trim() || '';
+  let team2 = c2[0]?.textContent.trim() || '';
+  const nCols = Math.min(c1.length, c2.length);
+  const innings1 = [], innings2 = [];
+  for (let i = 1; i < nCols - 1; i++) {
+    innings1.push(c1[i]?.textContent.trim() || '');
+    innings2.push(c2[i]?.textContent.trim() || '');
+  }
+  const total1 = c1[nCols-1]?.textContent.trim() || '';
+  const total2 = c2[nCols-1]?.textContent.trim() || '';
+  const teamTable = allTables.find(t => t !== scoreTable && t.classList.contains('left'))
+                 || allTables.find(t => t !== scoreTable);
+  if ((!team1 || !team2) && teamTable) {
+    const tc = [...(teamTable.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th') || [])];
+    if (!team1 && tc[0]) team1 = tc[0].textContent.trim();
+    if (!team2 && tc[3]) team2 = tc[3].textContent.trim();
+  }
+  let gameStatus = '';
+  for (const tbl of allTables) {
+    if (tbl === scoreTable || tbl === teamTable) continue;
+    const hasStatusImg = [...tbl.querySelectorAll('img[src]')]
+      .some(img => { const s = img.getAttribute('src')||''; return s.includes('no_21')||s.includes('no_22'); });
+    if (!hasStatusImg) continue;
+    const tc = [...(tbl.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th')||[])];
+    if (tc.length >= 2) gameStatus = tc[1].textContent.trim();
+    else if (tc.length === 1) gameStatus = tc[0].textContent.trim();
+    break;
+  }
+  const allEmpty = !team1 && !team2
+    && [...innings1,...innings2].every(s=>s===''||s==='0')
+    && (total1===''||total1==='0') && (total2===''||total2==='0');
+  if (allEmpty) return null;
+  return { region, round, venue, game_status: gameStatus, team1, team2, innings1, innings2, total1, total2, url };
+}
+
+// フィルタ
+function matchesFilter(g) {
+  if (P_REGION && !g.region.includes(P_REGION)) return false;
+  if (P_ROUND  && !g.round.includes(P_ROUND))   return false;
+  if (P_TEAM   && !g.team1.includes(P_TEAM) && !g.team2.includes(P_TEAM)) return false;
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  描画
+// ═══════════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function fmt(iso) {
+  if (!iso) return '';
+  return new Date(iso).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+function pad(arr, n) { const a=[...arr]; while(a.length<n) a.push(''); return a; }
+function winLose(t1, t2) {
+  const a=parseInt(t1), b=parseInt(t2);
+  if (isNaN(a)||isNaN(b)) return [null,null];
+  return a>b?[true,false]:a<b?[false,true]:[null,null];
+}
+
+function buildTitle() {
+  if (P_REGION && P_ROUND) return P_REGION + ' ' + P_ROUND;
+  if (P_REGION) return P_REGION + ' 試合スコア';
+  if (P_ROUND)  return P_ROUND + ' スコア';
+  if (P_TEAM)   return P_TEAM + ' の試合';
+  return '兵庫県高校野球 スコア';
+}
+
+function renderGame(g) {
+  const inn1 = pad(g.innings1||[], Math.max((g.innings1||[]).length,(g.innings2||[]).length,9));
+  const inn2 = pad(g.innings2||[], inn1.length);
+  const [w1, w2] = winLose(g.total1, g.total2);
+  const isEnd    = (g.game_status||'').includes('終了');
+  const isPlay   = !isEnd && (g.innings1||[]).some(v=>v!=='');
+  const badgeHtml = isEnd
+    ? '<span class="badge ended">終了</span>'
+    : isPlay ? '<span class="badge playing">試合中</span>' : '';
+  const venueHtml = g.venue ? '<span class="venue-label">📍' + esc(g.venue) + '</span>' : '';
+
+  let th = '<th style="text-align:left;padding-left:12px;">チーム</th>';
+  for (let i=1; i<=inn1.length; i++) th += '<th>' + i + '</th>';
+  th += '<th>計</th>';
+
+  const row = (name, inns, total, win) => {
+    let r = '<tr><td class="team-name">' + (esc(name)||'(未定)') + '</td>';
+    inns.forEach(s => {
+      const ok = s!=='' && s!=null;
+      r += '<td class="inn' + (ok?' ok':'') + '">' + (ok ? esc(s) : '−') + '</td>';
+    });
+    const wc = win===true?'win':win===false?'lose':'';
+    r += '<td class="total ' + wc + '">' + (esc(total)||'−') + '</td></tr>';
+    return r;
+  };
+
+  return '<div class="game-item">'
+    + '<div class="game-meta">'
+    + '<span class="round-label">' + esc(g.round) + '</span>'
+    + badgeHtml
+    + venueHtml
+    + '</div>'
+    + '<table class="score-table"><thead><tr>' + th + '</tr></thead><tbody>'
+    + row(g.team1, inn1, g.total1, w1)
+    + row(g.team2, inn2, g.total2, w2)
+    + '</tbody></table>'
+    + '</div>';
+}
+
+function setRoot(inner) {
+  document.getElementById('root').innerHTML = inner;
+}
+
+function showLoading() {
+  setRoot(
+    '<div class="widget-header"><span class="title">⚾ ' + esc(buildTitle()) + '</span></div>'
+    + '<div class="state-box"><div class="spinner-ring"></div><br>読み込み中...</div>'
+  );
+}
+
+function showError(msg, proxyResults) {
+  const proxyHtml = proxyResults
+    ? '<div style="margin-top:12px;text-align:left;font-size:11px;line-height:1.9;">'
+      + '<b>プロキシ接続テスト結果：</b><br>'
+      + proxyResults.map((r,i) =>
+          (r.ok
+            ? '✅ proxy' + i + '（' + r.name + '）: 成功'
+            : '❌ proxy' + i + '（' + r.name + '）: ' + esc(r.error))
+        ).join('<br>')
+      + '</div>'
+    : '';
+  const retryHtml = '<br><button onclick="load()" style="margin-top:10px;padding:5px 14px;background:var(--accent);color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:12px;">🔄 再試行</button>';
+  setRoot(
+    '<div class="widget-header"><span class="title">⚾ ' + esc(buildTitle()) + '</span></div>'
+    + '<div class="state-box">'
+    + '⚠️ <b>スコアを取得できませんでした</b><br>'
+    + '<small style="color:#c00;">' + esc(msg) + '</small>'
+    + proxyHtml
+    + retryHtml
+    + '</div>'
+  );
+}
+
+function renderGames(games, lastUpdated) {
+  const filtered = games.filter(matchesFilter);
+  const limited  = P_LIMIT > 0 ? filtered.slice(0, P_LIMIT) : filtered;
+  const lastStr  = lastUpdated ? fmt(lastUpdated) + ' 更新' : '';
+
+  const header = '<div class="widget-header">'
+    + '<span class="title">⚾ ' + esc(buildTitle()) + '</span>'
+    + '<span class="meta">' + esc(lastStr) + '</span>'
+    + '</div>';
+
+  if (!limited.length) {
+    setRoot(header + '<div class="no-match">該当する試合がありません</div>');
+    return;
+  }
+
+  const cards = limited.map(renderGame).join('');
+  const footer = '<div class="widget-footer">兵庫県高校野球連盟 | ' + esc(lastStr) + '</div>';
+  setRoot(header + '<div class="game-list">' + cards + '</div>' + footer);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  メイン
+// ═══════════════════════════════════════════════════════════════
+async function load() {
+  showLoading();
+  lastProxyResults = null;
+  const now = new Date().toISOString().slice(0,19);
+  try {
+    const links = await fetchGameLinks();
+    const games = [];
+    for (const link of links) {
+      // リージョンフィルタで不要なページはスキップ
+      if (P_REGION && !link.region.includes(P_REGION)) continue;
+      if (P_ROUND  && !link.round.includes(P_ROUND))   continue;
+      try {
+        const g = parseScorePage(await fetchHtml(link.url), link.region, link.round, link.url);
+        if (g) games.push(g);
+      } catch(e) {}
+    }
+    renderGames(games, now);
+  } catch(e) {
+    showError(String(e), lastProxyResults);
+  }
+}
+
+load();
+setInterval(load, REFRESH);
+</script>
+</body>
+</html>
