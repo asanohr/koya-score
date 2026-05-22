@@ -590,21 +590,29 @@ function buildEmbedPanel(g) {
   // score_widget.html への絶対URLを構築（別サイトへの埋め込みにはドメイン込みのURLが必要）
   const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
   const base = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
+
+  // ── 試合固有IDで絞り込む（同じ地区・ラウンド名が別日に重複しても混在しない）
   const q = new URLSearchParams();
-  if (g.region) q.set('region', g.region);
-  if (g.round)  q.set('round',  g.round);
+  q.set('id', g.id);  // region+round+URL のハッシュ：この試合だけを一意に指定
   const widgetUrl = base + '?' + q.toString();
-  const iframeCode = `<iframe src="${widgetUrl}" width="700" height="300" style="border:none;border-radius:10px;" loading="lazy" title="${g.round} スコア"></iframe>`;
+
+  const teamLabel = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
+  const iframeCode = `<iframe src="${widgetUrl}" width="700" height="220" style="border:none;border-radius:10px;" loading="lazy" title="${teamLabel} スコア"></iframe>`;
 
   // ローカルファイル（file://）で開いている場合は警告を出す
   const isLocalFile = location.protocol === 'file:';
   const warningHtml = isLocalFile
     ? '<div style="margin-bottom:8px;padding:7px 10px;background:#fff3cd;border:1px solid #ffc107;border-radius:5px;font-size:11px;color:#856404;">'
       + '⚠️ <b>このページはローカルファイルとして開かれています。</b><br>'
-      + '別サイトに埋め込むには <code>score_widget.html</code> をウェブサーバー上（GitHub Pages・レンタルサーバー等）に置き、'
-      + 'そのURLを <code>src</code> に指定してください。'
+      + '別サイトに埋め込むには <code>score_widget.html</code> を GitHub Pages 等のウェブサーバーに置いてください。'
       + '</div>'
     : '';
+
+  // IDの意味を説明するメモ
+  const idNote = '<div style="margin-top:6px;font-size:11px;color:var(--text-dim);">'
+    + '🔑 <b>ID: ' + esc(g.id) + '</b>（' + esc(g.region) + ' / ' + esc(g.round) + ' の固有ID）<br>'
+    + 'このIDは <b>この試合ページのURL</b> から生成されるため、同じ地区・ラウンド名でも別の試合と混在しません。'
+    + '</div>';
 
   return '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
     + '<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
@@ -615,8 +623,9 @@ function buildEmbedPanel(g) {
     + '<label>以下のコードをコピーして、別サイトのHTMLに貼り付けてください：</label>'
     + '<code id="embed-code-' + esc(g.id) + '">' + esc(iframeCode) + '</code>'
     + '<button class="embed-copy-btn" onclick="copyEmbed(this,\'' + esc(g.id) + '\')">📋 コードをコピー</button>'
+    + idNote
     + '<div style="margin-top:8px;font-size:11px;color:var(--text-dim);">'
-    + '💡 <b>カスタマイズ</b>：URLに <code>?refresh=3</code>（更新間隔・分）、<code>?theme=dark</code>（ダークモード）を追加できます'
+    + '💡 URLに <code>&amp;refresh=3</code>（更新間隔・分）、<code>&amp;theme=dark</code>（ダークモード）を追加できます'
     + '</div>'
     + '</div>';
 }
