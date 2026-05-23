@@ -11,7 +11,7 @@
       --new:#6b7280; --new-bg:rgba(107,114,128,.12);
       --updated:#dc2626; --updated-bg:rgba(220,38,38,.08);
       --win:#16a34a; --lose:#555;
-      --status-end:#1d6fd8; --status-play:#d97757; --radius:10px;
+      --status-end:#1d6fd8; --status-play:#92400e; --radius:10px;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:14px;}
@@ -75,7 +75,7 @@
     .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
     .badge.new    {background:var(--new-bg);    color:var(--new);     border:1px solid rgba(107,114,128,.3);}
     .badge.updated{background:var(--updated-bg);color:var(--updated); border:1px solid rgba(220,38,38,.4);}
-    .badge.playing{background:rgba(217,119,87,.12);color:var(--status-play);border:1px solid rgba(217,119,87,.4);}
+    .badge.playing{background:#fef3c7;color:var(--status-play);border:1px solid rgba(180,83,9,.3);}
     .badge.ended  {background:rgba(29,111,216,.08);color:var(--status-end);border:1px solid rgba(29,111,216,.4);}
 
     /* ── カード ── */
@@ -696,12 +696,19 @@ function winLose(t1, t2) {
 }
 function statusBadge(g) {
   const s = g.game_status || '';
-  const isEnd     = s.includes('終了');
-  const isPlaying = !isEnd && (g.innings1||[]).some(v => v !== '');
-  if (g.is_new)     return '<span class="badge new">NEW</span>';
+  const isEnd    = s.includes('終了');
+  // スコアが一つも入っていない＝NEW（対戦相手のみ登録済み）
+  const hasScore = (g.innings1||[]).some(v => v !== '' && v != null)
+                || (g.innings2||[]).some(v => v !== '' && v != null)
+                || (g.total1 !== '' && g.total1 != null)
+                || (g.total2 !== '' && g.total2 != null);
+  const isNew    = !hasScore && !isEnd;
+  const isPlaying = !isEnd && hasScore;
+
   if (g.is_updated) return '<span class="badge updated">更新</span>';
   if (isEnd)        return '<span class="badge ended">終了</span>';
   if (isPlaying)    return '<span class="badge playing">試合中</span>';
+  if (isNew)        return '<span class="badge new">NEW</span>';
   return '';
 }
 
