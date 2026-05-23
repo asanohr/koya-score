@@ -396,7 +396,7 @@ function renderGames(body, tournamentId, games) {
 
       const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tournamentId);
       const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
-      const iframeCode = '<iframe src="' + widgetUrl + '" width="700" height="160" style="border:none;border-radius:10px;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>';
+      const iframeCode = '<iframe src="' + widgetUrl + '" width="100%" height="160" style="border:none;border-radius:10px;display:block;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>';
 
       const delBtn = manageMode
         ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tournamentId) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
