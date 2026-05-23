@@ -8,10 +8,10 @@
     :root {
       --bg:#f0f4f8; --surface:#fff; --surface2:#f5f7fa; --border:#dde3ed;
       --text:#1a1d27; --text-dim:#555; --accent:#1d6fd8;
-      --new:#1d6fd8; --new-bg:rgba(29,111,216,.08);
+      --new:#6b7280; --new-bg:rgba(107,114,128,.12);
       --updated:#dc2626; --updated-bg:rgba(220,38,38,.08);
       --win:#16a34a; --lose:#555;
-      --status-end:#555; --status-play:#16a34a; --radius:10px;
+      --status-end:#1d6fd8; --status-play:#d97757; --radius:10px;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:14px;}
@@ -26,7 +26,7 @@
     .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
     .status-bar{font-size:12px;color:var(--text-dim);}
     .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
-    .dot.ok{background:var(--win);} .dot.err{background:var(--new);} .dot.ing{background:var(--updated);animation:blink 1s ease infinite;}
+    .dot.ok{background:var(--win);} .dot.err{background:var(--accent);} .dot.ing{background:var(--updated);animation:blink 1s ease infinite;}
     @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
     .gh-status{font-size:11px;color:var(--text-dim);white-space:nowrap;}
     .btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;transition:opacity .15s;font-family:inherit;}
@@ -73,18 +73,18 @@
     .legend{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
     .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim);}
     .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
-    .badge.new    {background:var(--new-bg);    color:var(--new);     border:1px solid rgba(29,111,216,.4);}
-    .badge.updated{background:var(--updated-bg);color:var(--updated); border:1px solid rgba(255,77,77,.4);}
-    .badge.playing{background:rgba(52,211,153,.15);color:var(--status-play);border:1px solid rgba(52,211,153,.4);}
-    .badge.ended  {background:rgba(107,114,128,.12);color:var(--status-end);border:1px solid rgba(107,114,128,.3);}
+    .badge.new    {background:var(--new-bg);    color:var(--new);     border:1px solid rgba(107,114,128,.3);}
+    .badge.updated{background:var(--updated-bg);color:var(--updated); border:1px solid rgba(220,38,38,.4);}
+    .badge.playing{background:rgba(217,119,87,.12);color:var(--status-play);border:1px solid rgba(217,119,87,.4);}
+    .badge.ended  {background:rgba(29,111,216,.08);color:var(--status-end);border:1px solid rgba(29,111,216,.4);}
 
     /* ── カード ── */
     .region-section{margin-bottom:26px;}
     .region-header{font-size:15px;font-weight:700;color:var(--text-dim);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;}
     .game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .3s;}
-    .game-card.is-new    {border-color:rgba(29,111,216,.6); animation:pulse-new 1.5s ease 3;}
+    .game-card.is-new    {border-color:rgba(107,114,128,.5); animation:pulse-new 1.5s ease 3;}
     .game-card.is-updated{border-color:rgba(255,77,77,.5);  animation:pulse-upd 1.5s ease 3;}
-    @keyframes pulse-new{0%,100%{box-shadow:0 0 0 0 rgba(29,111,216,0)}  50%{box-shadow:0 0 0 4px rgba(29,111,216,.25)}}
+    @keyframes pulse-new{0%,100%{box-shadow:0 0 0 0 rgba(107,114,128,0)}  50%{box-shadow:0 0 0 4px rgba(107,114,128,.25)}}
     @keyframes pulse-upd{0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}   50%{box-shadow:0 0 0 4px rgba(255,77,77,.2)}}
     .card-header{padding:8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
     .card-header:hover{background:rgba(0,0,0,.02);}
