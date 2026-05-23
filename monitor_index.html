@@ -6,128 +6,140 @@
   <title>兵庫県高校野球連盟スコアモニター</title>
   <style>
     :root {
-      --bg: #f0f4f8; --surface: #ffffff; --surface2: #f5f7fa;
-      --border: #dde3ed; --text: #1a1d27; --text-dim: #333333;
-      --accent: #1d6fd8; --new: #1d6fd8; --new-bg: rgba(29,111,216,.08);
-      --updated: #dc2626; --updated-bg: rgba(220,38,38,.08);
-      --win: #16a34a; --lose: #555555;
-      --status-end: #555555; --status-play: #16a34a; --radius: 10px;
+      --bg:#f0f4f8; --surface:#fff; --surface2:#f5f7fa; --border:#dde3ed;
+      --text:#1a1d27; --text-dim:#555; --accent:#1d6fd8;
+      --new:#1d6fd8; --new-bg:rgba(29,111,216,.08);
+      --updated:#dc2626; --updated-bg:rgba(220,38,38,.08);
+      --win:#16a34a; --lose:#555;
+      --status-end:#555; --status-play:#16a34a; --radius:10px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: "Hiragino Sans","Yu Gothic","Meiryo",sans-serif; font-size: 14px; }
-    header {
-      background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100;
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:14px;}
+
+    /* ── ヘッダー ── */
+    header{
+      background:var(--surface);border-bottom:1px solid var(--border);
+      padding:10px 20px;display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;
     }
-    header h1 { font-size: 16px; font-weight: 700; color: var(--accent); }
-    .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .status-bar { font-size: 12px; color: var(--text-dim); }
-    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
-    .dot.ok  { background: var(--win); }
-    .dot.err { background: var(--new); }
-    .dot.ing { background: var(--updated); animation: blink 1s ease infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-    .btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 13px; cursor: pointer; transition: opacity .15s; }
-    .btn:hover { opacity: .85; }
-    .btn:disabled { opacity: .45; cursor: default; }
-    .btn.btn-sub { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); }
-    .countdown { font-size: 12px; color: var(--text-dim); min-width: 90px; }
-    .spinner { display: none; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.2); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; }
-    main { max-width: 1100px; margin: 0 auto; padding: 18px 14px 40px; }
-    .legend { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
-    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-dim); }
-    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
-    .badge.new     { background: var(--new-bg);     color: var(--new);     border: 1px solid rgba(29,111,216,.4); }
-    .badge.updated { background: var(--updated-bg); color: var(--updated); border: 1px solid rgba(255,77,77,.4); }
-    .badge.playing { background: rgba(52,211,153,.15); color: var(--status-play); border: 1px solid rgba(52,211,153,.4); }
-    .badge.ended   { background: rgba(107,114,128,.12); color: var(--status-end); border: 1px solid rgba(107,114,128,.3); }
-    .confirm-btn {
-      display: block; width: 100%; padding: 8px;
-      background: rgba(255,77,77,.1); border: 1px solid rgba(255,77,77,.4); border-top: none;
-      color: var(--updated); font-size: 13px; font-weight: 600; font-family: inherit;
-      cursor: pointer; text-align: center; transition: background .15s;
+    header h1{font-size:15px;font-weight:700;color:var(--accent);white-space:nowrap;}
+    .header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .status-bar{font-size:12px;color:var(--text-dim);}
+    .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
+    .dot.ok{background:var(--win);} .dot.err{background:var(--new);} .dot.ing{background:var(--updated);animation:blink 1s ease infinite;}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .gh-status{font-size:11px;color:var(--text-dim);white-space:nowrap;}
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;transition:opacity .15s;font-family:inherit;}
+    .btn:hover{opacity:.85;} .btn:disabled{opacity:.45;cursor:default;}
+    .btn.sub{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);}
+    .btn.sm{padding:4px 10px;font-size:12px;}
+    .countdown{font-size:12px;color:var(--text-dim);min-width:90px;}
+    .spinner{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .sep{width:1px;height:20px;background:var(--border);flex-shrink:0;}
+
+    /* ── 設定パネル ── */
+    .panel{background:var(--surface);border-bottom:2px solid var(--accent);}
+    .panel-inner{max-width:1100px;margin:0 auto;padding:14px 20px;}
+    .panel h2{font-size:13px;font-weight:700;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+    .cfg-grid{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;}
+    .cfg-grid label{font-size:12px;color:var(--text-dim);white-space:nowrap;}
+    .cfg-grid input{
+      background:var(--surface2);color:var(--text);border:1px solid var(--border);
+      border-radius:5px;padding:5px 9px;font-size:13px;font-family:inherit;
     }
-    .confirm-btn:hover { background: rgba(255,77,77,.2); }
-    .region-section { margin-bottom: 26px; }
-    .region-header { font-size: 15px; font-weight: 700; color: var(--text-dim); border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 12px; }
-    .game-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; transition: border-color .3s; }
-    .game-card.is-new     { border-color: rgba(29,111,216,.6);  animation: pulse-new 1.5s ease 3; }
-    .game-card.is-updated { border-color: rgba(255,77,77,.5);  animation: pulse-upd 1.5s ease 3; }
-    @keyframes pulse-new { 0%,100%{box-shadow:0 0 0 0 rgba(29,111,216,0)}  50%{box-shadow:0 0 0 4px rgba(29,111,216,.25)} }
-    @keyframes pulse-upd { 0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}   50%{box-shadow:0 0 0 4px rgba(255,77,77,.2)} }
-    .card-header { padding: 8px 14px; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
-    .card-header:hover { background: rgba(255,255,255,.03); }
-    .card-round { font-size: 13px; font-weight: 600; color: var(--text); }
-    .card-summary { font-size: 15px; font-weight: 700; color: var(--text); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-time { font-size: 11px; color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
-    .card-toggle-btn { font-size: 12px; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 3px 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; line-height: 1.4; font-family: inherit; transition: background .15s, color .15s; }
-    .card-toggle-btn:hover { background: var(--border); color: var(--text); }
-    .card-body { border-top: 1px solid var(--border); }
-    .card-body.collapsed { display: none; }
-    .score-table { width: 100%; border-collapse: collapse; }
-    .score-table th, .score-table td { text-align: center; padding: 7px 4px; border-top: 1px solid var(--border); min-width: 26px; }
-    .score-table th { font-size: 13px; color: var(--text-dim); font-weight: 600; background: var(--surface2); }
-    .score-table td.team-name { text-align: left; padding-left: 14px; font-weight: 700; font-size: 16px; min-width: 120px; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
-    .score-table td.inn { font-size: 15px; font-weight: 700; color: var(--text-dim); }
-    .score-table td.inn.scored { color: var(--text); }
-    .score-table td.total { font-size: 19px; font-weight: 800; border-left: 1px solid var(--border); }
-    .score-table td.total.win  { color: var(--win); }
-    .score-table td.total.lose { color: var(--lose); }
-    .game-card.is-new td.scored,
-    .game-card.is-new td.total { color: var(--updated) !important; }
-    .game-card.is-updated td.changed { color: var(--updated) !important; }
-    .commentary-toggle { width: 100%; text-align: left; padding: 6px 14px; background: none; border: none; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    .commentary-toggle:hover { background: rgba(255,255,255,.03); }
-    .commentary-body { display: none; padding: 10px 14px; font-size: 12px; color: var(--text-dim); line-height: 1.7; border-top: 1px solid var(--border); background: var(--surface2); }
-    .commentary-body.open { display: block; }
-    .embed-btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: none; border: 1px solid var(--border); border-radius: 5px;
-      color: var(--text-dim); font-size: 11px; font-family: inherit;
-      padding: 3px 9px; cursor: pointer; transition: background .15s;
-      white-space: nowrap; flex-shrink: 0;
+    .cfg-grid input:focus{outline:2px solid var(--accent);}
+    #cfgStatus{font-size:12px;margin-left:8px;}
+
+    /* ── セッションパネル ── */
+    .session-panel{background:#eef4ff;border-bottom:1px solid #c7d8f5;}
+    .session-inner{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;flex-wrap:wrap;gap:14px 30px;align-items:flex-end;}
+    .ses-field{display:flex;flex-direction:column;gap:4px;}
+    .ses-field label{font-size:11px;font-weight:700;color:#3d5a99;text-transform:uppercase;letter-spacing:.04em;}
+    .ses-field input{
+      background:#fff;color:var(--text);border:1px solid #aabde0;
+      border-radius:5px;padding:5px 9px;font-size:13px;font-family:inherit;
     }
-    .embed-btn:hover { background: var(--surface2); color: var(--text); }
-    .embed-panel {
-      display: none; border-top: 1px solid var(--border);
-      background: #f8f9fc; padding: 10px 14px;
+    .ses-field input:focus{outline:2px solid var(--accent);}
+    .ses-field .row{display:flex;align-items:center;gap:6px;}
+    .date-badge{
+      display:inline-block;background:var(--accent);color:#fff;
+      border-radius:4px;padding:3px 10px;font-size:13px;font-weight:700;white-space:nowrap;
     }
-    .embed-panel.open { display: block; }
-    .embed-panel label { font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 4px; }
-    .embed-panel code {
-      display: block; background: #eef1f7; border: 1px solid var(--border);
-      border-radius: 5px; padding: 7px 10px; font-size: 11px;
-      word-break: break-all; color: var(--text); line-height: 1.6;
-    }
-    .embed-copy-btn {
-      margin-top: 6px; background: var(--accent); color: #fff;
-      border: none; border-radius: 5px; padding: 5px 12px;
-      font-size: 12px; cursor: pointer; font-family: inherit;
-      transition: opacity .15s;
-    }
-    .embed-copy-btn:hover { opacity: .85; }
-    .embed-copy-btn.copied { background: var(--win); }
-    .no-games { text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 15px; line-height: 2; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 600px) {
-      .score-table th, .score-table td { padding: 5px 2px; min-width: 20px; font-size: 13px; }
-      .score-table td.team-name { min-width: 90px; font-size: 14px; }
-      .score-table td.total { font-size: 16px; }
+    .field-error{font-size:11px;color:#dc2626;}
+
+    /* ── メイン ── */
+    main{max-width:1100px;margin:0 auto;padding:18px 14px 40px;}
+    .legend{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+    .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim);}
+    .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+    .badge.new    {background:var(--new-bg);    color:var(--new);     border:1px solid rgba(29,111,216,.4);}
+    .badge.updated{background:var(--updated-bg);color:var(--updated); border:1px solid rgba(255,77,77,.4);}
+    .badge.playing{background:rgba(52,211,153,.15);color:var(--status-play);border:1px solid rgba(52,211,153,.4);}
+    .badge.ended  {background:rgba(107,114,128,.12);color:var(--status-end);border:1px solid rgba(107,114,128,.3);}
+
+    /* ── カード ── */
+    .region-section{margin-bottom:26px;}
+    .region-header{font-size:15px;font-weight:700;color:var(--text-dim);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;}
+    .game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .3s;}
+    .game-card.is-new    {border-color:rgba(29,111,216,.6); animation:pulse-new 1.5s ease 3;}
+    .game-card.is-updated{border-color:rgba(255,77,77,.5);  animation:pulse-upd 1.5s ease 3;}
+    @keyframes pulse-new{0%,100%{box-shadow:0 0 0 0 rgba(29,111,216,0)}  50%{box-shadow:0 0 0 4px rgba(29,111,216,.25)}}
+    @keyframes pulse-upd{0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}   50%{box-shadow:0 0 0 4px rgba(255,77,77,.2)}}
+    .card-header{padding:8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
+    .card-header:hover{background:rgba(0,0,0,.02);}
+    .card-round{font-size:13px;font-weight:600;color:var(--text);}
+    .card-summary{font-size:15px;font-weight:700;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .card-time{font-size:11px;color:var(--text-dim);white-space:nowrap;flex-shrink:0;}
+    .card-toggle-btn{font-size:12px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:background .15s;}
+    .card-toggle-btn:hover{background:var(--border);}
+    .card-body{border-top:1px solid var(--border);}
+    .card-body.collapsed{display:none;}
+    .score-table{width:100%;border-collapse:collapse;}
+    .score-table th,.score-table td{text-align:center;padding:7px 4px;border-top:1px solid var(--border);min-width:26px;}
+    .score-table th{font-size:13px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
+    .score-table td.team-name{text-align:left;padding-left:14px;font-weight:700;font-size:16px;min-width:120px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .score-table td.inn{font-size:15px;font-weight:700;color:var(--text-dim);}
+    .score-table td.inn.scored{color:var(--text);}
+    .score-table td.total{font-size:19px;font-weight:800;border-left:1px solid var(--border);}
+    .score-table td.total.win{color:var(--win);} .score-table td.total.lose{color:var(--lose);}
+    .game-card.is-new td.scored,.game-card.is-new td.total{color:var(--updated)!important;}
+    .game-card.is-updated td.changed{color:var(--updated)!important;}
+    .confirm-btn{display:block;width:100%;padding:8px;background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.4);border-top:none;color:var(--updated);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;text-align:center;transition:background .15s;}
+    .confirm-btn:hover{background:rgba(255,77,77,.2);}
+    .commentary-toggle{width:100%;text-align:left;padding:6px 14px;background:none;border:none;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;}
+    .commentary-toggle:hover{background:rgba(0,0,0,.02);}
+    .commentary-body{display:none;padding:10px 14px;font-size:12px;color:var(--text-dim);line-height:1.7;border-top:1px solid var(--border);background:var(--surface2);}
+    .commentary-body.open{display:block;}
+
+    /* ── 埋め込みパネル ── */
+    .embed-btn{display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid var(--border);border-radius:5px;color:var(--text-dim);font-size:11px;font-family:inherit;padding:3px 9px;cursor:pointer;transition:background .15s;white-space:nowrap;flex-shrink:0;}
+    .embed-btn:hover{background:var(--surface2);color:var(--text);}
+    .embed-panel{display:none;border-top:1px solid var(--border);background:#f8f9fc;padding:10px 14px;}
+    .embed-panel.open{display:block;}
+    .embed-panel label{font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;}
+    .embed-panel code{display:block;background:#eef1f7;border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-size:11px;word-break:break-all;color:var(--text);line-height:1.6;}
+    .embed-copy-btn{margin-top:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+    .embed-copy-btn:hover{opacity:.85;} .embed-copy-btn.copied{background:var(--win);}
+
+    .no-games{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:15px;line-height:2;}
+    @media(max-width:600px){
+      .score-table th,.score-table td{padding:5px 2px;min-width:20px;font-size:13px;}
+      .score-table td.team-name{min-width:90px;font-size:14px;}
+      .score-table td.total{font-size:16px;}
     }
   </style>
 </head>
 <body>
+
 <header>
   <h1>⚾ 兵庫県高校野球連盟スコアモニター</h1>
   <div class="header-right">
-    <div class="status-bar">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">読み込み中...</span>
-    </div>
+    <div class="status-bar"><span class="dot" id="statusDot"></span><span id="statusText">読み込み中...</span></div>
+    <span class="gh-status" id="ghStatus"></span>
     <div class="countdown" id="countdown"></div>
     <label style="font-size:12px;color:var(--text-dim);display:flex;align-items:center;gap:6px;">
-      クロール間隔
+      間隔
       <select id="intervalSelect" onchange="setInterval_(this.value)"
         style="background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:12px;cursor:pointer;">
         <option value="1">1分</option><option value="2">2分</option><option value="3">3分</option>
@@ -139,12 +151,61 @@
     <button class="btn" id="refreshBtn" onclick="manualCrawl()">
       <span class="spinner" id="spinner"></span> 今すぐ更新
     </button>
-    <div style="width:24px;flex-shrink:0;"></div>
-    <button class="btn btn-sub" onclick="toggleAll(true)">全スコアを開く</button>
-    <button class="btn btn-sub" onclick="toggleAll(false)">全スコアを閉じる</button>
-    <button class="btn btn-sub" onclick="openHistory()">📋 過去のスコア一覧</button>
+    <div class="sep"></div>
+    <button class="btn sub" onclick="toggleAll(true)">全スコアを開く</button>
+    <button class="btn sub" onclick="toggleAll(false)">全スコアを閉じる</button>
+    <button class="btn sub" onclick="openHistory()">📋 過去のスコア一覧</button>
+    <button class="btn sub" onclick="toggleSettings()">⚙️ 設定</button>
   </div>
 </header>
+
+<!-- GitHub 設定パネル -->
+<div class="panel" id="settingsPanel" style="display:none;">
+  <div class="panel-inner">
+    <h2>GitHub 接続設定</h2>
+    <div class="cfg-grid">
+      <label>Personal Access Token</label>
+      <input type="password" id="cfgToken" placeholder="ghp_xxxxxxxxxxxx" style="width:260px;">
+      <label>Owner</label>
+      <input id="cfgOwner" placeholder="asanohr" style="width:130px;">
+      <label>Repository</label>
+      <input id="cfgRepo" placeholder="koya-score" style="width:150px;">
+      <label>Branch</label>
+      <input id="cfgBranch" placeholder="main" style="width:90px;">
+      <button class="btn sm" onclick="saveGitHubConfig()">💾 保存</button>
+      <button class="btn sm sub" onclick="testGitHub()">🔌 テスト接続</button>
+      <span id="cfgStatus" style="font-size:12px;"></span>
+    </div>
+  </div>
+</div>
+
+<!-- 試合セッションパネル -->
+<div class="session-panel">
+  <div class="session-inner">
+    <div class="ses-field">
+      <label>大会名</label>
+      <div class="row">
+        <input id="sesName" placeholder="2026年春季大会" style="width:200px;" oninput="saveSession()">
+        <button class="btn sm sub" id="autoDetectBtn" onclick="autoDetectTournament()">🔍 自動取得</button>
+      </div>
+    </div>
+    <div class="ses-field">
+      <label>大会ID（URL用）</label>
+      <div class="row">
+        <input id="sesId" placeholder="t20260523" style="width:130px;" oninput="validateTournamentId(); saveSession()">
+        <span id="sesIdErr" class="field-error"></span>
+      </div>
+    </div>
+    <div class="ses-field">
+      <label>試合日</label>
+      <div class="row">
+        <input type="date" id="sesDate" onchange="updateDateLabel(); saveSession()">
+        <span class="date-badge" id="sesDateLabel" style="display:none;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <main>
   <div class="legend">
     <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
@@ -156,17 +217,15 @@
 </main>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-//  設定
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+//  定数
+// ═══════════════════════════════════════════════════
 const BASE_URL    = 'http://www.hyogo-koyaren.or.jp';
 const INDEX_URL   = BASE_URL + '/taikai/result.php';
-const STORAGE_KEY = 'koya_scores';
 const CONFIG_KEY  = 'koya_config';
-const HISTORY_KEY = 'koya_embed_history';  // 試合iframeコード永久保存
+const SESSION_KEY = 'koya_session';
+const CURRENT_KEY = 'koya_current';
 const HIDDEN_REGIONS = ['近畿', '全国', '軟式'];
-
-// 試すCORSプロキシの一覧（上から順に試みる）
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
   u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
@@ -174,123 +233,207 @@ const PROXY_LIST = [
   u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
 ];
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 //  状態
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 let intervalMinutes = 5;
-let nextCrawlAt    = null;
-let crawlTimer     = null;
-let countdownTimer = null;
-let isCrawling     = false;
-const openCards    = new Set();
+let nextCrawlAt = null, crawlTimer = null, countdownTimer = null, isCrawling = false;
+const openCards = new Set();
+let workingProxyIdx = 0;
 
-// ═══════════════════════════════════════════════════════════════
-//  localStorage
-// ═══════════════════════════════════════════════════════════════
-function loadData() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData(); }
-  catch { return defaultData(); }
+// ═══════════════════════════════════════════════════
+//  localStorage ユーティリティ
+// ═══════════════════════════════════════════════════
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || {}; } catch { return {}; }
+}
+function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+
+function loadSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY)) || {}; } catch { return {}; }
+}
+function saveSession() {
+  const s = {
+    tournament_name: document.getElementById('sesName').value.trim(),
+    tournament_id:   document.getElementById('sesId').value.trim(),
+    game_date:       document.getElementById('sesDate').value,
+    game_date_label: document.getElementById('sesDateLabel').textContent,
+  };
+  localStorage.setItem(SESSION_KEY, JSON.stringify(s));
+}
+
+function loadCurrentData() {
+  try { return JSON.parse(localStorage.getItem(CURRENT_KEY)) || defaultData(); } catch { return defaultData(); }
 }
 function defaultData() {
   return { games: [], last_updated: null, crawl_status: 'pending', error: null, game_count: 0 };
 }
-function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
-function loadConfig() {
-  try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || { interval_minutes: 5 }; }
-  catch { return { interval_minutes: 5 }; }
-}
-function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+function saveCurrentData(d) { localStorage.setItem(CURRENT_KEY, JSON.stringify(d)); }
 
-// ── 埋め込み履歴（永久保存） ──
-function loadHistory() {
-  try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
-  catch { return []; }
+// ═══════════════════════════════════════════════════
+//  セッション UI
+// ═══════════════════════════════════════════════════
+function autoTournamentId() {
+  const d = new Date();
+  return 't' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
 }
-function saveHistory(arr) { localStorage.setItem(HISTORY_KEY, JSON.stringify(arr)); }
-function saveToHistory(games) {
-  const hist = loadHistory();
-  const byId = Object.fromEntries(hist.map(h => [h.id, h]));
-  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
-  const base = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
-  let changed = false;
-  for (const g of games) {
-    const iframeUrl = base + '?id=' + g.id;
-    const teamLabel = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
-    const iframeCode = `<iframe src="${iframeUrl}" width="700" height="220" style="border:none;border-radius:10px;" loading="lazy" title="${teamLabel} スコア"></iframe>`;
-    const isEnd = (g.game_status || '').includes('終了');
-    if (!byId[g.id]) {
-      hist.push({
-        id: g.id, region: g.region, round: g.round,
-        team1: g.team1 || '', team2: g.team2 || '', venue: g.venue || '',
-        total1: g.total1 || '', total2: g.total2 || '',
-        game_status: g.game_status || '', url: g.url || '',
-        iframeCode, savedAt: new Date().toISOString().slice(0, 19),
-      });
-      changed = true;
-    } else if (isEnd) {
-      // 試合終了後はスコアを最新に更新
-      Object.assign(byId[g.id], {
-        total1: g.total1 || '', total2: g.total2 || '',
-        game_status: g.game_status || '',
-      });
-      changed = true;
-    }
+function updateDateLabel() {
+  const val = document.getElementById('sesDate').value;
+  const el  = document.getElementById('sesDateLabel');
+  if (!val) { el.style.display = 'none'; el.textContent = ''; return; }
+  const [, m, d] = val.split('-');
+  el.textContent = parseInt(m) + '月' + parseInt(d) + '日';
+  el.style.display = 'inline-block';
+}
+function validateTournamentId() {
+  const id  = document.getElementById('sesId').value;
+  const err = document.getElementById('sesIdErr');
+  if (!id || /^[a-zA-Z0-9_-]+$/.test(id)) { err.textContent = ''; return true; }
+  err.textContent = '英数字・アンダースコア・ハイフンのみ';
+  return false;
+}
+
+// ═══════════════════════════════════════════════════
+//  GitHub 設定 UI
+// ═══════════════════════════════════════════════════
+function toggleSettings() {
+  const p = document.getElementById('settingsPanel');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+function saveGitHubConfig() {
+  const cfg = loadConfig();
+  cfg.gh_token  = document.getElementById('cfgToken').value.trim();
+  cfg.gh_owner  = document.getElementById('cfgOwner').value.trim();
+  cfg.gh_repo   = document.getElementById('cfgRepo').value.trim();
+  cfg.gh_branch = document.getElementById('cfgBranch').value.trim() || 'main';
+  saveConfig(cfg);
+  setCfgStatus('💾 保存しました', 'var(--win)');
+}
+async function testGitHub() {
+  saveGitHubConfig();
+  setCfgStatus('テスト中...', 'var(--text-dim)');
+  try {
+    const r = await ghRequest('GET', '');
+    setCfgStatus('✅ 接続成功：' + (r?.name || ''), 'var(--win)');
+  } catch(e) {
+    setCfgStatus('❌ ' + e.message, '#dc2626');
   }
-  if (changed) saveHistory(hist);
 }
-function openHistory() {
-  window.open(new URL('score_history.html', location.href).href, '_blank');
+function setCfgStatus(msg, color) {
+  const el = document.getElementById('cfgStatus');
+  el.textContent = msg; el.style.color = color;
+}
+function setGhStatus(type, msg) {
+  const el = document.getElementById('ghStatus');
+  el.textContent = msg;
+  el.style.color = type === 'ok' ? 'var(--win)' : type === 'error' ? '#dc2626' : 'var(--text-dim)';
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+//  GitHub API
+// ═══════════════════════════════════════════════════
+async function ghRequest(method, path, body) {
+  const cfg = loadConfig();
+  if (!cfg.gh_token) throw new Error('GitHubトークンが未設定です（⚙️設定）');
+  if (!cfg.gh_owner || !cfg.gh_repo) throw new Error('Owner/Repoが未設定です（⚙️設定）');
+  const url = `https://api.github.com/repos/${cfg.gh_owner}/${cfg.gh_repo}/contents/${path}`;
+  const opts = {
+    method,
+    headers: {
+      'Authorization': 'token ' + cfg.gh_token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error('GitHub API (' + res.status + '): ' + (e.message || '不明'));
+  }
+  return res.status === 204 ? null : await res.json();
+}
+async function ghRead(path) { return await ghRequest('GET', path); }
+
+function ghEncode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+function ghDecode(b64) {
+  const bin = atob(b64.replace(/\n/g, ''));
+  return new TextDecoder('utf-8').decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+}
+
+async function ghWrite(path, content, msg) {
+  const existing = await ghRead(path);
+  const body = {
+    message: msg || 'データ更新',
+    content: ghEncode(JSON.stringify(content, null, 2)),
+    branch:  loadConfig().gh_branch || 'main',
+  };
+  if (existing?.sha) body.sha = existing.sha;
+  return await ghRequest('PUT', path, body);
+}
+
+async function updateTournamentIndex(session, gameCount, lastUpdated) {
+  const path = 'data/index.json';
+  let index = { tournaments: [] };
+  const existing = await ghRead(path);
+  if (existing?.content) {
+    try { index = JSON.parse(ghDecode(existing.content)); } catch(e) {}
+  }
+  const entry = {
+    id:           session.tournament_id,
+    name:         session.tournament_name || session.tournament_id,
+    date:         session.game_date || '',
+    game_count:   gameCount,
+    last_updated: lastUpdated,
+  };
+  const idx = index.tournaments.findIndex(t => t.id === session.tournament_id);
+  if (idx >= 0) index.tournaments[idx] = entry; else index.tournaments.push(entry);
+  index.tournaments.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  index.last_updated = lastUpdated;
+  await ghWrite(path, index, '大会一覧更新');
+}
+
+// ═══════════════════════════════════════════════════
 //  スクレイピング
-// ═══════════════════════════════════════════════════════════════
-// 成功したプロキシのインデックスを記憶（次回から先頭に試す）
-let workingProxyIdx = 0;
-
+// ═══════════════════════════════════════════════════
 async function fetchRaw(url) {
-  // 前回成功したプロキシを先頭に並べ替えて試す
-  const order = [workingProxyIdx,
-    ...PROXY_LIST.map((_,i)=>i).filter(i=>i!==workingProxyIdx)];
+  const order = [workingProxyIdx, ...PROXY_LIST.map((_,i)=>i).filter(i=>i!==workingProxyIdx)];
   const errors = [];
   for (const i of order) {
     try {
       const res = await fetch(PROXY_LIST[i](url));
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      workingProxyIdx = i; // 成功したプロキシを記憶
+      workingProxyIdx = i;
       return await res.arrayBuffer();
-    } catch(e) {
-      console.warn('プロキシ' + i + '失敗:', e.message);
-      errors.push('proxy' + i + ': ' + e.message);
-    }
+    } catch(e) { errors.push('proxy' + i + ': ' + e.message); }
   }
   throw new Error('全プロキシ失敗 (' + errors.join(' / ') + ')');
 }
-
 async function fetchHtml(url) {
-  const buf = await fetchRaw(url);
-  // charset 検出
+  const buf  = await fetchRaw(url);
   const utf8 = new TextDecoder('utf-8').decode(buf);
-  const m = utf8.match(/charset=["\s]*([\w-]+)/i);
-  const cs = m ? m[1].toLowerCase() : '';
+  const m    = utf8.match(/charset=["\s]*([\w-]+)/i);
+  const cs   = m ? m[1].toLowerCase() : '';
   if (cs === 'utf-8' || cs === 'utf8') return utf8;
-  // charset なし or EUC-JP → EUC-JP でデコード
   for (const enc of ['euc-jp', 'shift-jis']) {
     try { return new TextDecoder(enc).decode(buf); } catch(e) {}
   }
   return utf8;
 }
-
 function makeId(region, round, url) {
   const s = region + '|' + round + '|' + url;
   let h = 0;
   for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
   return (h >>> 0).toString(16).padStart(8, '0');
 }
-
 async function fetchGameLinks() {
   const html = await fetchHtml(INDEX_URL);
-  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const doc  = new DOMParser().parseFromString(html, 'text/html');
   const results = [];
   doc.querySelectorAll('dl').forEach(dl => {
     const region = dl.querySelector('dt')?.textContent.trim() || '不明';
@@ -307,48 +450,52 @@ async function fetchGameLinks() {
   return results;
 }
 
+async function autoDetectTournament() {
+  const btn = document.getElementById('autoDetectBtn');
+  btn.disabled = true; btn.textContent = '取得中...';
+  try {
+    const html = await fetchHtml(INDEX_URL);
+    const doc  = new DOMParser().parseFromString(html, 'text/html');
+    let name = '';
+    for (const sel of ['h1', 'h2', 'h3']) {
+      const t = doc.querySelector(sel)?.textContent.trim() || '';
+      if (t.length > 3 && t.length < 60) { name = t; break; }
+    }
+    if (!name) name = doc.querySelector('title')?.textContent.trim() || '';
+    if (name) { document.getElementById('sesName').value = name; saveSession(); }
+    else alert('大会名を自動取得できませんでした。手動で入力してください。');
+  } catch(e) { alert('取得失敗: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = '🔍 自動取得'; }
+}
+
 function parseScorePage(html, region, round, url) {
   const doc = new DOMParser().parseFromString(html, 'text/html');
-
-  // 会場名
   let venue = '';
   for (const span of doc.querySelectorAll('span.px16')) {
     const t = span.textContent.trim();
     if (t.includes('会場')) { venue = t.replace(/試合会場[：:]/,'').trim(); break; }
   }
-
   const allTables = [...doc.querySelectorAll('table')];
   if (!allTables.length) return null;
-
-  // スコアテーブルを探す（bgcolor="#000000" 行が2行以上、各行に10列以上）
-  let scoreTable = null, scoreRows = [], titleText = '';
+  let scoreTable = null, scoreRows = [];
   for (const tbl of allTables) {
-    const dataRows = [...tbl.querySelectorAll('tr[bgcolor="#000000"]')]
+    const rows = [...tbl.querySelectorAll('tr[bgcolor="#000000"]')]
       .filter(r => r.querySelectorAll('td,th').length >= 10);
-    if (dataRows.length >= 2) {
-      scoreTable = tbl;
-      scoreRows = dataRows.slice(0, 2);
-      titleText = tbl.querySelector('td[colspan]')?.textContent.trim() || '';
-      break;
-    }
+    if (rows.length >= 2) { scoreTable = tbl; scoreRows = rows.slice(0, 2); break; }
   }
   if (!scoreRows.length) return null;
-
   const c1 = [...scoreRows[0].querySelectorAll('td,th')];
   const c2 = [...scoreRows[1].querySelectorAll('td,th')];
   let team1 = c1[0]?.textContent.trim() || '';
   let team2 = c2[0]?.textContent.trim() || '';
-
   const nCols = Math.min(c1.length, c2.length);
   const innings1 = [], innings2 = [];
   for (let i = 1; i < nCols - 1; i++) {
     innings1.push(c1[i]?.textContent.trim() || '');
     innings2.push(c2[i]?.textContent.trim() || '');
   }
-  const total1 = c1[nCols - 1]?.textContent.trim() || '';
-  const total2 = c2[nCols - 1]?.textContent.trim() || '';
-
-  // チーム名が空なら第2テーブルから補完
+  const total1 = c1[nCols-1]?.textContent.trim() || '';
+  const total2 = c2[nCols-1]?.textContent.trim() || '';
   const teamTable = allTables.find(t => t !== scoreTable && t.classList.contains('left'))
                  || allTables.find(t => t !== scoreTable);
   if ((!team1 || !team2) && teamTable) {
@@ -356,49 +503,49 @@ function parseScorePage(html, region, round, url) {
     if (!team1 && tc[0]) team1 = tc[0].textContent.trim();
     if (!team2 && tc[3]) team2 = tc[3].textContent.trim();
   }
-
-  // 試合状況（no_21/no_22 画像を含むテーブル）
   let commentary = '', gameStatus = '';
   for (const tbl of allTables) {
     if (tbl === scoreTable || tbl === teamTable) continue;
-    const hasStatusImg = [...tbl.querySelectorAll('img[src]')]
+    const hasImg = [...tbl.querySelectorAll('img[src]')]
       .some(img => { const s = img.getAttribute('src') || ''; return s.includes('no_21') || s.includes('no_22'); });
-    if (!hasStatusImg) continue;
+    if (!hasImg) continue;
     const tc = [...(tbl.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th') || [])];
     if (tc.length >= 2) { commentary = tc[0].textContent.trim(); gameStatus = tc[1].textContent.trim(); }
     else if (tc.length === 1) { gameStatus = tc[0].textContent.trim(); }
     break;
   }
-
-  // 全データが空なら null
   const allEmpty = !team1 && !team2
-    && [...innings1, ...innings2].every(s => s === '' || s === '0')
-    && (total1 === '' || total1 === '0') && (total2 === '' || total2 === '0');
+    && [...innings1,...innings2].every(s => s===''||s==='0')
+    && (total1===''||total1==='0') && (total2===''||total2==='0');
   if (allEmpty) return null;
-
   return {
     id: makeId(region, round, url), region, round, venue,
-    game_status: gameStatus, commentary, title: titleText,
+    game_status: gameStatus, commentary,
     team1, team2, innings1, innings2, total1, total2, url,
     is_new: false, is_updated: false, last_changed: null,
   };
 }
-
 function scoreSnapshot(g) {
-  return JSON.stringify({
-    innings1: g.innings1, innings2: g.innings2,
-    total1: g.total1, total2: g.total2, team1: g.team1, team2: g.team2,
-  });
+  return JSON.stringify({ innings1:g.innings1, innings2:g.innings2, total1:g.total1, total2:g.total2, team1:g.team1, team2:g.team2 });
 }
 
+// ═══════════════════════════════════════════════════
+//  Fetch & Update（クロール→GitHub書き込み）
+// ═══════════════════════════════════════════════════
 async function fetchAndUpdate() {
-  const now = new Date().toISOString().slice(0, 19);
+  const now     = new Date().toISOString().slice(0, 19);
+  const session = loadSession();
+  const tournamentId = session.tournament_id;
+
+  if (!tournamentId || !validateTournamentId()) {
+    saveCurrentData({ ...loadCurrentData(), crawl_status:'error', error:'大会IDを設定してください（セッション欄）', last_updated:now });
+    return;
+  }
+
   let links;
-  try {
-    links = await fetchGameLinks();
-  } catch(e) {
-    const d = loadData();
-    saveData({ ...d, crawl_status: 'error', error: String(e), last_updated: now });
+  try { links = await fetchGameLinks(); }
+  catch(e) {
+    saveCurrentData({ ...loadCurrentData(), crawl_status:'error', error:String(e), last_updated:now });
     return;
   }
 
@@ -406,36 +553,60 @@ async function fetchAndUpdate() {
   for (const link of links) {
     try {
       const game = parseScorePage(await fetchHtml(link.url), link.region, link.round, link.url);
-      if (game) newGames.push(game);
+      if (game) {
+        game.game_date       = session.game_date       || '';
+        game.game_date_label = session.game_date_label || '';
+        newGames.push(game);
+      }
     } catch(e) { console.warn('取得失敗:', link.url, e); }
   }
 
-  const oldById = Object.fromEntries((loadData().games || []).map(g => [g.id, g]));
-  const merged = newGames.map(ng => {
-    const old = oldById[ng.id];
+  const oldById = Object.fromEntries((loadCurrentData().games || []).map(g => [g.id, g]));
+  const merged  = newGames.map(ng => {
+    const old  = oldById[ng.id];
     const snap = scoreSnapshot(ng);
-    if (!old) {
-      return { ...ng, is_new: true, is_updated: false, confirmed_snapshot: null, last_changed: now };
-    }
+    if (!old) return { ...ng, is_new:true, is_updated:false, confirmed_snapshot:null, last_changed:now };
     const confirmedSnap = old.confirmed_snapshot ?? null;
     let result;
     if (snap !== scoreSnapshot(old)) {
-      result = { ...ng, is_new: false, is_updated: true, last_changed: now };
+      result = { ...ng, is_new:false, is_updated:true, last_changed:now };
     } else {
-      result = { ...ng, is_new: old.is_new || false, is_updated: old.is_updated || false, last_changed: old.last_changed || null };
+      result = { ...ng, is_new:old.is_new||false, is_updated:old.is_updated||false, last_changed:old.last_changed||null };
     }
     result.confirmed_snapshot = confirmedSnap;
-    if (confirmedSnap !== null && snap === confirmedSnap) { result.is_new = false; result.is_updated = false; }
+    if (confirmedSnap !== null && snap === confirmedSnap) { result.is_new=false; result.is_updated=false; }
     return result;
   });
 
-  saveData({ games: merged, last_updated: now, crawl_status: 'ok', error: null, game_count: newGames.length });
-  saveToHistory(merged);  // 各試合のiframeコードを永久保存
+  saveCurrentData({ games:merged, last_updated:now, crawl_status:'ok', error:null, game_count:newGames.length });
+
+  // GitHub に書き込み
+  const cfg = loadConfig();
+  if (!cfg.gh_token || !cfg.gh_owner || !cfg.gh_repo) {
+    setGhStatus('error', '⚠️ GitHub未設定（⚙️設定）');
+    return;
+  }
+  setGhStatus('pending', '📤 GitHub書き込み中...');
+  try {
+    const data = {
+      tournament_id:   tournamentId,
+      tournament_name: session.tournament_name || '',
+      game_date:       session.game_date       || '',
+      games:           merged,
+      last_updated:    now,
+    };
+    await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
+    await updateTournamentIndex(session, merged.length, now);
+    setGhStatus('ok', '✅ ' + new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'}) + ' 書き込み完了');
+  } catch(e) {
+    setGhStatus('error', '❌ ' + e.message);
+    console.error('GitHub write error:', e);
+  }
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 //  スケジューラー
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 async function runCrawl() {
   if (isCrawling) return;
   isCrawling = true;
@@ -444,28 +615,23 @@ async function runCrawl() {
   btn.disabled = true; sp.style.display = 'inline-block';
   document.getElementById('statusDot').className = 'dot ing';
   document.getElementById('statusText').textContent = 'クロール中...';
-  try {
-    await fetchAndUpdate();
-  } finally {
-    isCrawling = false;
-    btn.disabled = false; sp.style.display = 'none';
+  try { await fetchAndUpdate(); }
+  finally {
+    isCrawling = false; btn.disabled = false; sp.style.display = 'none';
     nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
     render();
   }
 }
-
 function startScheduler() {
   if (crawlTimer) clearInterval(crawlTimer);
   crawlTimer = setInterval(runCrawl, intervalMinutes * 60 * 1000);
 }
-
 function setInterval_(val) {
   intervalMinutes = parseInt(val);
-  saveConfig({ interval_minutes: intervalMinutes });
+  const cfg = loadConfig(); cfg.interval_minutes = intervalMinutes; saveConfig(cfg);
   nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
   startScheduler();
 }
-
 function startCountdown() {
   if (countdownTimer) clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
@@ -476,14 +642,13 @@ function startCountdown() {
       '次のクロールまで ' + (m > 0 ? m + '分' : '') + sec + '秒';
   }, 1000);
 }
-
 async function manualCrawl() { await runCrawl(); }
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 //  UI 描画
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 function esc(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function fmt(iso) {
   if (!iso) return '';
@@ -492,14 +657,13 @@ function fmt(iso) {
 function pad(arr, n) { const a = [...arr]; while (a.length < n) a.push(''); return a; }
 function winLose(t1, t2) {
   const a = parseInt(t1), b = parseInt(t2);
-  if (isNaN(a) || isNaN(b)) return [null, null];
-  return a > b ? [true, false] : a < b ? [false, true] : [null, null];
+  if (isNaN(a)||isNaN(b)) return [null,null];
+  return a>b ? [true,false] : a<b ? [false,true] : [null,null];
 }
-
 function statusBadge(g) {
   const s = g.game_status || '';
-  const isEnd = s.includes('終了');
-  const isPlaying = !isEnd && (g.innings1 || []).some(v => v !== '');
+  const isEnd     = s.includes('終了');
+  const isPlaying = !isEnd && (g.innings1||[]).some(v => v !== '');
   if (g.is_new)     return '<span class="badge new">NEW</span>';
   if (g.is_updated) return '<span class="badge updated">更新</span>';
   if (isEnd)        return '<span class="badge ended">終了</span>';
@@ -508,19 +672,18 @@ function statusBadge(g) {
 }
 
 function buildCard(g) {
-  const inn1 = pad(g.innings1 || [], Math.max((g.innings1||[]).length, (g.innings2||[]).length, 9));
-  const inn2 = pad(g.innings2 || [], inn1.length);
+  const inn1 = pad(g.innings1||[], Math.max((g.innings1||[]).length,(g.innings2||[]).length,9));
+  const inn2 = pad(g.innings2||[], inn1.length);
   const [w1, w2] = winLose(g.total1, g.total2);
-  const cardCls = g.is_new ? 'is-new' : g.is_updated ? 'is-updated' : '';
-  const isOpen  = openCards.has(g.id);
+  const cardCls  = g.is_new ? 'is-new' : g.is_updated ? 'is-updated' : '';
+  const isOpen   = openCards.has(g.id);
   const btnLabel = isOpen ? '閉じる ▲' : '開く ▼';
   const changedAt = g.last_changed ? '<span class="card-time">' + fmt(g.last_changed) + '</span>' : '';
-
   const t1 = g.team1 || '(未定)', t2 = g.team2 || '(未定)';
-  const hasScore = !!(g.total1 || g.total2);
-  const summaryText = hasScore ? t1 + '　' + g.total1 + '－' + g.total2 + '　' + t2 : t1 + ' vs ' + t2;
+  const hasScore  = !!(g.total1 || g.total2);
+  const summaryText = hasScore ? t1+'　'+g.total1+'－'+g.total2+'　'+t2 : t1+' vs '+t2;
   const summaryHtml = !isOpen
-    ? '<span class="card-summary">' + esc(summaryText) + '</span>'
+    ? '<span class="card-summary">'+esc(summaryText)+'</span>'
     : '<span class="card-summary"></span>';
 
   let th = '<th class="team-name">チーム</th>';
@@ -528,215 +691,195 @@ function buildCard(g) {
   th += '<th>計</th>';
 
   const snap = (g.is_updated && g.confirmed_snapshot) ? JSON.parse(g.confirmed_snapshot) : null;
-
-  const row = (name, inns, total, win, snapInns, snapTotal) => {
-    let r = '<tr><td class="team-name">' + (esc(name) || '(未定)') + '</td>';
+  const row  = (name, inns, total, win, snapInns, snapTotal) => {
+    let r = '<tr><td class="team-name">' + (esc(name)||'(未定)') + '</td>';
     inns.forEach((s, i) => {
       const ok = s !== '' && s != null;
-      let changed = false;
-      if (g.is_updated) changed = snap ? (s !== (snapInns ? (snapInns[i] ?? '') : '')) : ok;
-      r += '<td class="inn' + (ok ? ' scored' : '') + (changed ? ' changed' : '') + '">' + (ok ? esc(s) : '−') + '</td>';
+      const changed = g.is_updated ? (snap ? s !== (snapInns?.[i]??'') : ok) : false;
+      r += '<td class="inn'+(ok?' scored':'')+(changed?' changed':'')+'">'+( ok?esc(s):'−')+'</td>';
     });
-    const wc = win === true ? 'win' : win === false ? 'lose' : '';
-    const tc = g.is_updated ? (snap ? (total !== snapTotal) : !!total) : false;
-    r += '<td class="total ' + wc + (tc ? ' changed' : '') + '">' + (esc(total) || '−') + '</td></tr>';
+    const wc = win===true?'win':win===false?'lose':'';
+    const tc = g.is_updated ? (snap ? total!==snapTotal : !!total) : false;
+    r += '<td class="total '+wc+(tc?' changed':'')+'">'+( esc(total)||'−')+'</td></tr>';
     return r;
   };
 
-  const comm = g.commentary || '';
+  const comm     = g.commentary || '';
   const commHtml = comm
-    ? '<button class="commentary-toggle" onclick="toggleComm(this)">📋 試合経過を表示</button><div class="commentary-body">' + esc(comm) + '</div>'
+    ? '<button class="commentary-toggle" onclick="toggleComm(this)">📋 試合経過を表示</button>'
+      +'<div class="commentary-body">'+esc(comm)+'</div>'
+    : '';
+  const confirmHtml = (g.is_new||g.is_updated)
+    ? '<button class="confirm-btn" onclick="confirmGame(event,\''+esc(g.id)+'\')">✔ 確認（赤字を消す）</button>'
     : '';
 
-  const confirmHtml = (g.is_new || g.is_updated)
-    ? '<button class="confirm-btn" onclick="confirmGame(event,\'' + esc(g.id) + '\')">✔ 確認（赤字を消す）</button>'
+  return '<div class="game-card '+cardCls+'" data-id="'+esc(g.id)+'">'
+    +'<div class="card-header" onclick="toggleCard(this)">'
+    +'<span class="card-round">'+esc(g.round)+'</span>'
+    +statusBadge(g)+summaryHtml+changedAt
+    +'<button class="card-toggle-btn">'+btnLabel+'</button>'
+    +'</div>'
+    +'<div class="card-body '+(isOpen?'':'collapsed')+'">'
+    +'<table class="score-table"><thead><tr>'+th+'</tr></thead><tbody>'
+    +row(g.team1,inn1,g.total1,w1,snap?.innings1,snap?.total1)
+    +row(g.team2,inn2,g.total2,w2,snap?.innings2,snap?.total2)
+    +'</tbody></table>'
+    +commHtml+confirmHtml
+    +buildEmbedPanel(g)
+    +'</div></div>';
+}
+
+function buildEmbedPanel(g) {
+  const session      = loadSession();
+  const tournamentId = session.tournament_id || '';
+  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
+  const base   = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
+  const q      = new URLSearchParams();
+  q.set('id', g.id);
+  if (tournamentId) q.set('tournament', tournamentId);
+  const widgetUrl  = base + '?' + q.toString();
+  const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
+  const iframeCode = `<iframe src="${widgetUrl}" width="700" height="160" style="border:none;border-radius:10px;" loading="lazy" title="${teamLabel} スコア"></iframe>`;
+
+  const warnHtml = !tournamentId
+    ? '<div style="margin-bottom:8px;padding:7px 10px;background:#fff3cd;border:1px solid #ffc107;border-radius:5px;font-size:11px;color:#856404;">⚠️ 大会IDが未設定です。セッション欄で設定してからコードをコピーしてください。</div>'
     : '';
+  const idNote = '<div style="margin-top:6px;font-size:11px;color:var(--text-dim);">'
+    +'🔑 試合ID: <b>'+esc(g.id)+'</b>　大会ID: <b>'+esc(tournamentId||'（未設定）')+'</b>'
+    +'</div>';
 
-  // 埋め込みパネル
-  const embedHtml = buildEmbedPanel(g);
-
-  return '<div class="game-card ' + cardCls + '" data-id="' + esc(g.id) + '">'
-    + '<div class="card-header" onclick="toggleCard(this)">'
-    + '<span class="card-round">' + esc(g.round) + '</span>'
-    + statusBadge(g) + summaryHtml + changedAt
-    + '<button class="card-toggle-btn">' + btnLabel + '</button>'
-    + '</div>'
-    + '<div class="card-body ' + (isOpen ? '' : 'collapsed') + '">'
-    + '<table class="score-table"><thead><tr>' + th + '</tr></thead><tbody>'
-    + row(g.team1, inn1, g.total1, w1, snap?.innings1, snap?.total1)
-    + row(g.team2, inn2, g.total2, w2, snap?.innings2, snap?.total2)
-    + '</tbody></table>'
-    + commHtml + confirmHtml + embedHtml
-    + '</div></div>';
+  return '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
+    +'<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
+    +'<span style="font-size:11px;color:var(--text-dim);">他サイトの HTML に貼り付けられます</span>'
+    +'</div>'
+    +'<div class="embed-panel">'
+    +warnHtml
+    +'<label>以下のコードをコピーして別サイトのHTMLに貼り付けてください：</label>'
+    +'<code id="embed-code-'+esc(g.id)+'">'+esc(iframeCode)+'</code>'
+    +'<button class="embed-copy-btn" onclick="copyEmbed(this,\''+esc(g.id)+'\')">📋 コードをコピー</button>'
+    +idNote+'</div>';
 }
 
 function toggleCard(header) {
   const card = header.closest('.game-card');
   const body = card.querySelector('.card-body');
   const btn  = card.querySelector('.card-toggle-btn');
-  const summary = card.querySelector('.card-summary');
+  const sum  = card.querySelector('.card-summary');
   if (body.classList.contains('collapsed')) {
-    body.classList.remove('collapsed'); btn.textContent = '閉じる ▲'; summary.textContent = '';
+    body.classList.remove('collapsed'); btn.textContent='閉じる ▲'; sum.textContent='';
     openCards.add(card.dataset.id);
   } else {
-    body.classList.add('collapsed'); btn.textContent = '開く ▼';
-    const t1 = card.querySelectorAll('td.team-name')[0]?.textContent || '';
-    const t2 = card.querySelectorAll('td.team-name')[1]?.textContent || '';
-    const sc1 = card.querySelectorAll('td.total')[0]?.textContent || '';
-    const sc2 = card.querySelectorAll('td.total')[1]?.textContent || '';
-    summary.textContent = (sc1 || sc2) ? t1 + '　' + sc1 + '－' + sc2 + '　' + t2 : t1 + ' vs ' + t2;
+    body.classList.add('collapsed'); btn.textContent='開く ▼';
+    const tds  = card.querySelectorAll('td.team-name');
+    const tots = card.querySelectorAll('td.total');
+    const t1=tds[0]?.textContent||'', t2=tds[1]?.textContent||'';
+    const s1=tots[0]?.textContent||'', s2=tots[1]?.textContent||'';
+    sum.textContent = (s1||s2) ? t1+'　'+s1+'－'+s2+'　'+t2 : t1+' vs '+t2;
     openCards.delete(card.dataset.id);
   }
 }
-
 function toggleAll(open) {
   document.querySelectorAll('.game-card').forEach(card => {
-    const body = card.querySelector('.card-body');
-    const btn  = card.querySelector('.card-toggle-btn');
-    const summary = card.querySelector('.card-summary');
+    const body=card.querySelector('.card-body'), btn=card.querySelector('.card-toggle-btn'), sum=card.querySelector('.card-summary');
     if (open) {
-      body.classList.remove('collapsed'); btn.textContent = '閉じる ▲'; summary.textContent = '';
+      body.classList.remove('collapsed'); btn.textContent='閉じる ▲'; sum.textContent='';
       openCards.add(card.dataset.id);
     } else {
-      body.classList.add('collapsed'); btn.textContent = '開く ▼';
-      const tds = card.querySelectorAll('td.team-name');
-      const tots = card.querySelectorAll('td.total');
-      const t1 = tds[0]?.textContent || '', t2 = tds[1]?.textContent || '';
-      const sc1 = tots[0]?.textContent || '', sc2 = tots[1]?.textContent || '';
-      summary.textContent = (sc1 || sc2) ? t1 + '　' + sc1 + '－' + sc2 + '　' + t2 : t1 + ' vs ' + t2;
+      body.classList.add('collapsed'); btn.textContent='開く ▼';
+      const tds=card.querySelectorAll('td.team-name'), tots=card.querySelectorAll('td.total');
+      const t1=tds[0]?.textContent||'', t2=tds[1]?.textContent||'';
+      const s1=tots[0]?.textContent||'', s2=tots[1]?.textContent||'';
+      sum.textContent=(s1||s2)?t1+'　'+s1+'－'+s2+'　'+t2:t1+' vs '+t2;
       openCards.delete(card.dataset.id);
     }
   });
 }
-
 function confirmGame(event, gameId) {
   event.stopPropagation();
-  const d = loadData();
-  for (const g of d.games || []) {
-    if (g.id === gameId) {
-      g.is_new = false; g.is_updated = false;
-      g.confirmed_snapshot = scoreSnapshot(g);
-      break;
-    }
+  const d = loadCurrentData();
+  for (const g of d.games||[]) {
+    if (g.id===gameId) { g.is_new=false; g.is_updated=false; g.confirmed_snapshot=scoreSnapshot(g); break; }
   }
-  saveData(d);
-  render();
+  saveCurrentData(d); render();
 }
-
 function toggleComm(btn) {
   const body = btn.nextElementSibling;
   body.classList.toggle('open');
   btn.textContent = body.classList.contains('open') ? '📋 試合経過を閉じる' : '📋 試合経過を表示';
 }
-
-// ── 埋め込みパネル生成 ──
-function buildEmbedPanel(g) {
-  // score_widget.html への絶対URLを構築（別サイトへの埋め込みにはドメイン込みのURLが必要）
-  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
-  const base = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
-
-  // ── 試合固有IDで絞り込む（同じ地区・ラウンド名が別日に重複しても混在しない）
-  const q = new URLSearchParams();
-  q.set('id', g.id);  // region+round+URL のハッシュ：この試合だけを一意に指定
-  const widgetUrl = base + '?' + q.toString();
-
-  const teamLabel = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
-  const iframeCode = `<iframe src="${widgetUrl}" width="700" height="220" style="border:none;border-radius:10px;" loading="lazy" title="${teamLabel} スコア"></iframe>`;
-
-  // ローカルファイル（file://）で開いている場合は警告を出す
-  const isLocalFile = location.protocol === 'file:';
-  const warningHtml = isLocalFile
-    ? '<div style="margin-bottom:8px;padding:7px 10px;background:#fff3cd;border:1px solid #ffc107;border-radius:5px;font-size:11px;color:#856404;">'
-      + '⚠️ <b>このページはローカルファイルとして開かれています。</b><br>'
-      + '別サイトに埋め込むには <code>score_widget.html</code> を GitHub Pages 等のウェブサーバーに置いてください。'
-      + '</div>'
-    : '';
-
-  // IDの意味を説明するメモ
-  const idNote = '<div style="margin-top:6px;font-size:11px;color:var(--text-dim);">'
-    + '🔑 <b>ID: ' + esc(g.id) + '</b>（' + esc(g.region) + ' / ' + esc(g.round) + ' の固有ID）<br>'
-    + 'このIDは <b>この試合ページのURL</b> から生成されるため、同じ地区・ラウンド名でも別の試合と混在しません。'
-    + '</div>';
-
-  return '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
-    + '<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
-    + '<span style="font-size:11px;color:var(--text-dim);">他のサイトに &lt;iframe&gt; で貼り付けられます</span>'
-    + '</div>'
-    + '<div class="embed-panel">'
-    + warningHtml
-    + '<label>以下のコードをコピーして、別サイトのHTMLに貼り付けてください：</label>'
-    + '<code id="embed-code-' + esc(g.id) + '">' + esc(iframeCode) + '</code>'
-    + '<button class="embed-copy-btn" onclick="copyEmbed(this,\'' + esc(g.id) + '\')">📋 コードをコピー</button>'
-    + idNote
-    + '<div style="margin-top:8px;font-size:11px;color:var(--text-dim);">'
-    + '💡 URLに <code>&amp;refresh=3</code>（更新間隔・分）、<code>&amp;theme=dark</code>（ダークモード）を追加できます'
-    + '</div>'
-    + '</div>';
-}
-
 function toggleEmbed(btn) {
   const panel = btn.closest('div').nextElementSibling;
   panel.classList.toggle('open');
   btn.textContent = panel.classList.contains('open') ? '🔗 閉じる' : '🔗 埋め込みコード';
 }
-
 function copyEmbed(btn, gameId) {
   const code = document.getElementById('embed-code-' + gameId);
   if (!code) return;
   navigator.clipboard.writeText(code.textContent.trim()).then(() => {
-    btn.textContent = '✔ コピーしました！';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '📋 コードをコピー'; btn.classList.remove('copied'); }, 2000);
+    btn.textContent='✔ コピーしました！'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent='📋 コードをコピー'; btn.classList.remove('copied'); }, 2000);
   }).catch(() => {
-    const sel = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(code);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    const sel=window.getSelection(), range=document.createRange();
+    range.selectNodeContents(code); sel.removeAllRanges(); sel.addRange(range);
   });
 }
 
 function renderGames(games) {
-  if (!games || !games.length)
+  if (!games?.length)
     return '<div class="no-games">試合データがありません。<br>試合がある日は自動クロールされます。</div>';
-  const visible = games.filter(g => !HIDDEN_REGIONS.some(kw => (g.region || '').includes(kw)));
+  const visible = games.filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw)));
   if (!visible.length)
-    return '<div class="no-games">試合データがありません。<br>試合がある日は自動クロールされます。</div>';
+    return '<div class="no-games">試合データがありません。</div>';
   const byRegion = {};
-  for (const g of visible) {
-    const k = g.region || '不明';
-    if (!byRegion[k]) byRegion[k] = [];
-    byRegion[k].push(g);
-  }
+  for (const g of visible) { const k=g.region||'不明'; if(!byRegion[k])byRegion[k]=[]; byRegion[k].push(g); }
   return Object.entries(byRegion).map(([region, gs]) =>
-    '<div class="region-section"><div class="region-header">🏟 ' + esc(region) + '</div>'
+    '<div class="region-section"><div class="region-header">🏟 '+esc(region)+'</div>'
     + gs.map(buildCard).join('') + '</div>'
   ).join('');
 }
 
 function render() {
-  const d = loadData();
-  const ok = d.crawl_status !== 'error';
-  const last = d.last_updated ? fmt(d.last_updated) : '未取得';
-  const visibleCount = (d.games || []).filter(g => !HIDDEN_REGIONS.some(kw => (g.region || '').includes(kw))).length;
-  document.getElementById('statusDot').className = 'dot ' + (ok ? 'ok' : 'err');
+  const d     = loadCurrentData();
+  const ok    = d.crawl_status !== 'error';
+  const last  = d.last_updated ? fmt(d.last_updated) : '未取得';
+  const count = (d.games||[]).filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw))).length;
+  document.getElementById('statusDot').className  = 'dot ' + (ok ? 'ok' : 'err');
   document.getElementById('statusText').textContent = ok
-    ? '最終: ' + last + '　' + visibleCount + '試合'
+    ? '最終: ' + last + '　' + count + '試合'
     : 'エラー: ' + (d.error || '不明');
   document.getElementById('content').innerHTML = renderGames(d.games);
 }
 
-// ═══════════════════════════════════════════════════════════════
+function openHistory() {
+  window.open(new URL('score_history.html', location.href).href, '_blank');
+}
+
+// ═══════════════════════════════════════════════════
 //  起動
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
 async function init() {
   const cfg = loadConfig();
-  intervalMinutes = cfg.interval_minutes;
+  intervalMinutes = cfg.interval_minutes || 5;
   document.getElementById('intervalSelect').value = String(intervalMinutes);
-  render();           // 前回保存データをまず表示
-  await runCrawl();   // 初回クロール
-  startScheduler();   // 定期クロール開始
-  startCountdown();   // カウントダウン開始
+
+  // GitHub設定を復元
+  if (cfg.gh_token) document.getElementById('cfgToken').value = cfg.gh_token;
+  if (cfg.gh_owner) document.getElementById('cfgOwner').value = cfg.gh_owner;
+  if (cfg.gh_repo)  document.getElementById('cfgRepo').value  = cfg.gh_repo;
+  document.getElementById('cfgBranch').value = cfg.gh_branch || 'main';
+
+  // セッションを復元
+  const ses = loadSession();
+  document.getElementById('sesName').value = ses.tournament_name || '';
+  document.getElementById('sesId').value   = ses.tournament_id   || autoTournamentId();
+  document.getElementById('sesDate').value = ses.game_date       || new Date().toISOString().slice(0,10);
+  updateDateLabel();
+  if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
+
+  render();
+  await runCrawl();
+  startScheduler();
+  startCountdown();
 }
 
 init();

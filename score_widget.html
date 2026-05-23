@@ -5,293 +5,189 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>スコアウィジェット</title>
   <style>
-    :root {
+    :root{
       --surface:#fff;--surface2:#f5f7fa;--border:#dde3ed;
       --text:#1a1d27;--text-dim:#555;--accent:#1d6fd8;
       --win:#16a34a;--lose:#6b7280;--radius:10px;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:transparent;color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:13px;}
-    .wh{background:var(--accent);color:#fff;padding:7px 12px;border-radius:var(--radius) var(--radius) 0 0;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;}
-    .wh .ti{font-size:13px;}.wh .me{font-size:11px;opacity:.85;}
-    .sb{padding:24px;text-align:center;color:var(--text-dim);background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);}
-    .sp{display:inline-block;width:22px;height:22px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:8px;}
+    .wh{
+      background:var(--accent);color:#fff;
+      padding:7px 12px;border-radius:var(--radius) var(--radius) 0 0;
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      font-size:12px;font-weight:700;
+    }
+    .wh .ti{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .sb{
+      padding:24px;text-align:center;color:var(--text-dim);
+      background:var(--surface);border:1px solid var(--border);
+      border-top:none;border-radius:0 0 var(--radius) var(--radius);
+    }
+    .sp{
+      display:inline-block;width:22px;height:22px;
+      border:3px solid var(--border);border-top-color:var(--accent);
+      border-radius:50%;animation:spin .7s linear infinite;margin-bottom:8px;
+    }
     @keyframes spin{to{transform:rotate(360deg);}}
-    .gl{border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);overflow:hidden;background:var(--surface);}
-    .gi{border-top:1px solid var(--border);}.gi:first-child{border-top:none;}
-    .gm{padding:6px 12px 4px;display:flex;align-items:center;gap:8px;background:var(--surface2);}
-    .rl{font-size:11px;font-weight:700;color:var(--text-dim);}
-    .badge{display:inline-block;padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;}
-    .badge.playing{background:rgba(52,211,153,.15);color:#16a34a;border:1px solid rgba(52,211,153,.4);}
-    .badge.ended{background:rgba(107,114,128,.12);color:#6b7280;border:1px solid rgba(107,114,128,.3);}
-    .vl{font-size:10px;color:var(--text-dim);margin-left:auto;}
+    .gl{
+      border:1px solid var(--border);border-top:none;
+      border-radius:0 0 var(--radius) var(--radius);
+      overflow:hidden;background:var(--surface);
+    }
+    .gi{border-top:1px solid var(--border);}
+    .gi:first-child{border-top:none;}
     .st{width:100%;border-collapse:collapse;}
-    .st th{text-align:center;padding:4px 3px;font-size:11px;color:var(--text-dim);font-weight:600;background:var(--surface2);border-top:1px solid var(--border);min-width:22px;}
-    .st td{text-align:center;padding:5px 3px;border-top:1px solid var(--border);font-size:13px;font-weight:600;min-width:22px;}
-    .st td.tn{text-align:left;padding-left:12px;font-weight:700;font-size:14px;min-width:100px;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}
-    .st td.inn{color:var(--text-dim);}.st td.inn.ok{color:var(--text);}
+    .st th{
+      text-align:center;padding:4px 3px;font-size:11px;
+      color:var(--text-dim);font-weight:600;background:var(--surface2);
+      border-top:1px solid var(--border);min-width:22px;
+    }
+    .st td{
+      text-align:center;padding:5px 3px;
+      border-top:1px solid var(--border);font-size:13px;font-weight:600;min-width:22px;
+    }
+    .st td.tn{
+      text-align:left;padding-left:12px;font-weight:700;font-size:14px;
+      min-width:100px;max-width:160px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);
+    }
+    .st td.inn{color:var(--text-dim);}
+    .st td.inn.ok{color:var(--text);}
     .st td.tot{font-size:18px;font-weight:800;border-left:1px solid var(--border);}
-    .st td.tot.win{color:var(--win);}.st td.tot.lose{color:var(--lose);}
-    .wf{padding:5px 12px;font-size:10px;color:var(--text-dim);text-align:right;border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);background:var(--surface2);}
-    .nm{padding:20px;text-align:center;color:var(--text-dim);font-size:13px;line-height:1.8;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);}
+    .st td.tot.win{color:var(--win);}
+    .st td.tot.lose{color:var(--lose);}
+    .nm{
+      padding:20px;text-align:center;color:var(--text-dim);font-size:13px;line-height:1.8;
+      background:var(--surface);border:1px solid var(--border);
+      border-top:none;border-radius:0 0 var(--radius) var(--radius);
+    }
   </style>
 </head>
 <body>
 <div id="root"></div>
 <script>
-const BASE_URL='http://www.hyogo-koyaren.or.jp';
-const INDEX_URL=BASE_URL+'/taikai/result.php';
-const STORAGE_KEY='koya_scores';
-const PROXY_LIST=[
-  u=>'https://corsproxy.io/?'+encodeURIComponent(u),
-  u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),
-  u=>'https://thingproxy.freeboard.io/fetch/'+u,
-  u=>'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u),
-];
-const PROXY_NAMES=['corsproxy.io','allorigins.win','thingproxy','codetabs.com'];
-const params=new URLSearchParams(location.search);
-const P_ID    =(params.get('id')     ||'').trim();   // 試合固有ID（最優先・完全一致）
-const P_REGION=(params.get('region') ||'').trim();   // 地区名（部分一致）
-const P_ROUND =(params.get('round')  ||'').trim();   // ラウンド名（部分一致）
-const P_TEAM  =(params.get('team')   ||'').trim();   // チーム名（部分一致）
-const P_LIMIT =parseInt(params.get('limit')||'0');
-const P_THEME =params.get('theme')||'light';
-const REFRESH =parseInt(params.get('refresh')||'5')*60*1000;
-if(P_THEME==='dark'){
-  const r=document.documentElement.style;
-  r.setProperty('--surface','#22263a');r.setProperty('--surface2','#1e2235');
-  r.setProperty('--border','#333a55');r.setProperty('--text','#e8eaf0');r.setProperty('--text-dim','#8a93b2');
-  document.body.style.background='var(--surface)';
+// ── URLパラメータ ──
+const params      = new URLSearchParams(location.search);
+const P_TOURNAMENT = (params.get('tournament') || '').trim(); // 大会ID（必須）
+const P_ID         = (params.get('id')         || '').trim(); // 試合ID（必須）
+const P_THEME      = params.get('theme') || 'light';
+const REFRESH      = parseInt(params.get('refresh') || '5') * 60 * 1000;
+
+// ── ダークモード ──
+if (P_THEME === 'dark') {
+  const r = document.documentElement.style;
+  r.setProperty('--surface','#22263a'); r.setProperty('--surface2','#1e2235');
+  r.setProperty('--border','#333a55'); r.setProperty('--text','#e8eaf0');
+  r.setProperty('--text-dim','#8a93b2');
+  document.body.style.background = 'var(--surface)';
 }
 
-function loadFromStorage(){
-  try{const d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&Array.isArray(d.games)&&d.games.length>0)return d;}catch(e){}
-  return null;
+// ── ユーティリティ ──
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
+function wl(a, b) {
+  const x = parseInt(a), y = parseInt(b);
+  if (isNaN(x) || isNaN(y)) return [null, null];
+  return x > y ? [true, false] : x < y ? [false, true] : [null, null];
+}
+function setRoot(h) { document.getElementById('root').innerHTML = h; }
+
+// ── 表示 ──
+function showLoading() {
+  setRoot('<div class="wh"><span class="ti">⚾ 読み込み中...</span></div>'
+    + '<div class="sb"><div class="sp"></div><br>データを取得しています</div>');
+}
+function showError(msg) {
+  setRoot('<div class="wh"><span class="ti">⚾ スコアウィジェット</span></div>'
+    + '<div class="nm">⚠️ ' + esc(msg) + '</div>');
 }
 
-let wpi=0,lastPR=null;
-async function fetchRaw(url){
-  const order=[wpi,...PROXY_LIST.map((_,i)=>i).filter(i=>i!==wpi)];
-  const res=PROXY_LIST.map((_,i)=>({name:PROXY_NAMES[i],ok:false,error:'未試行'}));
-  for(const i of order){
-    try{
-      const r=await fetch(PROXY_LIST[i](url));
-      if(!r.ok)throw new Error('HTTP '+r.status);
-      wpi=i;res[i]={name:PROXY_NAMES[i],ok:true,error:null};lastPR=res;
-      return await r.arrayBuffer();
-    }catch(e){res[i]={name:PROXY_NAMES[i],ok:false,error:e.message||String(e)};}
-  }
-  lastPR=res;throw new Error('全プロキシ失敗');
-}
-async function fetchHtml(url){
-  const buf=await fetchRaw(url);
-  const u8=new TextDecoder('utf-8').decode(buf);
-  const m=u8.match(/charset=["\s]*([\w-]+)/i);
-  const cs=m?m[1].toLowerCase():'';
-  if(cs==='utf-8'||cs==='utf8')return u8;
-  for(const enc of['euc-jp','shift-jis']){try{return new TextDecoder(enc).decode(buf);}catch(e){}}
-  return u8;
-}
-async function fetchGameLinks(){
-  const html=await fetchHtml(INDEX_URL);
-  const doc=new DOMParser().parseFromString(html,'text/html');
-  const out=[];
-  doc.querySelectorAll('dl').forEach(dl=>{
-    const region=dl.querySelector('dt')?.textContent.trim()||'不明';
-    dl.querySelectorAll('dd a[href]').forEach(a=>{
-      let href=a.getAttribute('href')||'';const round=a.textContent.trim();
-      if(!href||!round)return;
-      if(href.startsWith('../'))href=BASE_URL+'/'+href.slice(3);
-      else if(href.startsWith('/'))href=BASE_URL+href;
-      else if(!href.startsWith('http'))href=BASE_URL+'/baseball/'+href;
-      out.push({region,round,url:href});
-    });
-  });
-  return out;
-}
-function parseScorePage(html,region,round,url){
-  const doc=new DOMParser().parseFromString(html,'text/html');
-  let venue='';
-  for(const span of doc.querySelectorAll('span.px16')){
-    const t=span.textContent.trim();
-    if(t.includes('会場')){venue=t.replace(/試合会場[：:]/,'').trim();break;}
-  }
-  const allT=[...doc.querySelectorAll('table')];if(!allT.length)return null;
-  let sT=null,sR=[];
-  for(const tbl of allT){
-    const rows=[...tbl.querySelectorAll('tr[bgcolor="#000000"]')].filter(r=>r.querySelectorAll('td,th').length>=10);
-    if(rows.length>=2){sT=tbl;sR=rows.slice(0,2);break;}
-  }
-  if(!sR.length)return null;
-  const c1=[...sR[0].querySelectorAll('td,th')],c2=[...sR[1].querySelectorAll('td,th')];
-  let t1=c1[0]?.textContent.trim()||'',t2=c2[0]?.textContent.trim()||'';
-  const n=Math.min(c1.length,c2.length);
-  const i1=[],i2=[];
-  for(let i=1;i<n-1;i++){i1.push(c1[i]?.textContent.trim()||'');i2.push(c2[i]?.textContent.trim()||'');}
-  const tot1=c1[n-1]?.textContent.trim()||'',tot2=c2[n-1]?.textContent.trim()||'';
-  const tT=allT.find(t=>t!==sT&&t.classList.contains('left'))||allT.find(t=>t!==sT);
-  if((!t1||!t2)&&tT){
-    const tc=[...(tT.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th')||[])];
-    if(!t1&&tc[0])t1=tc[0].textContent.trim();if(!t2&&tc[3])t2=tc[3].textContent.trim();
-  }
-  let gs='';
-  for(const tbl of allT){
-    if(tbl===sT||tbl===tT)continue;
-    const hi=[...tbl.querySelectorAll('img[src]')].some(img=>{const s=img.getAttribute('src')||'';return s.includes('no_21')||s.includes('no_22');});
-    if(!hi)continue;
-    const tc=[...(tbl.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th')||[])];
-    if(tc.length>=2)gs=tc[1].textContent.trim();else if(tc.length===1)gs=tc[0].textContent.trim();
-    break;
-  }
-  const ae=!t1&&!t2&&[...i1,...i2].every(s=>s===''||s==='0')&&(tot1===''||tot1==='0')&&(tot2===''||tot2==='0');
-  if(ae)return null;
-  return{region,round,venue,game_status:gs,team1:t1,team2:t2,innings1:i1,innings2:i2,total1:tot1,total2:tot2,url};
-}
-
-// IDが指定されている場合はそれだけで一意に判定（他のフィルタより優先）
-// IDはmonitor_index.htmlが計算した makeId(region, round, url) と同じハッシュ
-function makeId(region,round,url){
-  const s=region+'|'+round+'|'+url;
-  let h=0;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;
-  return(h>>>0).toString(16).padStart(8,'0');
-}
-function matchesFilter(g){
-  if(P_ID){
-    // localStorage のデータには id フィールドがある。フェッチデータは url から再計算
-    const gid=g.id||makeId(g.region,g.round,g.url||'');
-    return gid===P_ID;
-  }
-  if(P_REGION&&!g.region.includes(P_REGION))return false;
-  if(P_ROUND&&!g.round.includes(P_ROUND))return false;
-  if(P_TEAM&&!g.team1.includes(P_TEAM)&&!g.team2.includes(P_TEAM))return false;
-  return true;
-}
-
-function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function fmt(iso){if(!iso)return'';return new Date(iso).toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
-function pad(a,n){const r=[...a];while(r.length<n)r.push('');return r;}
-function wl(a,b){const x=parseInt(a),y=parseInt(b);if(isNaN(x)||isNaN(y))return[null,null];return x>y?[true,false]:x<y?[false,true]:[null,null];}
-// P_ID 使用時はゲームデータからタイトルを動的生成するため、ここでは仮タイトル
-function buildTitle(matchedGame){
-  if(matchedGame&&matchedGame.team1&&matchedGame.team2)
-    return matchedGame.region+' '+matchedGame.round+' '+matchedGame.team1+' vs '+matchedGame.team2;
-  if(P_ID)return '試合スコア';
-  if(P_REGION&&P_ROUND)return P_REGION+' '+P_ROUND;
-  if(P_REGION)return P_REGION+' 試合スコア';
-  if(P_ROUND)return P_ROUND+' スコア';
-  if(P_TEAM)return P_TEAM+' の試合';
-  return '兵庫県高校野球 スコア';
-}
-function renderGame(g){
+function renderGame(g) {
   // 延長判定：10回以降に実際の得点がある回まで表示、なければ9回で打ち切り
-  const raw1=g.innings1||[],raw2=g.innings2||[];
-  let maxInn=9;
-  const rawMax=Math.max(raw1.length,raw2.length);
-  for(let i=9;i<rawMax;i++){
-    const v1=raw1[i]!=null?String(raw1[i]):'';
-    const v2=raw2[i]!=null?String(raw2[i]):'';
-    if(v1!==''||v2!=='')maxInn=i+1;
+  const raw1 = g.innings1 || [], raw2 = g.innings2 || [];
+  let maxInn = 9;
+  const rawMax = Math.max(raw1.length, raw2.length);
+  for (let i = 9; i < rawMax; i++) {
+    const v1 = raw1[i] != null ? String(raw1[i]) : '';
+    const v2 = raw2[i] != null ? String(raw2[i]) : '';
+    if (v1 !== '' || v2 !== '') maxInn = i + 1;
   }
-  const i1=pad(raw1,maxInn);
-  const i2=pad(raw2,maxInn);
-  const[w1,w2]=wl(g.total1,g.total2);
-  let th='<th style="text-align:left;padding-left:12px;">チーム</th>';
-  for(let i=1;i<=maxInn;i++)th+='<th>'+i+'</th>';
-  th+='<th>計</th>';
-  const row=(nm,ins,tot,win)=>{
-    let r='<tr><td class="tn">'+(esc(nm)||'(未定)')+'</td>';
-    ins.forEach(s=>{const ok=s!==''&&s!=null;r+='<td class="inn'+(ok?' ok':'')+'">'+( ok?esc(s):'−')+'</td>';});
-    const wc=win===true?'win':win===false?'lose':'';
-    r+='<td class="tot '+wc+'">'+(esc(tot)||'−')+'</td></tr>';
+  const i1 = pad(raw1, maxInn), i2 = pad(raw2, maxInn);
+  const [w1, w2] = wl(g.total1, g.total2);
+
+  // ヘッダー：●月●日　会場名　第●試合　チームA vs チームB
+  const parts = [];
+  if (g.game_date_label) parts.push(g.game_date_label);
+  if (g.venue)           parts.push(g.venue);
+  if (g.round)           parts.push(g.round);
+  if (g.team1 && g.team2) parts.push(g.team1 + ' vs ' + g.team2);
+  const title = parts.join('　') || '試合スコア';
+
+  const isEnd = (g.game_status || '').includes('終了');
+  const endBadge = isEnd
+    ? '<span style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;white-space:nowrap;flex-shrink:0;">終了</span>'
+    : '';
+
+  let th = '<th style="text-align:left;padding-left:12px;">チーム</th>';
+  for (let i = 1; i <= maxInn; i++) th += '<th>' + i + '</th>';
+  th += '<th>計</th>';
+
+  const row = (nm, ins, tot, win) => {
+    let r = '<tr><td class="tn">' + (esc(nm) || '(未定)') + '</td>';
+    ins.forEach(s => {
+      const ok = s !== '' && s != null;
+      r += '<td class="inn' + (ok ? ' ok' : '') + '">' + (ok ? esc(s) : '−') + '</td>';
+    });
+    const wc = win === true ? 'win' : win === false ? 'lose' : '';
+    r += '<td class="tot ' + wc + '">' + (esc(tot) || '−') + '</td></tr>';
     return r;
   };
-  return'<div class="gi">'
-    +'<table class="st"><thead><tr>'+th+'</tr></thead><tbody>'
-    +row(g.team1,i1,g.total1,w1)+row(g.team2,i2,g.total2,w2)
-    +'</tbody></table></div>';
-}
-function setRoot(h){document.getElementById('root').innerHTML=h;}
-function showLoading(){
-  setRoot('<div class="wh"><span class="ti">⚾ '+esc(buildTitle())+'</span></div>'
-    +'<div class="sb"><div class="sp"></div><br>読み込み中...</div>');
-}
-function showError(msg,pr){
-  const ph=pr?'<div style="margin-top:12px;text-align:left;font-size:11px;line-height:1.9;"><b>プロキシ結果：</b><br>'
-    +pr.map(r=>r.ok?'✅ '+r.name+': 成功':'❌ '+r.name+': '+esc(r.error)).join('<br>')+'</div>':'';
-  setRoot('<div class="wh"><span class="ti">⚾ '+esc(buildTitle())+'</span></div>'
-    +'<div class="sb">⚠️ <b>取得できませんでした</b><br>'
-    +'<small style="color:#c00;">'+esc(msg)+'</small>'+ph
-    +'<br><button onclick="load()" style="margin-top:10px;padding:5px 14px;background:var(--accent);color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:12px;">🔄 再試行</button></div>');
-}
-function renderGames(games,lastUpdated,source){
-  const filtered=games.filter(matchesFilter);
-  const limited=P_LIMIT>0?filtered.slice(0,P_LIMIT):filtered;
-  const g0=limited.length?limited[0]:null;
-  // ヘッダー: 会場名　第●試合　チームA vs チームB
-  let titleParts=[];
-  if(g0){
-    if(g0.venue)titleParts.push(g0.venue);
-    if(g0.round)titleParts.push(g0.round);
-    if(g0.team1&&g0.team2)titleParts.push(g0.team1+' vs '+g0.team2);
-  }
-  const titleStr=titleParts.length?titleParts.join('　'):buildTitle(g0);
-  const isEnd=g0&&(g0.game_status||'').includes('終了');
-  const endBadge=isEnd
-    ?'<span style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;margin-left:8px;white-space:nowrap;">終了</span>'
-    :'';
-  const hdr='<div class="wh" style="align-items:center;">'
-    +'<span class="ti">⚾ '+esc(titleStr)+'</span>'+endBadge+'</div>';
-  if(!limited.length){
-    const ar=[...new Set(games.map(g=>g.region))].join('、');
-    const rr=[...new Set(games.map(g=>g.round))].join('、');
-    const idHint=P_ID?'<div style="margin-top:6px;font-size:11px;">🔑 指定ID: '+esc(P_ID)+'<br>このIDの試合が見つかりません。monitor_index.html を開いてデータを取得してください。</div>':'';
-    const hint=!P_ID&&games.length
-      ?'<div style="margin-top:10px;font-size:11px;text-align:left;line-height:1.9;">'
-        +(ar?'📍 データにある地区：'+esc(ar)+'<br>':'')+(rr?'🔖 データにあるラウンド：'+esc(rr):'')+'</div>'
-      :'<div style="margin-top:8px;font-size:11px;">monitor_index.html を一度開いてデータを取得してください。</div>';
-    setRoot(hdr+'<div class="nm">該当する試合がありません'+(P_ID?idHint:hint)+'</div>');
-    return;
-  }
-  setRoot(hdr+'<div class="gl">'+limited.map(renderGame).join('')+'</div>');
+
+  setRoot(
+    '<div class="wh"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
+    + '<div class="gl"><div class="gi">'
+    + '<table class="st"><thead><tr>' + th + '</tr></thead><tbody>'
+    + row(g.team1, i1, g.total1, w1)
+    + row(g.team2, i2, g.total2, w2)
+    + '</tbody></table></div></div>'
+  );
 }
 
-async function load(){
-  showLoading();lastPR=null;
-  // ① localStorage（monitor_index.html が保存したデータ）を優先
-  const stored=loadFromStorage();
-  if(stored){
-    const age=Date.now()-new Date(stored.last_updated||0).getTime();
-    if(age<REFRESH){renderGames(stored.games,stored.last_updated,'キャッシュ');return;}
-    renderGames(stored.games,stored.last_updated,'キャッシュ（更新中...）');
-  }
-  // ② フォールバック：CORSプロキシ経由フェッチ
-  const now=new Date().toISOString().slice(0,19);
-  try{
-    const links=await fetchGameLinks();
-    const games=[],errors=[];
-    for(const lk of links){
-      // P_ID 指定時：URLハッシュが一致するリンクだけフェッチ（無駄なリクエストを省く）
-      if(P_ID){
-        const lid=makeId(lk.region,lk.round,lk.url);
-        if(lid!==P_ID)continue;
-      } else {
-        if(P_REGION&&!lk.region.includes(P_REGION))continue;
-        if(P_ROUND&&!lk.round.includes(P_ROUND))continue;
-      }
-      try{const g=parseScorePage(await fetchHtml(lk.url),lk.region,lk.round,lk.url);if(g)games.push(g);}
-      catch(e){errors.push(lk.round+': '+e.message);}
+// ── データ取得 ──
+async function load() {
+  if (!P_TOURNAMENT) { showError('URLパラメータ "tournament" が指定されていません'); return; }
+  if (!P_ID)         { showError('URLパラメータ "id" が指定されていません'); return; }
+  showLoading();
+
+  // score_widget.html と同じオリジンの data/{tournament}.json を取得
+  const base    = location.href.replace(/\?.*$/, '').replace(/[^/]*$/, '');
+  const dataUrl = base + 'data/' + encodeURIComponent(P_TOURNAMENT) + '.json';
+
+  try {
+    // ?_= でブラウザキャッシュを回避（CDNキャッシュは別途）
+    const res = await fetch(dataUrl + '?_=' + Date.now());
+    if (!res.ok) throw new Error('大会データが見つかりません（' + P_TOURNAMENT + '）');
+    const data = await res.json();
+    const game = (data.games || []).find(g => g.id === P_ID);
+    if (!game) {
+      setRoot(
+        '<div class="wh"><span class="ti">⚾ スコアウィジェット</span></div>'
+        + '<div class="nm">この試合のデータが見つかりません'
+        + '<div style="margin-top:8px;font-size:11px;">ID: ' + esc(P_ID) + '<br>大会: ' + esc(P_TOURNAMENT) + '</div></div>'
+      );
+      return;
     }
-    if(games.length>0){renderGames(games,now,'直接取得');}
-    else if(stored){renderGames(stored.games,stored.last_updated,'キャッシュ（再取得失敗: '+(errors[0]||'0件')+'）');}
-    else{showError(errors.length?'取得失敗: '+errors.slice(0,2).join(' / '):'データ0件。monitor_index.html を開いてください。',lastPR);}
-  }catch(e){
-    if(stored)renderGames(stored.games,stored.last_updated,'キャッシュ（フェッチ失敗）');
-    else showError(String(e),lastPR);
+    renderGame(game);
+  } catch(e) {
+    showError(String(e));
   }
 }
 
 load();
-setInterval(load,REFRESH);
+setInterval(load, REFRESH);
 </script>
 </body>
 </html>
