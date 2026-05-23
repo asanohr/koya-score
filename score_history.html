@@ -7,7 +7,8 @@
   <style>
     :root {
       --bg:#f0f4f8; --surface:#fff; --surface2:#f5f7fa; --border:#dde3ed;
-      --text:#1a1d27; --text-dim:#555; --accent:#1d6fd8; --win:#16a34a; --radius:10px;
+      --text:#1a1d27; --text-dim:#555; --accent:#1d6fd8; --win:#16a34a;
+      --danger:#dc2626; --radius:10px;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:14px;}
@@ -18,11 +19,20 @@
       flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:100;
     }
     header h1{font-size:16px;font-weight:700;color:var(--accent);}
-    .btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;transition:opacity .15s;font-family:inherit;}
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;transition:opacity .15s;font-family:inherit;text-decoration:none;display:inline-block;}
     .btn:hover{opacity:.85;}
     .btn.sub{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);}
+    .btn.danger{background:var(--danger);color:#fff;border:none;}
 
     main{max-width:900px;margin:0 auto;padding:20px 14px 60px;}
+
+    /* 管理モードバナー */
+    .manage-banner{
+      display:none;background:#fef2f2;border:1px solid #fca5a5;
+      border-radius:var(--radius);padding:10px 16px;margin-bottom:14px;
+      font-size:13px;color:#991b1b;line-height:1.6;
+    }
+    .manage-banner.show{display:block;}
 
     /* 検索バー */
     .toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
@@ -38,7 +48,9 @@
     .tournament-card{
       background:var(--surface);border:1px solid var(--border);
       border-radius:var(--radius);margin-bottom:12px;overflow:hidden;
+      transition:border-color .2s;
     }
+    .tournament-card.manage-mode{border-color:#fca5a5;}
     .tournament-header{
       padding:12px 16px;display:flex;align-items:center;gap:12px;
       cursor:pointer;user-select:none;
@@ -53,6 +65,18 @@
     .t-arrow{font-size:12px;color:var(--text-dim);flex-shrink:0;}
     .tournament-body{display:none;border-top:1px solid var(--border);}
     .tournament-body.open{display:block;}
+
+    /* 削除ボタン */
+    .del-btn{
+      background:transparent;color:var(--danger);
+      border:1px solid #fca5a5;border-radius:5px;
+      padding:3px 10px;font-size:12px;cursor:pointer;
+      white-space:nowrap;flex-shrink:0;font-family:inherit;
+      transition:all .15s;
+    }
+    .del-btn:hover{background:var(--danger);color:#fff;border-color:var(--danger);}
+    .del-btn:disabled{opacity:.5;cursor:not-allowed;}
+    .del-btn.sm{padding:2px 8px;font-size:11px;}
 
     /* 試合行 */
     .game-row{border-top:1px solid var(--border);}
@@ -103,10 +127,16 @@
 <body>
 <header>
   <h1>📋 過去のスコア一覧</h1>
-  <a href="monitor_index.html" class="btn sub" style="text-decoration:none;">← モニターへ戻る</a>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button class="btn sub" id="manageBtn" onclick="toggleManage()">🗑 管理</button>
+    <a href="monitor_index.html" class="btn sub">← モニターへ戻る</a>
+  </div>
 </header>
 
 <main>
+  <div class="manage-banner" id="manageBanner">
+    🗑 <b>管理モード</b>：大会・試合の削除ボタンが表示されています。削除すると GitHub 上のデータも消えます。取り消しはできません。
+  </div>
   <div class="toolbar">
     <input type="search" id="searchBox" placeholder="大会名・チーム名・地区で絞り込み..." oninput="applyFilter()">
     <span class="count-label" id="countLabel"></span>
@@ -115,18 +145,18 @@
 </main>
 
 <script>
+const CONFIG_KEY = 'koya_config';
+
 function esc(s) {
   return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function fmtDate(iso) {
   if (!iso) return '';
-  // "2026-05-23" → "2026/05/23"
   const parts = iso.slice(0,10).split('-');
   if (parts.length < 3) return iso;
   return parseInt(parts[0]) + '年' + parseInt(parts[1]) + '月' + parseInt(parts[2]) + '日';
 }
 
-// ── データ取得 ──
 const base = location.href.replace(/\?.*$/,'').replace(/[^/]*$/,'');
 
 async function fetchJson(path) {
@@ -135,10 +165,147 @@ async function fetchJson(path) {
   return await res.json();
 }
 
-// ── 全大会データ ──
-let allTournaments = [];   // index.json の tournaments 配列
-let loadedGames   = {};    // { tournamentId: games[] }
+let allTournaments = [];
+let loadedGames    = {};
+let manageMode     = false;
+let lastFiltered   = null; // 検索中の表示リスト
 
+// ── GitHub API ──
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(CONFIG_KEY) || '{}'); } catch { return {}; }
+}
+
+async function ghRequest(method, path, body) {
+  const cfg = loadConfig();
+  if (!cfg.gh_token) throw new Error('GitHubトークンが未設定です。monitor_index.html の ⚙️設定 で入力してください。');
+  const url = 'https://api.github.com/repos/' + cfg.gh_owner + '/' + cfg.gh_repo + '/contents/' + path;
+  const res = await fetch(url, {
+    method,
+    headers: { Authorization: 'token ' + cfg.gh_token, 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'HTTP ' + res.status);
+  }
+  return await res.json();
+}
+
+async function ghRead(path) { return await ghRequest('GET', path); }
+
+function ghEncode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+function ghDecode(b64) {
+  const bin = atob(b64.replace(/\n/g,''));
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+async function ghWrite(path, content, msg) {
+  const existing = await ghRead(path);
+  const body = {
+    message: msg,
+    content: ghEncode(JSON.stringify(content, null, 2)),
+    branch: loadConfig().gh_branch || 'main',
+  };
+  if (existing?.sha) body.sha = existing.sha;
+  return await ghRequest('PUT', path, body);
+}
+
+async function ghDeleteFile(path, msg) {
+  const existing = await ghRead(path);
+  if (!existing) return;
+  return await ghRequest('DELETE', path, {
+    message: msg,
+    sha: existing.sha,
+    branch: loadConfig().gh_branch || 'main',
+  });
+}
+
+// ── 管理モード切替 ──
+function toggleManage() {
+  manageMode = !manageMode;
+  const btn    = document.getElementById('manageBtn');
+  const banner = document.getElementById('manageBanner');
+  if (manageMode) {
+    btn.textContent = '✕ 管理終了';
+    btn.className   = 'btn danger';
+    banner.className = 'manage-banner show';
+  } else {
+    btn.textContent = '🗑 管理';
+    btn.className   = 'btn sub';
+    banner.className = 'manage-banner';
+  }
+  renderTournamentList(lastFiltered || allTournaments);
+}
+
+// ── 大会削除 ──
+async function deleteTournament(id, name, event) {
+  event.stopPropagation();
+  if (!confirm('「' + name + '」を削除しますか？\nGitHub上のデータも削除されます。取り消しはできません。')) return;
+  const btn = event.currentTarget;
+  btn.textContent = '削除中...'; btn.disabled = true;
+  try {
+    // index.json から除去
+    const indexFile = await ghRead('data/index.json');
+    if (indexFile) {
+      const index = JSON.parse(ghDecode(indexFile.content));
+      index.tournaments = (index.tournaments || []).filter(t => t.id !== id);
+      await ghWrite('data/index.json', index, 'Delete tournament: ' + id);
+    }
+    // 大会JSONを削除
+    await ghDeleteFile('data/' + id + '.json', 'Delete tournament data: ' + id);
+
+    // ローカル状態を更新
+    allTournaments = allTournaments.filter(t => t.id !== id);
+    if (lastFiltered) lastFiltered = lastFiltered.filter(t => t.id !== id);
+    delete loadedGames[id];
+    renderTournamentList(lastFiltered || allTournaments);
+  } catch(e) {
+    alert('削除失敗: ' + e.message);
+    btn.textContent = '🗑 削除'; btn.disabled = false;
+  }
+}
+
+// ── 試合削除 ──
+async function deleteGame(tournamentId, gameId, event) {
+  event.stopPropagation();
+  if (!confirm('この試合データを削除しますか？\n取り消しはできません。')) return;
+  const btn = event.currentTarget;
+  btn.textContent = '削除中...'; btn.disabled = true;
+  try {
+    const newGames = (loadedGames[tournamentId] || []).filter(g => g.id !== gameId);
+
+    // 大会JSONを更新
+    await ghWrite('data/' + tournamentId + '.json', { games: newGames }, 'Delete game: ' + gameId);
+
+    // index.json の game_count を更新
+    const indexFile = await ghRead('data/index.json');
+    if (indexFile) {
+      const index = JSON.parse(ghDecode(indexFile.content));
+      const t = (index.tournaments || []).find(t => t.id === tournamentId);
+      if (t) t.game_count = newGames.length;
+      await ghWrite('data/index.json', index, 'Update game count: ' + tournamentId);
+      // allTournaments の game_count も更新
+      const at = allTournaments.find(t => t.id === tournamentId);
+      if (at) at.game_count = newGames.length;
+    }
+
+    loadedGames[tournamentId] = newGames;
+    const body = document.getElementById('tbody-' + CSS.escape(tournamentId));
+    if (body && body.classList.contains('open')) renderGames(body, tournamentId, newGames);
+  } catch(e) {
+    alert('削除失敗: ' + e.message);
+    btn.textContent = '削除'; btn.disabled = false;
+  }
+}
+
+// ── 描画 ──
 async function init() {
   try {
     const index = await fetchJson('data/index.json');
@@ -164,11 +331,15 @@ function renderTournamentList(tournaments) {
   }
   document.getElementById('content').innerHTML = tournaments.map(t => {
     const dateStr = t.date ? fmtDate(t.date) : '';
-    return '<div class="tournament-card" data-id="' + esc(t.id) + '">'
+    const delBtn  = manageMode
+      ? '<button class="del-btn" onclick="deleteTournament(\'' + esc(t.id) + '\',\'' + esc(t.name||t.id) + '\',event)">🗑 削除</button>'
+      : '';
+    return '<div class="tournament-card' + (manageMode ? ' manage-mode' : '') + '" data-id="' + esc(t.id) + '">'
       + '<div class="tournament-header" onclick="toggleTournament(this)">'
       + (dateStr ? '<span class="t-date">' + esc(dateStr) + '</span>' : '')
       + '<span class="t-name">🏆 ' + esc(t.name || t.id) + '</span>'
       + '<span class="t-count">' + (t.game_count || 0) + '試合</span>'
+      + delBtn
       + '<span class="t-arrow">▼</span>'
       + '</div>'
       + '<div class="tournament-body" id="tbody-' + esc(t.id) + '">'
@@ -189,7 +360,6 @@ async function toggleTournament(header) {
   }
   body.classList.add('open'); arrow.textContent = '▲';
 
-  // まだ読み込んでいなければ取得
   if (!loadedGames[id]) {
     try {
       const data = await fetchJson('data/' + encodeURIComponent(id) + '.json');
@@ -207,7 +377,6 @@ function renderGames(body, tournamentId, games) {
     body.innerHTML = '<div class="empty" style="padding:20px;">試合データがありません。</div>';
     return;
   }
-  // 地区ごとにグループ化
   const byRegion = {};
   for (const g of games) {
     const k = g.region || '不明';
@@ -216,8 +385,8 @@ function renderGames(body, tournamentId, games) {
   }
   body.innerHTML = Object.entries(byRegion).map(([region, gs]) => {
     const rows = gs.map(g => {
-      const isEnd  = (g.game_status||'').includes('終了');
-      const parts  = [];
+      const isEnd    = (g.game_status||'').includes('終了');
+      const parts    = [];
       if (g.venue) parts.push(g.venue);
       if (g.round) parts.push(g.round);
       if (g.team1 && g.team2) parts.push(g.team1 + ' vs ' + g.team2);
@@ -225,16 +394,20 @@ function renderGames(body, tournamentId, games) {
       const dateStr  = g.game_date_label ? '(' + g.game_date_label + ') ' : '';
       const scoreStr = (g.total1 !== '' && g.total2 !== '') ? g.total1 + '－' + g.total2 : '';
 
-      // iframeコードを再構成（widgetUrlはこのページの同一オリジン）
-      const widgetUrl = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tournamentId);
+      const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tournamentId);
       const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
       const iframeCode = '<iframe src="' + widgetUrl + '" width="700" height="160" style="border:none;border-radius:10px;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>';
+
+      const delBtn = manageMode
+        ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tournamentId) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
+        : '';
 
       return '<div class="game-row">'
         + '<div class="game-summary" onclick="toggleGame(this)">'
         + '<span class="g-title">⚾ ' + esc(dateStr + titleStr) + '</span>'
         + (isEnd ? '<span class="badge-end">終了</span>' : '')
         + (scoreStr ? '<span class="g-score">' + esc(scoreStr) + '</span>' : '')
+        + delBtn
         + '<span class="g-arrow">▼</span>'
         + '</div>'
         + '<div class="embed-detail" data-iframe="' + esc(iframeCode) + '">'
@@ -250,7 +423,10 @@ function renderGames(body, tournamentId, games) {
 }
 
 function toggleGame(summary) {
+  // 管理モード中は試合の展開・折りたたみをしない
+  if (manageMode) return;
   const detail = summary.nextElementSibling;
+  if (!detail) return;
   const arrow  = summary.querySelector('.g-arrow');
   const isOpen = detail.classList.contains('open');
   detail.classList.toggle('open');
@@ -271,12 +447,16 @@ function copyCode(btn) {
 
 function applyFilter() {
   const q = document.getElementById('searchBox').value.trim().toLowerCase();
-  if (!q) { renderTournamentList(allTournaments); return; }
-  const filtered = allTournaments.filter(t => {
+  if (!q) {
+    lastFiltered = null;
+    renderTournamentList(allTournaments);
+    return;
+  }
+  lastFiltered = allTournaments.filter(t => {
     const text = [t.name, t.id, t.date].join(' ').toLowerCase();
     return text.includes(q);
   });
-  renderTournamentList(filtered);
+  renderTournamentList(lastFiltered);
 }
 
 init();
