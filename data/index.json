@@ -6,7 +6,14 @@
       "date": "2026-05-23",
       "game_count": 4,
       "last_updated": "2026-05-23T03:50:11"
+    },
+    {
+      "id": "2026spring",
+      "name": "2026spring",
+      "date": "2026-05-23",
+      "game_count": 4,
+      "last_updated": "2026-05-23T03:55:13"
     }
   ],
-  "last_updated": "2026-05-23T03:50:11"
+  "last_updated": "2026-05-23T03:55:13"
 }
