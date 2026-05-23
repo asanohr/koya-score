@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>過去のスコア一覧 - 兵庫県高校野球連盟</title>
+  <style>
+    :root {
+      --bg: #f0f4f8; --surface: #ffffff; --surface2: #f5f7fa;
+      --border: #dde3ed; --text: #1a1d27; --text-dim: #555;
+      --accent: #1d6fd8; --win: #16a34a; --lose: #555; --radius: 10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: "Hiragino Sans","Yu Gothic","Meiryo",sans-serif; font-size: 14px; }
+    header {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; position: sticky; top: 0; z-index: 100;
+    }
+    header h1 { font-size: 16px; font-weight: 700; color: var(--accent); }
+    .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 13px; cursor: pointer; transition: opacity .15s; }
+    .btn:hover { opacity: .85; }
+    .btn.btn-sub { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); }
+    .btn.btn-danger { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+    .btn.btn-danger:hover { background: #fecaca; }
+    main { max-width: 1100px; margin: 0 auto; padding: 18px 14px 40px; }
+    .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+    .toolbar input {
+      flex: 1; min-width: 200px; padding: 7px 12px; border: 1px solid var(--border);
+      border-radius: 6px; background: var(--surface); color: var(--text); font-size: 13px;
+      font-family: inherit;
+    }
+    .toolbar input:focus { outline: 2px solid var(--accent); }
+    .count-label { font-size: 13px; color: var(--text-dim); white-space: nowrap; }
+    .region-section { margin-bottom: 28px; }
+    .region-header {
+      font-size: 15px; font-weight: 700; color: var(--text-dim);
+      border-left: 3px solid var(--accent); padding-left: 10px; margin-bottom: 12px;
+    }
+    .game-row {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 8px; overflow: hidden;
+    }
+    .game-summary {
+      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+      cursor: pointer; user-select: none;
+    }
+    .game-summary:hover { background: var(--surface2); }
+    .game-date { font-size: 11px; color: var(--text-dim); white-space: nowrap; flex-shrink: 0; }
+    .game-title { flex: 1; font-weight: 600; font-size: 14px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .game-score { font-size: 14px; font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+    .badge-end {
+      display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 700;
+      background: rgba(107,114,128,.12); color: #6b7280; border: 1px solid rgba(107,114,128,.3);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .toggle-arrow { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
+    .embed-detail {
+      display: none; border-top: 1px solid var(--border);
+      padding: 10px 14px; background: var(--surface2);
+    }
+    .embed-detail.open { display: block; }
+    .embed-detail label { font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 4px; }
+    .embed-detail code {
+      display: block; background: #eef1f7; border: 1px solid var(--border);
+      border-radius: 5px; padding: 7px 10px; font-size: 11px;
+      word-break: break-all; color: var(--text); line-height: 1.6; font-family: monospace;
+    }
+    .copy-btn {
+      margin-top: 6px; background: var(--accent); color: #fff;
+      border: none; border-radius: 5px; padding: 5px 12px;
+      font-size: 12px; cursor: pointer; font-family: inherit; transition: opacity .15s;
+    }
+    .copy-btn:hover { opacity: .85; }
+    .copy-btn.copied { background: var(--win); }
+    .id-note { margin-top: 6px; font-size: 11px; color: var(--text-dim); }
+    .no-data {
+      text-align: center; padding: 60px 20px; color: var(--text-dim);
+      font-size: 15px; line-height: 2.2;
+    }
+    .confirm-modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.45); z-index: 200; align-items: center; justify-content: center;
+    }
+    .confirm-modal-backdrop.open { display: flex; }
+    .confirm-modal {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px 28px; max-width: 380px; width: 90%; box-shadow: 0 8px 32px rgba(0,0,0,.18);
+    }
+    .confirm-modal h2 { font-size: 16px; margin-bottom: 10px; }
+    .confirm-modal p { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-bottom: 18px; }
+    .confirm-modal .btns { display: flex; gap: 10px; justify-content: flex-end; }
+    @media (max-width: 600px) {
+      .game-date { display: none; }
+      .game-score { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>📋 過去のスコア一覧</h1>
+  <div class="header-right">
+    <button class="btn btn-sub" onclick="history.back()">← 戻る</button>
+    <button class="btn btn-danger" onclick="confirmClear()">🗑 履歴を全削除</button>
+  </div>
+</header>
+<main>
+  <div class="toolbar">
+    <input type="search" id="searchBox" placeholder="チーム名・地区・ラウンドで絞り込み..." oninput="applyFilter()">
+    <span class="count-label" id="countLabel"></span>
+  </div>
+  <div id="content"></div>
+</main>
+
+<!-- 削除確認モーダル -->
+<div class="confirm-modal-backdrop" id="clearModal">
+  <div class="confirm-modal">
+    <h2>⚠️ 履歴を全削除しますか？</h2>
+    <p>保存された全試合のiframeコードが削除されます。この操作は取り消せません。</p>
+    <div class="btns">
+      <button class="btn btn-sub" onclick="closeClearModal()">キャンセル</button>
+      <button class="btn btn-danger" onclick="doClear()">削除する</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const HISTORY_KEY = 'koya_embed_history';
+
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+  catch { return []; }
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function fmtDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  return d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0')
+    + ' ' + d.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+}
+
+let allHistory = [];
+
+function render(items) {
+  const content = document.getElementById('content');
+  document.getElementById('countLabel').textContent = items.length + '試合';
+
+  if (!items.length) {
+    content.innerHTML = '<div class="no-data">'
+      + (allHistory.length
+        ? '🔍 絞り込み結果が0件です。<br>別のキーワードをお試しください。'
+        : '保存された試合がまだありません。<br>monitor_index.html を開いてクロールすると、<br>ここに各試合のiframeコードが自動保存されます。')
+      + '</div>';
+    return;
+  }
+
+  // 地区ごとにグループ化
+  const byRegion = {};
+  for (const h of items) {
+    const k = h.region || '不明';
+    if (!byRegion[k]) byRegion[k] = [];
+    byRegion[k].push(h);
+  }
+
+  content.innerHTML = Object.entries(byRegion).map(([region, entries]) => {
+    const rows = entries.map(h => {
+      const isEnd = (h.game_status || '').includes('終了');
+      const endBadge = isEnd ? '<span class="badge-end">終了</span>' : '';
+      const teamStr = (h.team1 && h.team2) ? h.team1 + ' vs ' + h.team2 : '';
+      const titleStr = [h.venue, h.round, teamStr].filter(Boolean).join('　');
+      const scoreStr = (h.total1 !== '' && h.total2 !== '') ? h.total1 + '－' + h.total2 : '';
+      return '<div class="game-row" data-id="' + esc(h.id) + '">'
+        + '<div class="game-summary" onclick="toggleDetail(this)">'
+        + '<span class="game-date">' + esc(fmtDate(h.savedAt)) + '</span>'
+        + '<span class="game-title">⚾ ' + esc(titleStr) + '</span>'
+        + endBadge
+        + (scoreStr ? '<span class="game-score">' + esc(scoreStr) + '</span>' : '')
+        + '<span class="toggle-arrow">▼</span>'
+        + '</div>'
+        + '<div class="embed-detail" id="detail-' + esc(h.id) + '">'
+        + '<label>iframeコード（他サイトのHTMLに貼り付けて使用）：</label>'
+        + '<code id="code-' + esc(h.id) + '">' + esc(h.iframeCode) + '</code>'
+        + '<button class="copy-btn" onclick="copyCode(this,\'' + esc(h.id) + '\')">📋 コードをコピー</button>'
+        + '<div class="id-note">🔑 ID: <b>' + esc(h.id) + '</b>　保存: ' + esc(fmtDate(h.savedAt)) + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+    return '<div class="region-section">'
+      + '<div class="region-header">🏟 ' + esc(region) + '（' + entries.length + '試合）</div>'
+      + rows + '</div>';
+  }).join('');
+}
+
+function toggleDetail(summary) {
+  const detail = summary.nextElementSibling;
+  const arrow = summary.querySelector('.toggle-arrow');
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  arrow.textContent = isOpen ? '▼' : '▲';
+}
+
+function copyCode(btn, id) {
+  const code = document.getElementById('code-' + id);
+  if (!code) return;
+  navigator.clipboard.writeText(code.textContent.trim()).then(() => {
+    btn.textContent = '✔ コピーしました！';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 コードをコピー'; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    const sel = window.getSelection(), range = document.createRange();
+    range.selectNodeContents(code); sel.removeAllRanges(); sel.addRange(range);
+  });
+}
+
+function applyFilter() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  if (!q) { render(allHistory); return; }
+  const filtered = allHistory.filter(h => {
+    const text = [h.region, h.round, h.team1, h.team2, h.venue].join(' ').toLowerCase();
+    return text.includes(q);
+  });
+  render(filtered);
+}
+
+function confirmClear() {
+  document.getElementById('clearModal').classList.add('open');
+}
+function closeClearModal() {
+  document.getElementById('clearModal').classList.remove('open');
+}
+function doClear() {
+  localStorage.removeItem(HISTORY_KEY);
+  allHistory = [];
+  closeClearModal();
+  render([]);
+}
+
+// 起動
+allHistory = loadHistory();
+// 新しい順に並べ替え
+allHistory.sort((a, b) => (b.savedAt || '').localeCompare(a.savedAt || ''));
+render(allHistory);
+</script>
+</body>
+</html>

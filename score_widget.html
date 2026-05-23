@@ -183,15 +183,20 @@ function buildTitle(matchedGame){
   return '兵庫県高校野球 スコア';
 }
 function renderGame(g){
-  const i1=pad(g.innings1||[],Math.max((g.innings1||[]).length,(g.innings2||[]).length,9));
-  const i2=pad(g.innings2||[],i1.length);
+  // 延長判定：10回以降に実際の得点がある回まで表示、なければ9回で打ち切り
+  const raw1=g.innings1||[],raw2=g.innings2||[];
+  let maxInn=9;
+  const rawMax=Math.max(raw1.length,raw2.length);
+  for(let i=9;i<rawMax;i++){
+    const v1=raw1[i]!=null?String(raw1[i]):'';
+    const v2=raw2[i]!=null?String(raw2[i]):'';
+    if(v1!==''||v2!=='')maxInn=i+1;
+  }
+  const i1=pad(raw1,maxInn);
+  const i2=pad(raw2,maxInn);
   const[w1,w2]=wl(g.total1,g.total2);
-  const isEnd=(g.game_status||'').includes('終了');
-  const isPlay=!isEnd&&(g.innings1||[]).some(v=>v!=='');
-  const badge=isEnd?'<span class="badge ended">終了</span>':isPlay?'<span class="badge playing">試合中</span>':'';
-  const venue=g.venue?'<span class="vl">📍'+esc(g.venue)+'</span>':'';
   let th='<th style="text-align:left;padding-left:12px;">チーム</th>';
-  for(let i=1;i<=i1.length;i++)th+='<th>'+i+'</th>';
+  for(let i=1;i<=maxInn;i++)th+='<th>'+i+'</th>';
   th+='<th>計</th>';
   const row=(nm,ins,tot,win)=>{
     let r='<tr><td class="tn">'+(esc(nm)||'(未定)')+'</td>';
@@ -200,7 +205,7 @@ function renderGame(g){
     r+='<td class="tot '+wc+'">'+(esc(tot)||'−')+'</td></tr>';
     return r;
   };
-  return'<div class="gi"><div class="gm"><span class="rl">'+esc(g.round)+'</span>'+badge+venue+'</div>'
+  return'<div class="gi">'
     +'<table class="st"><thead><tr>'+th+'</tr></thead><tbody>'
     +row(g.team1,i1,g.total1,w1)+row(g.team2,i2,g.total2,w2)
     +'</tbody></table></div>';
@@ -221,10 +226,21 @@ function showError(msg,pr){
 function renderGames(games,lastUpdated,source){
   const filtered=games.filter(matchesFilter);
   const limited=P_LIMIT>0?filtered.slice(0,P_LIMIT):filtered;
-  const lastStr=lastUpdated?fmt(lastUpdated)+' 更新':'';
-  // P_ID 指定時はマッチした試合のチーム名をタイトルに使う
-  const titleGame=limited.length?limited[0]:null;
-  const hdr='<div class="wh"><span class="ti">⚾ '+esc(buildTitle(titleGame))+'</span><span class="me">'+esc(lastStr)+'</span></div>';
+  const g0=limited.length?limited[0]:null;
+  // ヘッダー: 会場名　第●試合　チームA vs チームB
+  let titleParts=[];
+  if(g0){
+    if(g0.venue)titleParts.push(g0.venue);
+    if(g0.round)titleParts.push(g0.round);
+    if(g0.team1&&g0.team2)titleParts.push(g0.team1+' vs '+g0.team2);
+  }
+  const titleStr=titleParts.length?titleParts.join('　'):buildTitle(g0);
+  const isEnd=g0&&(g0.game_status||'').includes('終了');
+  const endBadge=isEnd
+    ?'<span style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;margin-left:8px;white-space:nowrap;">終了</span>'
+    :'';
+  const hdr='<div class="wh" style="align-items:center;">'
+    +'<span class="ti">⚾ '+esc(titleStr)+'</span>'+endBadge+'</div>';
   if(!limited.length){
     const ar=[...new Set(games.map(g=>g.region))].join('、');
     const rr=[...new Set(games.map(g=>g.round))].join('、');
@@ -236,9 +252,7 @@ function renderGames(games,lastUpdated,source){
     setRoot(hdr+'<div class="nm">該当する試合がありません'+(P_ID?idHint:hint)+'</div>');
     return;
   }
-  const sl=source?' | '+source:'';
-  setRoot(hdr+'<div class="gl">'+limited.map(renderGame).join('')+'</div>'
-    +'<div class="wf">兵庫県高校野球連盟 | '+esc(lastStr)+esc(sl)+'</div>');
+  setRoot(hdr+'<div class="gl">'+limited.map(renderGame).join('')+'</div>');
 }
 
 async function load(){

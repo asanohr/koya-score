@@ -142,6 +142,7 @@
     <div style="width:24px;flex-shrink:0;"></div>
     <button class="btn btn-sub" onclick="toggleAll(true)">全スコアを開く</button>
     <button class="btn btn-sub" onclick="toggleAll(false)">全スコアを閉じる</button>
+    <button class="btn btn-sub" onclick="openHistory()">📋 過去のスコア一覧</button>
   </div>
 </header>
 <main>
@@ -162,6 +163,7 @@ const BASE_URL    = 'http://www.hyogo-koyaren.or.jp';
 const INDEX_URL   = BASE_URL + '/taikai/result.php';
 const STORAGE_KEY = 'koya_scores';
 const CONFIG_KEY  = 'koya_config';
+const HISTORY_KEY = 'koya_embed_history';  // 試合iframeコード永久保存
 const HIDDEN_REGIONS = ['近畿', '全国', '軟式'];
 
 // 試すCORSプロキシの一覧（上から順に試みる）
@@ -198,6 +200,47 @@ function loadConfig() {
   catch { return { interval_minutes: 5 }; }
 }
 function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+
+// ── 埋め込み履歴（永久保存） ──
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; }
+  catch { return []; }
+}
+function saveHistory(arr) { localStorage.setItem(HISTORY_KEY, JSON.stringify(arr)); }
+function saveToHistory(games) {
+  const hist = loadHistory();
+  const byId = Object.fromEntries(hist.map(h => [h.id, h]));
+  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
+  const base = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
+  let changed = false;
+  for (const g of games) {
+    const iframeUrl = base + '?id=' + g.id;
+    const teamLabel = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
+    const iframeCode = `<iframe src="${iframeUrl}" width="700" height="220" style="border:none;border-radius:10px;" loading="lazy" title="${teamLabel} スコア"></iframe>`;
+    const isEnd = (g.game_status || '').includes('終了');
+    if (!byId[g.id]) {
+      hist.push({
+        id: g.id, region: g.region, round: g.round,
+        team1: g.team1 || '', team2: g.team2 || '', venue: g.venue || '',
+        total1: g.total1 || '', total2: g.total2 || '',
+        game_status: g.game_status || '', url: g.url || '',
+        iframeCode, savedAt: new Date().toISOString().slice(0, 19),
+      });
+      changed = true;
+    } else if (isEnd) {
+      // 試合終了後はスコアを最新に更新
+      Object.assign(byId[g.id], {
+        total1: g.total1 || '', total2: g.total2 || '',
+        game_status: g.game_status || '',
+      });
+      changed = true;
+    }
+  }
+  if (changed) saveHistory(hist);
+}
+function openHistory() {
+  window.open(new URL('score_history.html', location.href).href, '_blank');
+}
 
 // ═══════════════════════════════════════════════════════════════
 //  スクレイピング
@@ -387,6 +430,7 @@ async function fetchAndUpdate() {
   });
 
   saveData({ games: merged, last_updated: now, crawl_status: 'ok', error: null, game_count: newGames.length });
+  saveToHistory(merged);  // 各試合のiframeコードを永久保存
 }
 
 // ═══════════════════════════════════════════════════════════════
