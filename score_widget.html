@@ -158,8 +158,15 @@ function renderGame(g) {
 
 // ── データ取得 ──
 async function load() {
-  if (!P_TOURNAMENT) { showError('URLパラメータ "tournament" が指定されていません'); return; }
-  if (!P_ID)         { showError('URLパラメータ "id" が指定されていません'); return; }
+  if (!P_TOURNAMENT) {
+    if (P_ID) {
+      showError('このiframeコードは古い形式です。monitor_index.html を開き、試合カードの「🔗 埋め込みコード」から新しいコードを取得してください。');
+    } else {
+      showError('URLパラメータ "tournament" と "id" が必要です');
+    }
+    return;
+  }
+  if (!P_ID) { showError('URLパラメータ "id" が指定されていません'); return; }
   showLoading();
 
   // score_widget.html と同じオリジンの data/{tournament}.json を取得

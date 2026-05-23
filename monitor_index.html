@@ -192,7 +192,7 @@
     <div class="ses-field">
       <label>大会ID（URL用）</label>
       <div class="row">
-        <input id="sesId" placeholder="t20260523" style="width:130px;" oninput="validateTournamentId(); saveSession()">
+        <input id="sesId" placeholder="2026spring" style="width:130px;" oninput="validateTournamentId(); saveSession()">
         <span id="sesIdErr" class="field-error"></span>
       </div>
     </div>
@@ -275,7 +275,10 @@ function saveCurrentData(d) { localStorage.setItem(CURRENT_KEY, JSON.stringify(d
 // ═══════════════════════════════════════════════════
 function autoTournamentId() {
   const d = new Date();
-  return 't' + d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  const y = d.getFullYear();
+  const m = d.getMonth() + 1;
+  const season = m <= 2 ? 'winter' : m <= 6 ? 'spring' : m <= 8 ? 'summer' : 'autumn';
+  return y + season;
 }
 function updateDateLabel() {
   const val = document.getElementById('sesDate').value;
