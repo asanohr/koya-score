@@ -11,14 +11,15 @@
       --win:#16a34a;--lose:#6b7280;--radius:10px;--playing:#d97757;--pre:#9ca3af;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{background:transparent;color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:13px;}
+    body{background:transparent;color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:15px;}
     .wh{
       background:var(--accent);color:#fff;
       padding:7px 12px;border-radius:var(--radius) var(--radius) 0 0;
       display:flex;align-items:center;justify-content:space-between;gap:8px;
-      font-size:12px;font-weight:700;
+      font-size:14px;font-weight:700;
     }
-    .wh .ti{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .wh .ti{font-size:14px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .wh .ball{margin-right:3px;}
     .sb{
       padding:24px;text-align:center;color:var(--text-dim);
       background:var(--surface);border:1px solid var(--border);
@@ -40,16 +41,16 @@
     .gi:first-child{border-top:none;}
     .st{width:100%;border-collapse:collapse;}
     .st th{
-      text-align:center;padding:4px 3px;font-size:11px;
+      text-align:center;padding:4px 3px;font-size:13px;
       color:var(--text-dim);font-weight:600;background:var(--surface2);
       border-top:1px solid var(--border);min-width:22px;
     }
     .st td{
       text-align:center;padding:5px 3px;
-      border-top:1px solid var(--border);font-size:13px;font-weight:600;min-width:22px;
+      border-top:1px solid var(--border);font-size:15px;font-weight:600;min-width:22px;
     }
     .st td.tn{
-      text-align:left;padding-left:12px;font-weight:700;font-size:14px;
+      text-align:left;padding-left:12px;font-weight:700;font-size:15px;
       min-width:100px;max-width:160px;
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);
     }
@@ -59,10 +60,11 @@
     .st td.tot.win{color:var(--win);}
     .st td.tot.lose{color:var(--lose);}
     @media(max-width:480px){
-      .wh .ti{font-size:11px;}
-      .st th{font-size:10px;padding:3px 2px;min-width:18px;}
-      .st td{font-size:11px;padding:4px 2px;min-width:18px;}
-      .st td.tn{font-size:12px;min-width:72px;max-width:100px;padding-left:8px;}
+      .wh .ball{display:none;}
+      .wh .ti{font-size:12px;}
+      .st th{font-size:11px;padding:3px 2px;min-width:18px;}
+      .st td{font-size:13px;padding:4px 2px;min-width:18px;}
+      .st td.tn{font-size:14px;min-width:72px;max-width:100px;padding-left:8px;}
       .st td.tot{font-size:15px;}
     }
     .nm{
@@ -158,7 +160,7 @@ function renderGame(g) {
   };
 
   setRoot(
-    '<div class="wh" style="background:' + headerBg + '"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
+    '<div class="wh" style="background:' + headerBg + '"><span class="ti"><span class="ball" aria-hidden="true">⚾ </span>' + esc(title) + '</span>' + endBadge + '</div>'
     + '<div class="gl"><div class="gi">'
     + '<table class="st"><thead><tr>' + th + '</tr></thead><tbody>'
     + row(g.team1, i1, g.total1, w1)
