@@ -142,6 +142,7 @@
       間隔
       <select id="intervalSelect" onchange="setInterval_(this.value)"
         style="background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:3px 6px;font-size:12px;cursor:pointer;">
+        <option value="0">更新なし</option>
         <option value="1">1分</option><option value="2">2分</option><option value="3">3分</option>
         <option value="4">4分</option><option value="5" selected>5分</option><option value="6">6分</option>
         <option value="7">7分</option><option value="8">8分</option><option value="9">9分</option>
@@ -237,6 +238,7 @@ const PROXY_LIST = [
 // ═══════════════════════════════════════════════════
 let intervalMinutes = 5;
 let nextCrawlAt = null, crawlTimer = null, countdownTimer = null, isCrawling = false;
+let reloadTimer = null, nextRefreshAt = null;
 const openCards = new Set();
 let workingProxyIdx = 0;
 
@@ -610,20 +612,58 @@ function startScheduler() {
   if (crawlTimer) clearInterval(crawlTimer);
   crawlTimer = setInterval(runCrawl, intervalMinutes * 60 * 1000);
 }
+
+// 「更新なし」モード：スクレイピングせず GitHub Pages JSON を取得して再描画
+async function refreshDisplay() {
+  const session = loadSession();
+  const tid = session.tournament_id;
+  if (tid) {
+    const base = location.href.replace(/\?.*$/, '').replace(/[^/]*$/, '');
+    try {
+      const res = await fetch(base + 'data/' + encodeURIComponent(tid) + '.json?_=' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        saveCurrentData({ games: data.games || [], last_updated: data.last_updated || null,
+          crawl_status: 'ok', error: null, game_count: (data.games || []).length });
+      }
+    } catch(e) { console.warn('表示更新失敗:', e); }
+  }
+  nextRefreshAt = Date.now() + 60 * 1000;
+  render();
+}
+function startReloadScheduler() {
+  if (crawlTimer) { clearInterval(crawlTimer); crawlTimer = null; }
+  if (reloadTimer) clearInterval(reloadTimer);
+  nextRefreshAt = Date.now() + 60 * 1000;
+  reloadTimer = setInterval(refreshDisplay, 60 * 1000);
+}
+
 function setInterval_(val) {
   intervalMinutes = parseInt(val);
   const cfg = loadConfig(); cfg.interval_minutes = intervalMinutes; saveConfig(cfg);
-  nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
-  startScheduler();
+  if (intervalMinutes === 0) {
+    if (crawlTimer) { clearInterval(crawlTimer); crawlTimer = null; }
+    startReloadScheduler();
+  } else {
+    if (reloadTimer) { clearInterval(reloadTimer); reloadTimer = null; nextRefreshAt = null; }
+    nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
+    startScheduler();
+  }
 }
 function startCountdown() {
   if (countdownTimer) clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
-    if (!nextCrawlAt) return;
-    const s = Math.max(0, Math.ceil((nextCrawlAt - Date.now()) / 1000));
-    const m = Math.floor(s / 60), sec = s % 60;
-    document.getElementById('countdown').textContent =
-      '次のクロールまで ' + (m > 0 ? m + '分' : '') + sec + '秒';
+    if (intervalMinutes === 0) {
+      if (!nextRefreshAt) return;
+      const s = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
+      document.getElementById('countdown').textContent = '次の表示更新まで ' + s + '秒';
+    } else {
+      if (!nextCrawlAt) return;
+      const s = Math.max(0, Math.ceil((nextCrawlAt - Date.now()) / 1000));
+      const m = Math.floor(s / 60), sec = s % 60;
+      document.getElementById('countdown').textContent =
+        '次のクロールまで ' + (m > 0 ? m + '分' : '') + sec + '秒';
+    }
   }, 1000);
 }
 async function manualCrawl() { await runCrawl(); }
@@ -854,7 +894,7 @@ function openHistory() {
 // ═══════════════════════════════════════════════════
 async function init() {
   const cfg = loadConfig();
-  intervalMinutes = cfg.interval_minutes || 5;
+  intervalMinutes = (cfg.interval_minutes != null) ? cfg.interval_minutes : 5;
   document.getElementById('intervalSelect').value = String(intervalMinutes);
 
   // GitHub設定を復元
@@ -872,8 +912,13 @@ async function init() {
   if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
 
   render();
-  await runCrawl();
-  startScheduler();
+  if (intervalMinutes === 0) {
+    await refreshDisplay();
+    startReloadScheduler();
+  } else {
+    await runCrawl();
+    startScheduler();
+  }
   startCountdown();
 }
 

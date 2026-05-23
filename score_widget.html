@@ -8,7 +8,7 @@
     :root{
       --surface:#fff;--surface2:#f5f7fa;--border:#dde3ed;
       --text:#1a1d27;--text-dim:#555;--accent:#1d6fd8;
-      --win:#16a34a;--lose:#6b7280;--radius:10px;
+      --win:#16a34a;--lose:#6b7280;--radius:10px;--playing:#d97757;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:transparent;color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:13px;}
@@ -127,7 +127,9 @@ function renderGame(g) {
   if (g.team1 && g.team2) parts.push(g.team1 + ' vs ' + g.team2);
   const title = parts.join('　') || '試合スコア';
 
-  const isEnd = (g.game_status || '').includes('終了');
+  const isEnd     = (g.game_status || '').includes('終了');
+  const isPlaying = !isEnd && (raw1.some(v => v !== '' && v != null) || raw2.some(v => v !== '' && v != null));
+  const headerBg  = isPlaying ? 'var(--playing)' : 'var(--accent)';
   const endBadge = isEnd
     ? '<span style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;white-space:nowrap;flex-shrink:0;">終了</span>'
     : '';
@@ -148,7 +150,7 @@ function renderGame(g) {
   };
 
   setRoot(
-    '<div class="wh"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
+    '<div class="wh" style="background:' + headerBg + '"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
     + '<div class="gl"><div class="gi">'
     + '<table class="st"><thead><tr>' + th + '</tr></thead><tbody>'
     + row(g.team1, i1, g.total1, w1)
