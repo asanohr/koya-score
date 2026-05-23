@@ -134,7 +134,6 @@ function renderGame(g) {
   if (g.game_date_label) parts.push(g.game_date_label);
   if (g.venue)           parts.push(g.venue);
   if (g.round)           parts.push(g.round);
-  if (g.team1 && g.team2) parts.push(g.team1 + ' vs ' + g.team2);
   const title = parts.join('　') || '試合スコア';
 
   const isEnd     = (g.game_status || '').includes('終了');
