@@ -1,6 +1,6 @@
 {
   "tournament_id": "2026spring",
-  "tournament_name": "",
+  "tournament_name": "2026春季大会",
   "game_date": "2026-05-23",
   "games": [
     {
@@ -216,5 +216,5 @@
       "confirmed_snapshot": null
     }
   ],
-  "last_updated": "2026-05-23T03:55:13"
+  "last_updated": "2026-05-23T04:00:06"
 }
