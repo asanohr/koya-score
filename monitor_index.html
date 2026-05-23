@@ -186,7 +186,6 @@
       <label>大会名</label>
       <div class="row">
         <input id="sesName" placeholder="2026年春季大会" style="width:200px;" oninput="saveSession()">
-        <button class="btn sm sub" id="autoDetectBtn" onclick="autoDetectTournament()">🔍 自動取得</button>
       </div>
     </div>
     <div class="ses-field">
@@ -453,24 +452,6 @@ async function fetchGameLinks() {
   return results;
 }
 
-async function autoDetectTournament() {
-  const btn = document.getElementById('autoDetectBtn');
-  btn.disabled = true; btn.textContent = '取得中...';
-  try {
-    const html = await fetchHtml(INDEX_URL);
-    const doc  = new DOMParser().parseFromString(html, 'text/html');
-    let name = '';
-    for (const sel of ['h1', 'h2', 'h3']) {
-      const t = doc.querySelector(sel)?.textContent.trim() || '';
-      if (t.length > 3 && t.length < 60) { name = t; break; }
-    }
-    if (!name) name = doc.querySelector('title')?.textContent.trim() || '';
-    if (name) { document.getElementById('sesName').value = name; saveSession(); }
-    else alert('大会名を自動取得できませんでした。手動で入力してください。');
-  } catch(e) { alert('取得失敗: ' + e.message); }
-  finally { btn.disabled = false; btn.textContent = '🔍 自動取得'; }
-}
-
 function parseScorePage(html, region, round, url) {
   const doc = new DOMParser().parseFromString(html, 'text/html');
   let venue = '';
@@ -489,8 +470,8 @@ function parseScorePage(html, region, round, url) {
   if (!scoreRows.length) return null;
   const c1 = [...scoreRows[0].querySelectorAll('td,th')];
   const c2 = [...scoreRows[1].querySelectorAll('td,th')];
-  let team1 = c1[0]?.textContent.trim() || '';
-  let team2 = c2[0]?.textContent.trim() || '';
+  let team1 = (c1[0]?.textContent.trim() || '').replace(/ /g, '');
+  let team2 = (c2[0]?.textContent.trim() || '').replace(/ /g, '');
   const nCols = Math.min(c1.length, c2.length);
   const innings1 = [], innings2 = [];
   for (let i = 1; i < nCols - 1; i++) {
@@ -503,8 +484,8 @@ function parseScorePage(html, region, round, url) {
                  || allTables.find(t => t !== scoreTable);
   if ((!team1 || !team2) && teamTable) {
     const tc = [...(teamTable.querySelector('tr[bgcolor="#000000"]')?.querySelectorAll('td,th') || [])];
-    if (!team1 && tc[0]) team1 = tc[0].textContent.trim();
-    if (!team2 && tc[3]) team2 = tc[3].textContent.trim();
+    if (!team1 && tc[0]) team1 = tc[0].textContent.trim().replace(/ /g, '');
+    if (!team2 && tc[3]) team2 = tc[3].textContent.trim().replace(/ /g, '');
   }
   let commentary = '', gameStatus = '';
   for (const tbl of allTables) {
@@ -658,6 +639,16 @@ function fmt(iso) {
   return new Date(iso).toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 function pad(arr, n) { const a = [...arr]; while (a.length < n) a.push(''); return a; }
+function effectiveInnCount(inn1, inn2) {
+  let max = 9;
+  const len = Math.max((inn1||[]).length, (inn2||[]).length);
+  for (let i = 9; i < len; i++) {
+    const v1 = (inn1||[])[i] != null ? String((inn1||[])[i]) : '';
+    const v2 = (inn2||[])[i] != null ? String((inn2||[])[i]) : '';
+    if (v1 !== '' || v2 !== '') max = i + 1;
+  }
+  return max;
+}
 function winLose(t1, t2) {
   const a = parseInt(t1), b = parseInt(t2);
   if (isNaN(a)||isNaN(b)) return [null,null];
@@ -675,8 +666,9 @@ function statusBadge(g) {
 }
 
 function buildCard(g) {
-  const inn1 = pad(g.innings1||[], Math.max((g.innings1||[]).length,(g.innings2||[]).length,9));
-  const inn2 = pad(g.innings2||[], inn1.length);
+  const innCount = effectiveInnCount(g.innings1, g.innings2);
+  const inn1 = pad(g.innings1||[], innCount).slice(0, innCount);
+  const inn2 = pad(g.innings2||[], innCount).slice(0, innCount);
   const [w1, w2] = winLose(g.total1, g.total2);
   const cardCls  = g.is_new ? 'is-new' : g.is_updated ? 'is-updated' : '';
   const isOpen   = openCards.has(g.id);

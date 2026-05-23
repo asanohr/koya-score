@@ -115,7 +115,8 @@ function renderGame(g) {
     const v2 = raw2[i] != null ? String(raw2[i]) : '';
     if (v1 !== '' || v2 !== '') maxInn = i + 1;
   }
-  const i1 = pad(raw1, maxInn), i2 = pad(raw2, maxInn);
+  const i1 = pad(raw1, maxInn).slice(0, maxInn);
+  const i2 = pad(raw2, maxInn).slice(0, maxInn);
   const [w1, w2] = wl(g.total1, g.total2);
 
   // ヘッダー：●月●日　会場名　第●試合　チームA vs チームB
