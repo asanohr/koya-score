@@ -209,8 +209,8 @@
 <main>
   <div class="legend">
     <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
-    <div class="legend-item"><span class="badge updated">更新</span> スコア更新（赤字）</div>
-    <div class="legend-item"><span class="badge playing">試合中</span> 進行中</div>
+    <div class="legend-item"><span class="badge updated">更新</span> 赤字を追加</div>
+    <div class="legend-item"><span class="badge playing">試合中</span> プレー中</div>
     <div class="legend-item"><span class="badge ended">終了</span> 試合終了</div>
   </div>
   <div id="content"></div>
@@ -222,9 +222,10 @@
 // ═══════════════════════════════════════════════════
 const BASE_URL    = 'http://www.hyogo-koyaren.or.jp';
 const INDEX_URL   = BASE_URL + '/taikai/result.php';
-const CONFIG_KEY  = 'koya_config';
-const SESSION_KEY = 'koya_session';
-const CURRENT_KEY = 'koya_current';
+const CONFIG_KEY    = 'koya_config';
+const SESSION_KEY   = 'koya_session';
+const CURRENT_KEY   = 'koya_current';
+const CONFIRMED_KEY = 'koya_confirmed'; // このPCの確認済みスナップショット（PC固有）
 const HIDDEN_REGIONS = ['近畿', '全国', '軟式'];
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
@@ -270,6 +271,36 @@ function defaultData() {
   return { games: [], last_updated: null, crawl_status: 'pending', error: null, game_count: 0 };
 }
 function saveCurrentData(d) { localStorage.setItem(CURRENT_KEY, JSON.stringify(d)); }
+
+// ── PC固有の確認状態（GitHubには書き込まない） ──
+function loadConfirmed() {
+  try { return JSON.parse(localStorage.getItem(CONFIRMED_KEY) || '{}'); } catch { return {}; }
+}
+function saveConfirmed(c) { localStorage.setItem(CONFIRMED_KEY, JSON.stringify(c)); }
+
+// ゲームがこのPCで未確認の更新があるか判定
+// confirmed[g.id] が未登録 → 初回表示なので自動確認（赤字なし）
+// confirmed[g.id] と現在スコアが異なる → 赤字
+function localUpdateInfo(g, confirmed) {
+  const snap = confirmed[g.id];
+  if (snap === undefined) return { updated: false, prevSnap: null };
+  const cur = scoreSnapshot(g);
+  if (cur === snap) return { updated: false, prevSnap: null };
+  return { updated: true, prevSnap: JSON.parse(snap) };
+}
+
+// ゲームリストのうち、このPCで初めて見るゲームを自動確認登録
+function autoConfirmNew(games) {
+  const confirmed = loadConfirmed();
+  let dirty = false;
+  for (const g of games) {
+    if (!(g.id in confirmed)) {
+      confirmed[g.id] = scoreSnapshot(g);
+      dirty = true;
+    }
+  }
+  if (dirty) saveConfirmed(confirmed);
+}
 
 // ═══════════════════════════════════════════════════
 //  セッション UI
@@ -564,6 +595,7 @@ async function fetchAndUpdate() {
     return result;
   });
 
+  autoConfirmNew(merged); // 初回出現ゲームをこのPCで自動確認
   saveCurrentData({ games:merged, last_updated:now, crawl_status:'ok', error:null, game_count:newGames.length });
 
   // GitHub に書き込み
@@ -623,8 +655,10 @@ async function refreshDisplay() {
       const res = await fetch(base + 'data/' + encodeURIComponent(tid) + '.json?_=' + Date.now());
       if (res.ok) {
         const data = await res.json();
-        saveCurrentData({ games: data.games || [], last_updated: data.last_updated || null,
-          crawl_status: 'ok', error: null, game_count: (data.games || []).length });
+        const games = data.games || [];
+        autoConfirmNew(games); // 初回出現ゲームをこのPCで自動確認
+        saveCurrentData({ games, last_updated: data.last_updated || null,
+          crawl_status: 'ok', error: null, game_count: games.length });
       }
     } catch(e) { console.warn('表示更新失敗:', e); }
   }
@@ -694,30 +728,32 @@ function winLose(t1, t2) {
   if (isNaN(a)||isNaN(b)) return [null,null];
   return a>b ? [true,false] : a<b ? [false,true] : [null,null];
 }
-function statusBadge(g) {
+function statusBadge(g, confirmed) {
   const s = g.game_status || '';
   const isEnd    = s.includes('終了');
-  // スコアが一つも入っていない＝NEW（対戦相手のみ登録済み）
   const hasScore = (g.innings1||[]).some(v => v !== '' && v != null)
                 || (g.innings2||[]).some(v => v !== '' && v != null)
                 || (g.total1 !== '' && g.total1 != null)
                 || (g.total2 !== '' && g.total2 != null);
-  const isNew    = !hasScore && !isEnd;
+  const isNew     = !hasScore && !isEnd;
   const isPlaying = !isEnd && hasScore;
+  const { updated } = localUpdateInfo(g, confirmed); // このPCの確認状態で判定
 
-  if (g.is_updated) return '<span class="badge updated">更新</span>';
-  if (isEnd)        return '<span class="badge ended">終了</span>';
-  if (isPlaying)    return '<span class="badge playing">試合中</span>';
-  if (isNew)        return '<span class="badge new">NEW</span>';
+  if (updated)   return '<span class="badge updated">更新</span>';
+  if (isEnd)     return '<span class="badge ended">終了</span>';
+  if (isPlaying) return '<span class="badge playing">試合中</span>';
+  if (isNew)     return '<span class="badge new">NEW</span>';
   return '';
 }
 
 function buildCard(g) {
+  const confirmed = loadConfirmed();
+  const { updated: isUpdatedLocal, prevSnap } = localUpdateInfo(g, confirmed);
   const innCount = effectiveInnCount(g.innings1, g.innings2);
   const inn1 = pad(g.innings1||[], innCount).slice(0, innCount);
   const inn2 = pad(g.innings2||[], innCount).slice(0, innCount);
   const [w1, w2] = winLose(g.total1, g.total2);
-  const cardCls  = g.is_new ? 'is-new' : g.is_updated ? 'is-updated' : '';
+  const cardCls  = isUpdatedLocal ? 'is-updated' : '';
   const isOpen   = openCards.has(g.id);
   const btnLabel = isOpen ? '閉じる ▲' : '開く ▼';
   const changedAt = g.last_changed ? '<span class="card-time">' + fmt(g.last_changed) + '</span>' : '';
@@ -732,16 +768,16 @@ function buildCard(g) {
   for (let i = 1; i <= inn1.length; i++) th += '<th>' + i + '</th>';
   th += '<th>計</th>';
 
-  const snap = (g.is_updated && g.confirmed_snapshot) ? JSON.parse(g.confirmed_snapshot) : null;
+  const snap = (isUpdatedLocal && prevSnap) ? prevSnap : null;
   const row  = (name, inns, total, win, snapInns, snapTotal) => {
     let r = '<tr><td class="team-name">' + (esc(name)||'(未定)') + '</td>';
     inns.forEach((s, i) => {
       const ok = s !== '' && s != null;
-      const changed = g.is_updated ? (snap ? s !== (snapInns?.[i]??'') : ok) : false;
+      const changed = isUpdatedLocal ? (snap ? s !== (snapInns?.[i]??'') : ok) : false;
       r += '<td class="inn'+(ok?' scored':'')+(changed?' changed':'')+'">'+( ok?esc(s):'−')+'</td>';
     });
     const wc = win===true?'win':win===false?'lose':'';
-    const tc = g.is_updated ? (snap ? total!==snapTotal : !!total) : false;
+    const tc = isUpdatedLocal ? (snap ? total!==snapTotal : !!total) : false;
     r += '<td class="total '+wc+(tc?' changed':'')+'">'+( esc(total)||'−')+'</td></tr>';
     return r;
   };
@@ -751,14 +787,14 @@ function buildCard(g) {
     ? '<button class="commentary-toggle" onclick="toggleComm(this)">📋 試合経過を表示</button>'
       +'<div class="commentary-body">'+esc(comm)+'</div>'
     : '';
-  const confirmHtml = (g.is_new||g.is_updated)
+  const confirmHtml = isUpdatedLocal
     ? '<button class="confirm-btn" onclick="confirmGame(event,\''+esc(g.id)+'\')">✔ 確認（赤字を消す）</button>'
     : '';
 
   return '<div class="game-card '+cardCls+'" data-id="'+esc(g.id)+'">'
     +'<div class="card-header" onclick="toggleCard(this)">'
     +'<span class="card-round">'+esc(g.round)+'</span>'
-    +statusBadge(g)+summaryHtml+changedAt
+    +statusBadge(g, confirmed)+summaryHtml+changedAt
     +'<button class="card-toggle-btn">'+btnLabel+'</button>'
     +'</div>'
     +'<div class="card-body '+(isOpen?'':'collapsed')+'">'
@@ -838,11 +874,13 @@ function toggleAll(open) {
 }
 function confirmGame(event, gameId) {
   event.stopPropagation();
-  const d = loadCurrentData();
-  for (const g of d.games||[]) {
-    if (g.id===gameId) { g.is_new=false; g.is_updated=false; g.confirmed_snapshot=scoreSnapshot(g); break; }
+  const g = (loadCurrentData().games||[]).find(g => g.id === gameId);
+  if (g) {
+    const confirmed = loadConfirmed();
+    confirmed[gameId] = scoreSnapshot(g); // このPCの確認済み状態を更新
+    saveConfirmed(confirmed);
   }
-  saveCurrentData(d); render();
+  render();
 }
 function toggleComm(btn) {
   const body = btn.nextElementSibling;
