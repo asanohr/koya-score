@@ -226,7 +226,7 @@ const CONFIG_KEY    = 'koya_config';
 const SESSION_KEY   = 'koya_session';
 const CURRENT_KEY   = 'koya_current';
 const CONFIRMED_KEY = 'koya_confirmed'; // このPCの確認済みスナップショット（PC固有）
-const HIDDEN_REGIONS = ['近畿', '全国', '軟式'];
+const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
   u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
