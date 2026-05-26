@@ -2,11 +2,11 @@
   "tournaments": [
     {
       "id": "2026spring",
-      "name": "2026年春季大会",
+      "name": "2026春季大会",
       "date": "2026-05-23",
       "game_count": 5,
-      "last_updated": "2026-05-25T09:40:47"
+      "last_updated": "2026-05-26T05:45:33"
     }
   ],
-  "last_updated": "2026-05-25T09:40:47"
+  "last_updated": "2026-05-26T05:45:33"
 }
