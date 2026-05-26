@@ -394,7 +394,7 @@ async function ghWrite(path, content, msg) {
 // スコアテーブル構築
 // ═══════════════════════════════════════════════════
 function buildSelect(team, idx, val) {
-  let html = `<select class="inn-sel" size="6" onchange="onInnChange(${team},${idx},this.value)">`;
+  let html = `<select class="inn-sel" onchange="onInnChange(${team},${idx},this.value)">`;
   for (const v of INN_OPTIONS) {
     const sel = (v === val) ? ' selected' : '';
     const label = v === '' ? '−' : v;
