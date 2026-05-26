@@ -195,9 +195,13 @@
     <div class="card-title">📝 試合情報を入力</div>
 
     <div class="field">
-      <label>タイトル（ヘッダー表示）</label>
-      <input id="titleInput" placeholder="例：2026春季大会　1回戦　姫路球場" oninput="updatePreview()">
-      <div class="field-hint">ウィジェットのヘッダーに表示されます。自由に記述してください。</div>
+      <label>大会名</label>
+      <input id="tournamentNameInput" placeholder="例：2026年春季大会" oninput="updatePreview()">
+    </div>
+    <div class="field">
+      <label>日付・回戦・会場（その他情報）</label>
+      <input id="extraInfoInput" placeholder="例：5月5日　決勝　姫路球場" oninput="updatePreview()">
+      <div class="field-hint">ヘッダー表示：「大会名　その他情報」の形式になります。</div>
     </div>
 
     <div class="team-grid">
@@ -490,13 +494,15 @@ function totalDisplay(vals) {
 // プレビュー描画（score_widget.html の表示をインライン再現）
 // ═══════════════════════════════════════════════════
 function getGameObj() {
-  const title  = document.getElementById('titleInput').value.trim();
+  const tournament_name = document.getElementById('tournamentNameInput').value.trim();
+  const extra_info      = document.getElementById('extraInfoInput').value.trim();
   const team1  = document.getElementById('team1Input').value.trim() || 'チームA';
   const team2  = document.getElementById('team2Input').value.trim() || 'チームB';
   const status = document.getElementById('statusSelect').value;
   return {
     id: currentGameId || '',
-    round: title,
+    tournament_name,
+    extra_info,
     team1, team2,
     innings1: [...inn1Values],
     innings2: [...inn2Values],
@@ -505,6 +511,7 @@ function getGameObj() {
     game_status: status,
     game_date_label: '',
     venue: '',
+    round: '',
   };
 }
 
@@ -524,9 +531,14 @@ function renderWidgetHtml(g) {
   const [w1, w2] = wl(g.total1, g.total2);
 
   const parts = [];
-  if (g.game_date_label) parts.push(g.game_date_label);
-  if (g.venue)           parts.push(g.venue);
-  if (g.round)           parts.push(g.round);
+  if (g.tournament_name) {
+    parts.push(g.tournament_name);
+    if (g.extra_info) parts.push(g.extra_info);
+  } else {
+    if (g.game_date_label) parts.push(g.game_date_label);
+    if (g.venue)           parts.push(g.venue);
+    if (g.round)           parts.push(g.round);
+  }
   const title = parts.join('　') || '試合スコア';
 
   const isEnd     = (g.game_status || '').includes('終了');
@@ -598,14 +610,46 @@ async function confirmScore() {
 
     const g = getGameObj();
     g.id = currentGameId;
+    const now = new Date().toISOString();
 
     // GitHub に data/{id}.json として保存
     const path = 'data/' + currentGameId + '.json';
     const content = {
-      last_updated: new Date().toISOString(),
+      last_updated: now,
       games: [g],
     };
-    await ghWrite(path, content, 'スコア手動入力: ' + (g.round || currentGameId));
+    await ghWrite(path, content, 'スコア手動入力: ' + (g.tournament_name || currentGameId));
+
+    // data/index.json に登録（大会名でグループ化できるよう）
+    const ghDecode = b64 => {
+      const bin = atob(b64.replace(/\n/g,''));
+      return new TextDecoder('utf-8').decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
+    };
+    const indexPath = 'data/index.json';
+    let index = { tournaments: [] };
+    const existingIdx = await ghRead(indexPath);
+    if (existingIdx?.content) {
+      try { index = JSON.parse(ghDecode(existingIdx.content)); } catch(e) {}
+    }
+    const entry = {
+      id: currentGameId,
+      name: g.tournament_name || 'カスタムスコア',
+      date: now.slice(0,10),
+      game_count: 1,
+      last_updated: now,
+      type: 'manual',
+    };
+    const ei = index.tournaments.findIndex(t => t.id === currentGameId);
+    if (ei >= 0) index.tournaments[ei] = entry; else index.tournaments.push(entry);
+    index.tournaments.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+    await ghWrite(indexPath, index, 'カスタムスコア登録: ' + currentGameId);
+
+    // localStorage に手動スコアIDを保存（モニターページで読み込むため）
+    const MANUAL_IDS_KEY = 'koya_manual_ids';
+    let ids = [];
+    try { ids = JSON.parse(localStorage.getItem(MANUAL_IDS_KEY) || '[]'); } catch {}
+    if (!ids.includes(currentGameId)) { ids.push(currentGameId); }
+    localStorage.setItem(MANUAL_IDS_KEY, JSON.stringify(ids));
 
     // iframeタグ生成（GitHub Pages URL）
     const baseUrl  = 'https://' + cfg.gh_owner + '.github.io/' + cfg.gh_repo + '/';
@@ -668,7 +712,8 @@ function newGame() {
   inn1Values = new Array(9).fill('');
   inn2Values = new Array(9).fill('');
   innCount = 9;
-  document.getElementById('titleInput').value  = '';
+  document.getElementById('tournamentNameInput').value = '';
+  document.getElementById('extraInfoInput').value      = '';
   document.getElementById('team1Input').value  = '';
   document.getElementById('team2Input').value  = '';
   document.getElementById('statusSelect').value = '';

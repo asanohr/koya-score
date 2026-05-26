@@ -127,11 +127,16 @@ function renderGame(g) {
   const i2 = pad(raw2, maxInn).slice(0, maxInn);
   const [w1, w2] = wl(g.total1, g.total2);
 
-  // ヘッダー：●月●日　会場名　第●試合　チームA vs チームB
+  // ヘッダー：大会名　その他情報（日付・回戦・会場）
   const parts = [];
-  if (g.game_date_label) parts.push(g.game_date_label);
-  if (g.venue)           parts.push(g.venue);
-  if (g.round)           parts.push(g.round);
+  if (g.tournament_name) {
+    parts.push(g.tournament_name);
+    if (g.extra_info) parts.push(g.extra_info);
+  } else {
+    if (g.game_date_label) parts.push(g.game_date_label);
+    if (g.venue)           parts.push(g.venue);
+    if (g.round)           parts.push(g.round);
+  }
   const title = parts.join('　') || '試合スコア';
 
   const isEnd     = (g.game_status || '').includes('終了');

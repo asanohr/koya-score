@@ -122,6 +122,30 @@
     .embed-copy-btn{margin-top:6px;background:var(--accent);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:12px;cursor:pointer;font-family:inherit;transition:opacity .15s;}
     .embed-copy-btn:hover{opacity:.85;} .embed-copy-btn.copied{background:var(--win);}
 
+    /* ── メタ情報入力パネル ── */
+    .meta-panel{background:#f0f5ff;border-top:1px solid var(--border);padding:10px 14px;}
+    .meta-panel .meta-title{font-size:11px;font-weight:700;color:#3d5a99;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;}
+    .meta-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+    .meta-row label{font-size:12px;color:var(--text-dim);white-space:nowrap;min-width:130px;}
+    .meta-row input{flex:1;background:#fff;color:var(--text);border:1px solid #aabde0;border-radius:5px;padding:5px 9px;font-size:13px;font-family:inherit;}
+    .meta-row input:focus{outline:2px solid var(--accent);outline-offset:0;}
+    .meta-actions{display:flex;align-items:center;gap:10px;margin-top:4px;}
+    .meta-save-btn{background:var(--accent);color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+    .meta-save-btn:hover{opacity:.85;} .meta-save-btn:disabled{opacity:.45;cursor:default;}
+    .meta-preview{font-size:11px;color:var(--text-dim);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+    /* ── カスタムスコアセクション ── */
+    .custom-section{max-width:1100px;margin:0 auto;padding:0 14px 48px;}
+    .custom-section-title{font-size:15px;font-weight:700;color:var(--text);border-left:3px solid #d97757;padding-left:10px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+    .custom-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+    .custom-card-hdr{padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .custom-card-title{font-size:14px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .custom-card-score{font-size:13px;color:var(--text-dim);white-space:nowrap;}
+    .custom-card-body{border-top:1px solid var(--border);padding:10px 14px;background:var(--surface2);}
+    .custom-card-body label{font-size:11px;color:var(--text-dim);display:block;margin-bottom:4px;}
+    .custom-card-body code{display:block;background:#eef1f7;border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-size:11px;word-break:break-all;color:var(--text);line-height:1.6;margin-bottom:6px;}
+    .btn.danger{background:#dc2626;color:#fff;}
+
     .no-games{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:15px;line-height:2;}
     @media(max-width:600px){
       .score-table th,.score-table td{padding:5px 2px;min-width:20px;font-size:13px;}
@@ -207,7 +231,7 @@
   </div>
 </div>
 
-<main>
+<main id="mainContent">
   <div class="legend">
     <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
     <div class="legend-item"><span class="badge playing">試合中</span> プレー中</div>
@@ -216,6 +240,20 @@
   </div>
   <div id="content"></div>
 </main>
+
+<!-- カスタムスコアセクション -->
+<div class="custom-section">
+  <div class="custom-section-title">
+    <span>📝 カスタムスコア</span>
+    <div style="display:flex;gap:8px;">
+      <button class="btn sub sm" onclick="loadAndRenderManualScores()">🔄 更新</button>
+      <button class="btn sub sm" onclick="location.href='score_creator.html'">＋ 新規作成</button>
+    </div>
+  </div>
+  <div id="custom-scores-content">
+    <div style="color:var(--text-dim);font-size:13px;padding:10px 0;">読み込み中...</div>
+  </div>
+</div>
 
 <script>
 // ═══════════════════════════════════════════════════
@@ -227,6 +265,8 @@ const CONFIG_KEY    = 'koya_config';
 const SESSION_KEY   = 'koya_session';
 const CURRENT_KEY   = 'koya_current';
 const CONFIRMED_KEY = 'koya_confirmed'; // このPCの確認済みスナップショット（PC固有）
+const GAME_META_KEY = 'koya_game_meta'; // 試合ごとの大会名・その他情報（PC固有）
+const MANUAL_IDS_KEY = 'koya_manual_ids'; // 手動作成スコアID一覧
 const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
@@ -279,6 +319,18 @@ function loadConfirmed() {
 }
 function saveConfirmed(c) { localStorage.setItem(CONFIRMED_KEY, JSON.stringify(c)); }
 
+// 試合ごとのメタ情報（大会名・その他情報）
+function loadGameMeta() {
+  try { return JSON.parse(localStorage.getItem(GAME_META_KEY) || '{}'); } catch { return {}; }
+}
+function saveGameMeta(m) { localStorage.setItem(GAME_META_KEY, JSON.stringify(m)); }
+
+// 手動作成スコアID一覧
+function loadManualIds() {
+  try { return JSON.parse(localStorage.getItem(MANUAL_IDS_KEY) || '[]'); } catch { return []; }
+}
+function saveManualIds(ids) { localStorage.setItem(MANUAL_IDS_KEY, JSON.stringify(ids)); }
+
 // ゲームがこのPCで未確認の更新があるか判定
 // confirmed[g.id] が未登録 → 初回表示なので自動確認（赤字なし）
 // confirmed[g.id] と現在スコアが異なる → 赤字
@@ -288,6 +340,28 @@ function localUpdateInfo(g, confirmed) {
   const cur = scoreSnapshot(g);
   if (cur === snap) return { updated: false, prevSnap: null };
   return { updated: true, prevSnap: JSON.parse(snap) };
+}
+
+// デフォルトのその他情報を生成（日付・回戦・会場）
+function buildDefaultExtraInfo(g, session) {
+  const parts = [];
+  if (session?.game_date_label) parts.push(session.game_date_label);
+  if (g.round) parts.push(g.round);
+  if (g.venue) parts.push(g.venue);
+  return parts.join('　');
+}
+
+// ゲームにメタ情報（大会名・その他情報）を付加して返す
+function enrichGamesWithMeta(games, session) {
+  const meta = loadGameMeta();
+  return games.map(g => {
+    const m = meta[g.id] || {};
+    return {
+      ...g,
+      tournament_name: m.tournament_name !== undefined ? m.tournament_name : (session?.tournament_name || ''),
+      extra_info:      m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session),
+    };
+  });
 }
 
 // ゲームリストのうち、このPCで初めて見るゲームを自動確認登録
@@ -611,7 +685,7 @@ async function fetchAndUpdate() {
       tournament_id:   tournamentId,
       tournament_name: session.tournament_name || '',
       game_date:       session.game_date       || '',
-      games:           merged,
+      games:           enrichGamesWithMeta(merged, session), // メタ情報（大会名・その他情報）を付加
       last_updated:    now,
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
@@ -804,6 +878,7 @@ function buildCard(g) {
     +row(g.team2,inn2,g.total2,w2,snap?.innings2,snap?.total2)
     +'</tbody></table>'
     +commHtml+confirmHtml
+    +buildMetaPanel(g)
     +buildEmbedPanel(g)
     +'</div></div>';
 }
@@ -837,6 +912,78 @@ function buildEmbedPanel(g) {
     +'<code id="embed-code-'+esc(g.id)+'">'+esc(iframeCode)+'</code>'
     +'<button class="embed-copy-btn" onclick="copyEmbed(this,\''+esc(g.id)+'\')">📋 コードをコピー</button>'
     +idNote+'</div>';
+}
+
+function buildMetaPanel(g) {
+  const session = loadSession();
+  const m = loadGameMeta()[g.id] || {};
+  const tn = m.tournament_name !== undefined ? m.tournament_name : (session.tournament_name || '');
+  const ei = m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session);
+  const gid = esc(g.id);
+  const preview = esc([tn, ei].filter(Boolean).join('　') || '（未設定）');
+  return '<div class="meta-panel">'
+    +'<div class="meta-title">📋 ヘッダー情報（iframeに表示）</div>'
+    +'<div class="meta-row"><label>大会名</label>'
+    +'<input type="text" id="meta-tn-'+gid+'" value="'+esc(tn)+'" placeholder="例：26年春季大会"'
+    +' oninput="updateMetaPreview(\''+gid+'\')">'
+    +'</div>'
+    +'<div class="meta-row"><label>日付・回戦・会場</label>'
+    +'<input type="text" id="meta-ei-'+gid+'" value="'+esc(ei)+'" placeholder="例：5月5日　決勝　姫路球場"'
+    +' oninput="updateMetaPreview(\''+gid+'\')">'
+    +'</div>'
+    +'<div class="meta-actions">'
+    +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
+    +'<span class="meta-preview" id="meta-prev-'+gid+'">表示：⚾ '+preview+'</span>'
+    +'</div></div>';
+}
+
+function updateMetaPreview(gameId) {
+  const tn = document.getElementById('meta-tn-'+gameId)?.value?.trim() || '';
+  const ei = document.getElementById('meta-ei-'+gameId)?.value?.trim() || '';
+  const el = document.getElementById('meta-prev-'+gameId);
+  if (el) el.textContent = '表示：⚾ ' + ([tn, ei].filter(Boolean).join('　') || '（未設定）');
+}
+
+async function confirmMeta(event, gameId) {
+  event.stopPropagation();
+  const tn = document.getElementById('meta-tn-'+gameId)?.value?.trim() ?? '';
+  const ei = document.getElementById('meta-ei-'+gameId)?.value?.trim() ?? '';
+
+  // localStorage 保存
+  const meta = loadGameMeta();
+  meta[gameId] = { tournament_name: tn, extra_info: ei };
+  saveGameMeta(meta);
+
+  const cfg = loadConfig();
+  const session = loadSession();
+  const tournamentId = session.tournament_id;
+  if (!cfg.gh_token || !tournamentId) {
+    alert('GitHub設定または大会IDが設定されていません。');
+    return;
+  }
+
+  const btn = document.getElementById('meta-btn-'+gameId);
+  const orig = btn?.textContent || '';
+  if (btn) { btn.disabled = true; btn.textContent = '保存中...'; }
+
+  try {
+    const games = loadCurrentData().games || [];
+    const enriched = enrichGamesWithMeta(games, session);
+    const now = new Date().toISOString().slice(0,19);
+    const data = {
+      tournament_id:   tournamentId,
+      tournament_name: session.tournament_name || '',
+      game_date:       session.game_date       || '',
+      games:           enriched,
+      last_updated:    now,
+    };
+    await ghWrite('data/' + tournamentId + '.json', data, 'ヘッダー情報更新: ' + gameId);
+    if (btn) { btn.textContent = '✅ 保存しました'; }
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 2500);
+  } catch(e) {
+    if (btn) { btn.textContent = '❌ ' + e.message; }
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 4000);
+  }
 }
 
 function toggleCard(header) {
@@ -936,6 +1083,103 @@ function openHistory() {
 }
 
 // ═══════════════════════════════════════════════════
+//  カスタムスコア（手動作成）
+// ═══════════════════════════════════════════════════
+let cachedManualScores = [];
+
+async function loadAndRenderManualScores() {
+  const el = document.getElementById('custom-scores-content');
+  if (!el) return;
+  const ids = loadManualIds();
+  if (!ids.length) {
+    el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">'
+      +'カスタムスコアはありません。<a href="score_creator.html" style="color:var(--accent);">スコア作成ツール</a>で作成できます。</div>';
+    return;
+  }
+  el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">読み込み中...</div>';
+  const base = location.href.replace(/\?.*$/,'').replace(/[^/]*$/,'');
+  cachedManualScores = [];
+  for (const id of ids) {
+    try {
+      const res = await fetch(base + 'data/' + encodeURIComponent(id) + '.json?_=' + Date.now());
+      if (!res.ok) continue;
+      const data = await res.json();
+      const game = (data.games || [])[0];
+      if (game) cachedManualScores.push({ id, game });
+    } catch(e) { console.warn('カスタムスコア読み込み失敗:', id, e); }
+  }
+  renderManualScores();
+}
+
+function renderManualScores() {
+  const el = document.getElementById('custom-scores-content');
+  if (!el) return;
+  if (!cachedManualScores.length) {
+    el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">'
+      +'カスタムスコアはありません（データが見つかりませんでした）。</div>';
+    return;
+  }
+  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
+  const widgetBase = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
+  el.innerHTML = cachedManualScores.map(({ id, game }) => {
+    const tn = game.tournament_name || '';
+    const ei = game.extra_info || '';
+    const title = [tn, ei].filter(Boolean).join('　') || '試合スコア';
+    const hasScore = (game.total1 !== '' && game.total1 != null) || (game.total2 !== '' && game.total2 != null);
+    const scoreStr = hasScore
+      ? (game.team1||'?') + '　' + (game.total1||'−') + '－' + (game.total2||'−') + '　' + (game.team2||'?')
+      : (game.team1||'?') + ' vs ' + (game.team2||'?');
+    const isEnd = (game.game_status || '').includes('終了');
+    const q = new URLSearchParams({ tournament: id, id: game.id });
+    const widgetUrl = widgetBase + '?' + q.toString();
+    const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+    return '<div class="custom-card">'
+      +'<div class="custom-card-hdr">'
+      +'<span class="custom-card-title">⚾ '+esc(title)+'</span>'
+      +'<span class="custom-card-score">'+esc(scoreStr)+'</span>'
+      +(isEnd ? '<span class="badge ended">終了</span>' : '')
+      +'<button class="btn sub sm" onclick="location.href=\'score_creator.html\'">✏️ 編集</button>'
+      +'<button class="btn danger sm" onclick="deleteManualScore(\''+esc(id)+'\',this)">🗑 削除</button>'
+      +'</div>'
+      +'<div class="custom-card-body">'
+      +'<label>iframeタグ（他サイトのHTMLに貼り付けてください）：</label>'
+      +'<code id="cs-code-'+esc(id)+'">'+esc(iframeTag)+'</code>'
+      +'<button class="embed-copy-btn" onclick="copyManualEmbed(\''+esc(id)+'\')">📋 コードをコピー</button>'
+      +'</div></div>';
+  }).join('');
+}
+
+function deleteManualScore(id, btn) {
+  if (!confirm('このカスタムスコアをモニターから非表示にしますか？\n（過去のスコア一覧には残ります）')) return;
+  // localStorage からのみ削除。GitHub データは残すので過去のスコア一覧に引き続き表示される
+  saveManualIds(loadManualIds().filter(i => i !== id));
+  cachedManualScores = cachedManualScores.filter(s => s.id !== id);
+  renderManualScores();
+}
+
+function copyManualEmbed(id) {
+  const el = document.getElementById('cs-code-' + id);
+  if (!el) return;
+  const text = el.textContent.trim();
+  const done = () => {
+    el.style.background = '#d1fae5';
+    setTimeout(() => { el.style.background = ''; }, 1500);
+  };
+  if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done).catch(() => {}); }
+  else { const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); done(); }
+}
+
+async function ghDeleteFile(path, msg) {
+  const existing = await ghRead(path);
+  if (!existing?.sha) return;
+  return await ghRequest('DELETE', path, {
+    message: msg || '削除',
+    sha: existing.sha,
+    branch: loadConfig().gh_branch || 'main',
+  });
+}
+
+// ═══════════════════════════════════════════════════
 //  起動
 // ═══════════════════════════════════════════════════
 async function init() {
@@ -958,6 +1202,7 @@ async function init() {
   if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
 
   render();
+  loadAndRenderManualScores(); // カスタムスコアを非同期で読み込み
   if (intervalMinutes === 0) {
     await refreshDisplay();
     startReloadScheduler();

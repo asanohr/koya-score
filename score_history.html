@@ -167,9 +167,15 @@ async function fetchJson(path) {
 }
 
 let allTournaments = [];
-let loadedGames    = {};
+let loadedGames    = {}; // { tournamentId: [ { ...game, _tid } ] }
 let manageMode     = false;
 let lastFiltered   = null; // 検索中の表示リスト
+
+function nameHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+  return (h >>> 0).toString(16);
+}
 
 // ── GitHub API ──
 function loadConfig() {
@@ -297,9 +303,17 @@ async function deleteGame(tournamentId, gameId, event) {
       if (at) at.game_count = newGames.length;
     }
 
-    loadedGames[tournamentId] = newGames;
-    const body = document.getElementById('tbody-' + CSS.escape(tournamentId));
-    if (body && body.classList.contains('open')) renderGames(body, tournamentId, newGames);
+    loadedGames[tournamentId] = newGames.map(g => ({ ...g, _tid: tournamentId }));
+    // グループ内の全試合を結合して再描画
+    const groupCard = [...document.querySelectorAll('.tournament-card')]
+      .find(c => (c.dataset.ids || '').split(',').includes(tournamentId));
+    if (groupCard) {
+      const body = groupCard.querySelector('.tournament-body');
+      if (body && body.classList.contains('open')) {
+        const ids = (groupCard.dataset.ids || '').split(',').filter(Boolean);
+        renderGames(body, ids.flatMap(id => loadedGames[id] || []));
+      }
+    }
   } catch(e) {
     alert('削除失敗: ' + e.message);
     btn.textContent = '削除'; btn.disabled = false;
@@ -324,56 +338,77 @@ async function init() {
 }
 
 function renderTournamentList(tournaments) {
-  document.getElementById('countLabel').textContent = tournaments.length + '大会';
-  if (!tournaments.length) {
-    document.getElementById('content').innerHTML =
-      '<div class="empty">該当する大会がありません。</div>';
+  // 大会名でグループ化
+  const byName = {};
+  for (const t of tournaments) {
+    const k = t.name || t.id;
+    if (!byName[k]) byName[k] = { name: k, tournaments: [], totalGames: 0, latestDate: '' };
+    byName[k].tournaments.push(t);
+    byName[k].totalGames += (t.game_count || 0);
+    if ((t.date || '') > byName[k].latestDate) byName[k].latestDate = t.date || '';
+  }
+  const groups = Object.values(byName).sort((a, b) => b.latestDate.localeCompare(a.latestDate));
+  document.getElementById('countLabel').textContent = groups.length + '大会';
+  if (!groups.length) {
+    document.getElementById('content').innerHTML = '<div class="empty">該当する大会がありません。</div>';
     return;
   }
-  document.getElementById('content').innerHTML = tournaments.map(t => {
-    const dateStr = t.date ? fmtDate(t.date) : '';
-    const delBtn  = manageMode
-      ? '<button class="del-btn" onclick="deleteTournament(\'' + esc(t.id) + '\',\'' + esc(t.name||t.id) + '\',event)">🗑 削除</button>'
+  document.getElementById('content').innerHTML = groups.map(g => {
+    const dateStr = g.latestDate ? fmtDate(g.latestDate) : '';
+    const tids    = g.tournaments.map(t => t.id).join(',');
+    const bodyId  = 'grp-' + nameHash(g.name);
+    const delBtns = manageMode
+      ? g.tournaments.map(t =>
+          '<button class="del-btn" onclick="deleteTournament(\'' + esc(t.id) + '\',\'' + esc(t.name||t.id) + '\',event)" style="margin-left:4px;">🗑 '
+          + esc(t.date || t.id) + '</button>'
+        ).join('')
       : '';
-    return '<div class="tournament-card' + (manageMode ? ' manage-mode' : '') + '" data-id="' + esc(t.id) + '">'
-      + '<div class="tournament-header" onclick="toggleTournament(this)">'
+    return '<div class="tournament-card' + (manageMode ? ' manage-mode' : '') + '" data-ids="' + esc(tids) + '">'
+      + '<div class="tournament-header" onclick="toggleGroup(this)">'
       + (dateStr ? '<span class="t-date">' + esc(dateStr) + '</span>' : '')
-      + '<span class="t-name">🏆 ' + esc(t.name || t.id) + '</span>'
-      + '<span class="t-count">' + (t.game_count || 0) + '試合</span>'
-      + delBtn
+      + '<span class="t-name">🏆 ' + esc(g.name) + '</span>'
+      + '<span class="t-count">' + g.totalGames + '試合</span>'
+      + delBtns
       + '<span class="t-arrow">▼</span>'
       + '</div>'
-      + '<div class="tournament-body" id="tbody-' + esc(t.id) + '">'
+      + '<div class="tournament-body" id="' + bodyId + '">'
       + '<div class="loading" style="padding:20px;"><div class="sp" style="width:20px;height:20px;border-width:2px;"></div></div>'
       + '</div>'
       + '</div>';
   }).join('');
 }
 
-async function toggleTournament(header) {
+async function toggleGroup(header) {
   const card  = header.closest('.tournament-card');
   const body  = card.querySelector('.tournament-body');
   const arrow = header.querySelector('.t-arrow');
-  const id    = card.dataset.id;
+  const ids   = (card.dataset.ids || '').split(',').filter(Boolean);
 
   if (body.classList.contains('open')) {
     body.classList.remove('open'); arrow.textContent = '▼'; return;
   }
   body.classList.add('open'); arrow.textContent = '▲';
 
-  if (!loadedGames[id]) {
-    try {
-      const data = await fetchJson('data/' + encodeURIComponent(id) + '.json');
-      loadedGames[id] = data.games || [];
-    } catch(e) {
-      body.innerHTML = '<div class="empty" style="padding:20px;">読み込み失敗: ' + esc(e.message) + '</div>';
-      return;
+  // 未読み込みのtournamentを読み込む
+  const unloaded = ids.filter(id => loadedGames[id] === undefined);
+  if (unloaded.length) {
+    body.innerHTML = '<div class="loading" style="padding:20px;"><div class="sp" style="width:20px;height:20px;border-width:2px;"></div></div>';
+    for (const id of unloaded) {
+      try {
+        const data = await fetchJson('data/' + encodeURIComponent(id) + '.json');
+        // _tid を付加してどの tournament ファイル由来かを記録
+        loadedGames[id] = (data.games || []).map(g => ({ ...g, _tid: id }));
+      } catch(e) {
+        loadedGames[id] = [];
+      }
     }
   }
-  renderGames(body, id, loadedGames[id]);
+  // グループ内の全試合を結合して表示
+  const allGames = ids.flatMap(id => loadedGames[id] || []);
+  renderGames(body, allGames);
 }
 
-function renderGames(body, tournamentId, games) {
+function renderGames(body, games) {
   if (!games.length) {
     body.innerHTML = '<div class="empty" style="padding:20px;">試合データがありません。</div>';
     return;
@@ -386,36 +421,45 @@ function renderGames(body, tournamentId, games) {
   }
   body.innerHTML = Object.entries(byRegion).map(([region, gs]) => {
     const rows = gs.map(g => {
-      const isEnd    = (g.game_status||'').includes('終了');
-      const parts    = [];
-      if (g.venue) parts.push(g.venue);
-      if (g.round) parts.push(g.round);
-      if (g.team1 && g.team2) parts.push(g.team1 + ' vs ' + g.team2);
-      const titleStr = parts.join('　') || g.round;
-      const dateStr  = g.game_date_label ? '(' + g.game_date_label + ') ' : '';
+      const tid    = g._tid || '';
+      const isEnd  = (g.game_status||'').includes('終了');
+      // ヘッダー表示：tournament_name + extra_info（設定済みの場合）
+      const tn = g.tournament_name || '';
+      const ei = g.extra_info || '';
+      const titleParts = [];
+      if (tn) titleParts.push(tn);
+      if (ei) titleParts.push(ei);
+      // fallback
+      if (!titleParts.length) {
+        if (g.game_date_label) titleParts.push(g.game_date_label);
+        if (g.venue) titleParts.push(g.venue);
+        if (g.round) titleParts.push(g.round);
+      }
+      if (g.team1 && g.team2) titleParts.push(g.team1 + ' vs ' + g.team2);
+      const titleStr = titleParts.join('　') || g.round || '試合';
       const scoreStr = (g.total1 !== '' && g.total2 !== '') ? g.total1 + '－' + g.total2 : '';
 
-      const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tournamentId);
-      const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : g.round;
-      const iframeCode = '<iframe src="' + widgetUrl + '" width="100%" height="160" style="border:none;border-radius:10px;display:block;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>';
+      const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tid);
+      const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : (g.round || '');
+      const iframeCode = '<iframe src="' + widgetUrl + '" width="100%" height="175" style="border:none;border-radius:10px;display:block;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>';
 
       const delBtn = manageMode
-        ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tournamentId) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
+        ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tid) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
         : '';
 
       return '<div class="game-row">'
         + '<div class="game-summary" onclick="toggleGame(this)">'
-        + '<span class="g-title">⚾ ' + esc(dateStr + titleStr) + '</span>'
+        + '<span class="g-title">⚾ ' + esc(titleStr) + '</span>'
         + (isEnd ? '<span class="badge-end">終了</span>' : '')
         + (scoreStr ? '<span class="g-score">' + esc(scoreStr) + '</span>' : '')
         + delBtn
         + '<span class="g-arrow">▼</span>'
         + '</div>'
-        + '<div class="embed-detail" data-iframe="' + esc(iframeCode) + '">'
+        + '<div class="embed-detail">'
         + '<label>iframeコード（他サイトのHTMLに貼り付けて使用）：</label>'
         + '<code>' + esc(iframeCode) + '</code>'
         + '<button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>'
-        + '<div class="id-note">🔑 試合ID: <b>' + esc(g.id) + '</b>　大会ID: <b>' + esc(tournamentId) + '</b></div>'
+        + '<div class="id-note">🔑 試合ID: <b>' + esc(g.id) + '</b>　大会ID: <b>' + esc(tid) + '</b></div>'
         + '</div>'
         + '</div>';
     }).join('');
@@ -448,11 +492,8 @@ function copyCode(btn) {
 
 function applyFilter() {
   const q = document.getElementById('searchBox').value.trim().toLowerCase();
-  if (!q) {
-    lastFiltered = null;
-    renderTournamentList(allTournaments);
-    return;
-  }
+  if (!q) { lastFiltered = null; renderTournamentList(allTournaments); return; }
+  // 大会名・ID・日付で絞り込み（グループ名でも一致する）
   lastFiltered = allTournaments.filter(t => {
     const text = [t.name, t.id, t.date].join(' ').toLowerCase();
     return text.includes(q);
