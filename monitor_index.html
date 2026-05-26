@@ -923,11 +923,13 @@ function buildMetaPanel(g) {
   const ei = m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session);
   const gid = esc(g.id);
   return '<div class="meta-panel">'
-    +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:0;">'
-    +'<label style="min-width:auto;font-weight:700;color:#3d5a99;font-size:12px;">ヘッダー情報</label>'
-    +'<input type="text" id="meta-tn-'+gid+'" value="'+esc(tn)+'" placeholder="大会名"'
+    +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:0;gap:6px 10px;">'
+    +'<span style="font-weight:700;color:#3d5a99;font-size:12px;white-space:nowrap;">ヘッダー情報</span>'
+    +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">大会名</label>'
+    +'<input type="text" id="meta-tn-'+gid+'" value="'+esc(tn)+'" placeholder="例：26年春季大会"'
     +' style="flex:1;min-width:100px;" oninput="updateMetaPreview(\''+gid+'\')">'
-    +'<input type="text" id="meta-ei-'+gid+'" value="'+esc(ei)+'" placeholder="日付・回戦・会場"'
+    +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">日付・回戦・会場</label>'
+    +'<input type="text" id="meta-ei-'+gid+'" value="'+esc(ei)+'" placeholder="例：5月5日　決勝　姫路"'
     +' style="flex:2;min-width:140px;" oninput="updateMetaPreview(\''+gid+'\')">'
     +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
     +'</div></div>';

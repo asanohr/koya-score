@@ -427,18 +427,19 @@ async function ghWrite(path, content, msg) {
 function buildInnDd(team, idx, val) {
   const display = (val === '' || val == null) ? '−' : val;
   let html = '<div class="inn-dd">'
-    + '<button class="inn-dd-btn" type="button" onclick="toggleInnDd(this)">' + esc(display) + '</button>'
+    + '<button class="inn-dd-btn" type="button" onclick="toggleInnDd(this,event)">' + esc(display) + '</button>'
     + '<ul class="inn-dd-list">';
   for (const v of INN_OPTIONS) {
     const label  = v === '' ? '−' : v;
     const selCls = v === (val ?? '') ? ' class="sel"' : '';
-    html += '<li' + selCls + ' data-val="' + esc(v) + '" onclick="selectInnDd(this,' + team + ',' + idx + ')">' + label + '</li>';
+    html += '<li' + selCls + ' data-val="' + esc(v) + '" onclick="selectInnDd(this,' + team + ',' + idx + ',event)">' + label + '</li>';
   }
   html += '</ul></div>';
   return html;
 }
 
-function toggleInnDd(btn) {
+function toggleInnDd(btn, event) {
+  if (event) event.stopPropagation();
   const list   = btn.parentElement.querySelector('.inn-dd-list');
   const isOpen = list.classList.contains('open');
   closeAllInnDd();
@@ -454,7 +455,8 @@ function toggleInnDd(btn) {
   }
 }
 
-function selectInnDd(li, team, idx) {
+function selectInnDd(li, team, idx, event) {
+  if (event) event.stopPropagation();
   const val  = li.dataset.val;
   const dd   = li.closest('.inn-dd');
   const btn  = dd.querySelector('.inn-dd-btn');
