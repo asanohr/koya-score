@@ -1,6 +1,6 @@
 {
   "tournament_id": "2026spring",
-  "tournament_name": "2026年春季大会",
+  "tournament_name": "2026春季大会",
   "game_date": "2026-05-23",
   "games": [
     {
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-05-23T08:34:23",
+      "last_changed": "2026-05-26T05:45:33",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null
@@ -104,7 +104,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T06:46:14",
+      "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null
@@ -157,7 +157,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=2",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-25T08:23:37",
+      "last_changed": "2026-05-26T05:45:33",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null
@@ -210,7 +210,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=11",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T06:46:14",
+      "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null
@@ -263,11 +263,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=31",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T06:46:14",
+      "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null
     }
   ],
-  "last_updated": "2026-05-25T09:40:47"
+  "last_updated": "2026-05-26T05:45:33"
 }
