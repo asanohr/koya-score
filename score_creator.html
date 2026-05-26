@@ -394,7 +394,7 @@ async function ghWrite(path, content, msg) {
 // スコアテーブル構築
 // ═══════════════════════════════════════════════════
 function buildSelect(team, idx, val) {
-  let html = `<select class="inn-sel" onchange="onInnChange(${team},${idx},this.value)">`;
+  let html = `<select class="inn-sel" size="6" onchange="onInnChange(${team},${idx},this.value)">`;
   for (const v of INN_OPTIONS) {
     const sel = (v === val) ? ' selected' : '';
     const label = v === '' ? '−' : v;
@@ -724,10 +724,65 @@ function newGame() {
 }
 
 // ═══════════════════════════════════════════════════
+// 編集モード（?edit={id} パラメータ）
+// ═══════════════════════════════════════════════════
+async function loadEditGame(id) {
+  setMsg('読み込み中...', 'ok');
+  try {
+    const base = location.href.replace(/\?.*$/, '').replace(/[^/]*$/, '');
+    const res  = await fetch(base + 'data/' + encodeURIComponent(id) + '.json?_=' + Date.now());
+    if (!res.ok) throw new Error('データが見つかりません (HTTP ' + res.status + ')');
+    const data = await res.json();
+    const game = (data.games || [])[0];
+    if (!game) throw new Error('試合データが見つかりません');
+
+    // 同じIDで再確定できるよう currentGameId をセット
+    currentGameId = id;
+
+    // フォームに値を設定
+    document.getElementById('tournamentNameInput').value = game.tournament_name || '';
+    document.getElementById('extraInfoInput').value      = game.extra_info      || '';
+    document.getElementById('team1Input').value  = game.team1        || '';
+    document.getElementById('team2Input').value  = game.team2        || '';
+    document.getElementById('statusSelect').value = game.game_status || '';
+
+    // イニングスコアを復元
+    innCount = Math.max(9, (game.innings1||[]).length, (game.innings2||[]).length);
+    inn1Values = [...(game.innings1 || [])];
+    inn2Values = [...(game.innings2 || [])];
+    while (inn1Values.length < innCount) inn1Values.push('');
+    while (inn2Values.length < innCount) inn2Values.push('');
+
+    buildTable();
+    updatePreview();
+
+    // 現在のiframeタグを表示
+    const cfg = loadConfig();
+    if (cfg.gh_owner && cfg.gh_repo) {
+      const baseUrl   = 'https://' + cfg.gh_owner + '.github.io/' + cfg.gh_repo + '/';
+      const widgetUrl = baseUrl + 'score_widget.html'
+        + '?tournament=' + encodeURIComponent(id)
+        + '&id='         + encodeURIComponent(game.id || id);
+      const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+      document.getElementById('iframeCode').textContent = iframeTag;
+      document.getElementById('iframeResult').className = 'iframe-result show';
+    }
+
+    setMsg('', '');
+  } catch(e) {
+    setMsg('⚠️ 編集データの読み込みに失敗しました: ' + e.message, 'err');
+  }
+}
+
+// ═══════════════════════════════════════════════════
 // 初期化
 // ═══════════════════════════════════════════════════
 buildTable();
 updatePreview();
+
+// 編集モード検出（?edit=ID）
+const _editId = new URLSearchParams(location.search).get('edit');
+if (_editId) { loadEditGame(_editId); }
 </script>
 </body>
 </html>

@@ -1111,6 +1111,69 @@ async function loadAndRenderManualScores() {
   renderManualScores();
 }
 
+function buildCustomCard(id, game) {
+  const hasScore = (game.total1 !== '' && game.total1 != null) || (game.total2 !== '' && game.total2 != null);
+  const scoreStr = hasScore
+    ? (game.team1||'?') + '　' + (game.total1||'−') + '－' + (game.total2||'−') + '　' + (game.team2||'?')
+    : (game.team1||'?') + ' vs ' + (game.team2||'?');
+  const isEnd = (game.game_status || '').includes('終了');
+
+  // iframeタグ
+  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
+  const widgetBase = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
+  const wq = new URLSearchParams({ tournament: id, id: game.id || id });
+  const widgetUrl = widgetBase + '?' + wq.toString();
+  const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+
+  // スコアテーブル
+  const innCnt = effectiveInnCount(game.innings1, game.innings2);
+  const inn1 = pad(game.innings1 || [], innCnt).slice(0, innCnt);
+  const inn2 = pad(game.innings2 || [], innCnt).slice(0, innCnt);
+  const [w1, w2] = winLose(game.total1, game.total2);
+
+  let th = '<th class="team-name">チーム</th>';
+  for (let i = 1; i <= innCnt; i++) th += '<th>' + i + '</th>';
+  th += '<th>計</th>';
+
+  const row = (name, inns, total, win) => {
+    let r = '<tr><td class="team-name">' + (esc(name) || '(未定)') + '</td>';
+    inns.forEach(s => {
+      const ok = s !== '' && s != null;
+      r += '<td class="inn' + (ok ? ' scored' : '') + '">' + (ok ? esc(s) : '−') + '</td>';
+    });
+    const wc = win === true ? 'win' : win === false ? 'lose' : '';
+    r += '<td class="total ' + wc + '">' + (esc(total) || '−') + '</td></tr>';
+    return r;
+  };
+
+  const safeId = esc(id);
+  const editUrl = 'score_creator.html?edit=' + encodeURIComponent(id);
+
+  return '<div class="game-card" data-custom-id="' + safeId + '">'
+    + '<div class="card-header" onclick="toggleCustomCard(this)">'
+    + (isEnd ? '<span class="badge ended">終了</span>' : '')
+    + '<span class="card-summary">' + esc(scoreStr) + '</span>'
+    + '<button class="btn sub sm" style="flex-shrink:0;" onclick="event.stopPropagation();location.href=\'' + editUrl + '\'">✏️ 編集</button>'
+    + '<button class="btn danger sm" style="flex-shrink:0;" onclick="event.stopPropagation();deleteManualScore(\'' + safeId + '\',this)">🗑 削除</button>'
+    + '<button class="card-toggle-btn" style="flex-shrink:0;">開く ▼</button>'
+    + '</div>'
+    + '<div class="card-body collapsed">'
+    + '<table class="score-table"><thead><tr>' + th + '</tr></thead><tbody>'
+    + row(game.team1 || '?', inn1, game.total1, w1)
+    + row(game.team2 || '?', inn2, game.total2, w2)
+    + '</tbody></table>'
+    + '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
+    + '<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
+    + '<span style="font-size:11px;color:var(--text-dim);">他サイトの HTML に貼り付けられます</span>'
+    + '</div>'
+    + '<div class="embed-panel">'
+    + '<label>以下のコードをコピーして別サイトのHTMLに貼り付けてください：</label>'
+    + '<code id="cs-code-' + safeId + '">' + esc(iframeTag) + '</code>'
+    + '<button class="embed-copy-btn" onclick="copyManualEmbed(\'' + safeId + '\')">📋 コードをコピー</button>'
+    + '</div>'
+    + '</div></div>';
+}
+
 function renderManualScores() {
   const el = document.getElementById('custom-scores-content');
   if (!el) return;
@@ -1119,34 +1182,29 @@ function renderManualScores() {
       +'カスタムスコアはありません（データが見つかりませんでした）。</div>';
     return;
   }
-  const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
-  const widgetBase = origin + location.pathname.replace(/[^/]*$/, '') + 'score_widget.html';
-  el.innerHTML = cachedManualScores.map(({ id, game }) => {
-    const tn = game.tournament_name || '';
-    const ei = game.extra_info || '';
-    const title = [tn, ei].filter(Boolean).join('　') || '試合スコア';
-    const hasScore = (game.total1 !== '' && game.total1 != null) || (game.total2 !== '' && game.total2 != null);
-    const scoreStr = hasScore
-      ? (game.team1||'?') + '　' + (game.total1||'−') + '－' + (game.total2||'−') + '　' + (game.team2||'?')
-      : (game.team1||'?') + ' vs ' + (game.team2||'?');
-    const isEnd = (game.game_status || '').includes('終了');
-    const q = new URLSearchParams({ tournament: id, id: game.id });
-    const widgetUrl = widgetBase + '?' + q.toString();
-    const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
-    return '<div class="custom-card">'
-      +'<div class="custom-card-hdr">'
-      +'<span class="custom-card-title">⚾ '+esc(title)+'</span>'
-      +'<span class="custom-card-score">'+esc(scoreStr)+'</span>'
-      +(isEnd ? '<span class="badge ended">終了</span>' : '')
-      +'<button class="btn sub sm" onclick="location.href=\'score_creator.html\'">✏️ 編集</button>'
-      +'<button class="btn danger sm" onclick="deleteManualScore(\''+esc(id)+'\',this)">🗑 削除</button>'
-      +'</div>'
-      +'<div class="custom-card-body">'
-      +'<label>iframeタグ（他サイトのHTMLに貼り付けてください）：</label>'
-      +'<code id="cs-code-'+esc(id)+'">'+esc(iframeTag)+'</code>'
-      +'<button class="embed-copy-btn" onclick="copyManualEmbed(\''+esc(id)+'\')">📋 コードをコピー</button>'
-      +'</div></div>';
-  }).join('');
+  el.innerHTML = cachedManualScores.map(({ id, game }) => buildCustomCard(id, game)).join('');
+}
+
+function toggleCustomCard(header) {
+  const card = header.closest('.game-card');
+  const body = card.querySelector('.card-body');
+  const btn  = card.querySelector('.card-toggle-btn');
+  const sum  = card.querySelector('.card-summary');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    btn.textContent = '閉じる ▲';
+    if (sum) sum.textContent = '';
+  } else {
+    body.classList.add('collapsed');
+    btn.textContent = '開く ▼';
+    if (sum) {
+      const tds  = card.querySelectorAll('td.team-name');
+      const tots = card.querySelectorAll('td.total');
+      const t1 = tds[0]?.textContent || '', t2 = tds[1]?.textContent || '';
+      const s1 = tots[0]?.textContent || '', s2 = tots[1]?.textContent || '';
+      sum.textContent = (s1 || s2) ? t1 + '　' + s1 + '－' + s2 + '　' + t2 : t1 + ' vs ' + t2;
+    }
+  }
 }
 
 function deleteManualScore(id, btn) {
