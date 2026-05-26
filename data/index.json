@@ -1,6 +1,14 @@
 {
   "tournaments": [
     {
+      "id": "m_1779778666895",
+      "name": "26年春季大会",
+      "date": "2026-05-26",
+      "game_count": 1,
+      "last_updated": "2026-05-26T06:57:46.895Z",
+      "type": "manual"
+    },
+    {
       "id": "2026spring",
       "name": "2026春季大会",
       "date": "2026-05-23",
