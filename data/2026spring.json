@@ -54,7 +54,9 @@
       "last_changed": "2026-05-26T05:45:33",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
-      "confirmed_snapshot": null
+      "confirmed_snapshot": null,
+      "tournament_name": "2026春季大会",
+      "extra_info": "5月23日　第1試合　姫路"
     },
     {
       "id": "0ee141d5",
@@ -107,7 +109,9 @@
       "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
-      "confirmed_snapshot": null
+      "confirmed_snapshot": null,
+      "tournament_name": "2026春季大会",
+      "extra_info": "5月23日　第2試合　姫路"
     },
     {
       "id": "4712804e",
@@ -160,7 +164,9 @@
       "last_changed": "2026-05-26T05:45:33",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
-      "confirmed_snapshot": null
+      "confirmed_snapshot": null,
+      "tournament_name": "2026春季大会",
+      "extra_info": "5月23日　第1試合　近畿/全国大会"
     },
     {
       "id": "c6e7fb72",
@@ -213,7 +219,9 @@
       "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
-      "confirmed_snapshot": null
+      "confirmed_snapshot": null,
+      "tournament_name": "2026春季大会",
+      "extra_info": "5月23日　第1試合　軟式"
     },
     {
       "id": "61553b02",
@@ -266,8 +274,10 @@
       "last_changed": "2026-05-23T02:24:15",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
-      "confirmed_snapshot": null
+      "confirmed_snapshot": null,
+      "tournament_name": "2026春季大会",
+      "extra_info": "5月23日　第2試合　軟式"
     }
   ],
-  "last_updated": "2026-05-26T06:55:15"
+  "last_updated": "2026-05-26T06:55:17"
 }
