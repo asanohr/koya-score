@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スコア作成ツール</title>
+  <style>
+    :root {
+      --bg:#f0f4f8; --surface:#fff; --surface2:#f5f7fa; --border:#dde3ed;
+      --text:#1a1d27; --text-dim:#555; --accent:#1d6fd8;
+      --win:#16a34a; --lose:#6b7280; --radius:10px;
+      --playing:#d97757; --pre:#9ca3af;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:14px;}
+
+    /* ── ヘッダー ── */
+    header{
+      background:var(--surface);border-bottom:1px solid var(--border);
+      padding:10px 20px;display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;
+    }
+    header h1{font-size:15px;font-weight:700;color:var(--accent);white-space:nowrap;}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+    /* ── ボタン ── */
+    .btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:13px;cursor:pointer;transition:opacity .15s;font-family:inherit;white-space:nowrap;}
+    .btn:hover{opacity:.85;} .btn:disabled{opacity:.45;cursor:default;}
+    .btn.sub{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);}
+    .btn.sm{padding:4px 10px;font-size:12px;}
+
+    /* ── 設定パネル ── */
+    .panel{background:var(--surface);border-bottom:2px solid var(--accent);}
+    .panel-inner{max-width:1200px;margin:0 auto;padding:14px 20px;}
+    .panel h2{font-size:13px;font-weight:700;color:var(--text-dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+    .cfg-grid{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;}
+    .cfg-grid label{font-size:12px;color:var(--text-dim);white-space:nowrap;}
+    .cfg-grid input{
+      background:var(--surface2);color:var(--text);border:1px solid var(--border);
+      border-radius:5px;padding:5px 9px;font-size:13px;font-family:inherit;
+    }
+    .cfg-grid input:focus{outline:2px solid var(--accent);outline-offset:0;}
+
+    /* ── メインレイアウト ── */
+    main{max-width:1200px;margin:0 auto;padding:20px 16px 48px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+    @media(max-width:820px){main{grid-template-columns:1fr;}}
+
+    /* ── カード ── */
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+    .card-title{font-size:15px;font-weight:700;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+
+    /* ── フォームフィールド ── */
+    .field{margin-bottom:14px;}
+    .field label{display:block;font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+    .field input,.field select{
+      width:100%;background:var(--surface2);color:var(--text);border:1px solid var(--border);
+      border-radius:6px;padding:8px 12px;font-size:14px;font-family:inherit;
+    }
+    .field input:focus,.field select:focus{outline:2px solid var(--accent);outline-offset:0;}
+    .field-hint{font-size:11px;color:var(--text-dim);margin-top:4px;}
+    .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+    /* ── スコアテーブル ── */
+    .section-label{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+    .score-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:6px;margin-bottom:14px;}
+    .score-tbl{border-collapse:collapse;width:100%;}
+    .score-tbl th{
+      text-align:center;padding:7px 3px;font-size:12px;color:var(--text-dim);
+      font-weight:600;background:var(--surface2);border-bottom:1px solid var(--border);
+      white-space:nowrap;min-width:40px;
+    }
+    .score-tbl th.th-team{text-align:left;padding-left:14px;min-width:110px;}
+    .score-tbl td{text-align:center;padding:6px 3px;border-top:1px solid var(--border);min-width:40px;}
+    .score-tbl td.td-team{text-align:left;padding-left:14px;font-weight:700;font-size:14px;min-width:110px;color:var(--text);}
+    .score-tbl td.td-tot{font-size:16px;font-weight:800;border-left:1px solid var(--border);min-width:44px;color:var(--text);}
+    select.inn-sel{
+      width:44px;padding:5px 2px;font-size:14px;font-weight:600;
+      border:1px solid var(--border);border-radius:4px;background:var(--surface);
+      cursor:pointer;font-family:inherit;
+    }
+    select.inn-sel:focus{outline:2px solid var(--accent);outline-offset:0;}
+
+    /* ── イニング操作 ── */
+    .inn-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
+    .inn-bar .status-group{margin-left:auto;display:flex;align-items:center;gap:8px;}
+    .inn-bar .status-group label{font-size:12px;color:var(--text-dim);white-space:nowrap;}
+    .inn-bar .status-group select{
+      background:var(--surface2);color:var(--text);border:1px solid var(--border);
+      border-radius:5px;padding:5px 9px;font-size:13px;font-family:inherit;cursor:pointer;
+    }
+
+    /* ── 確定ボタン ── */
+    .confirm-btn{
+      width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;
+      padding:13px;font-size:15px;font-weight:700;cursor:pointer;
+      transition:opacity .15s;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .confirm-btn:hover{opacity:.85;} .confirm-btn:disabled{opacity:.45;cursor:default;}
+    .spinner{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* ── メッセージ ── */
+    .msg{margin-top:10px;padding:9px 12px;border-radius:6px;font-size:13px;line-height:1.5;}
+    .msg.err{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;}
+    .msg.ok{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+
+    /* ── プレビュー (score_widget.html の表示をインライン再現) ── */
+    .preview-wrap{margin-bottom:16px;}
+    .wid-wrap{border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);}
+    .wid-hdr{
+      padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px;
+      font-size:14px;font-weight:700;color:#fff;
+    }
+    .wid-hdr .ti{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .wid-hdr .eb{
+      background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);
+      border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;white-space:nowrap;flex-shrink:0;
+    }
+    .wid-gl{overflow-x:auto;background:var(--surface);-webkit-overflow-scrolling:touch;
+      border:1px solid var(--border);border-top:none;border-radius:0 0 var(--radius) var(--radius);}
+    .wid-st{width:100%;border-collapse:collapse;}
+    .wid-st th{
+      text-align:center;padding:4px 3px;font-size:13px;color:var(--text-dim);
+      font-weight:600;background:var(--surface2);border-top:1px solid var(--border);min-width:22px;
+    }
+    .wid-st th.th-nm{text-align:left;padding-left:12px;}
+    .wid-st td{text-align:center;padding:5px 3px;border-top:1px solid var(--border);font-size:15px;font-weight:600;min-width:22px;}
+    .wid-st td.nm{text-align:left;padding-left:12px;font-weight:700;font-size:15px;min-width:100px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .wid-st td.inn{color:var(--text-dim);}
+    .wid-st td.inn.s{color:var(--text);}
+    .wid-st td.tot{font-size:18px;font-weight:800;border-left:1px solid var(--border);}
+    .wid-st td.tot.win{color:var(--win);}
+    .wid-st td.tot.lose{color:var(--lose);}
+
+    /* ── iframeタグ結果 ── */
+    .iframe-result{display:none;margin-top:18px;padding-top:18px;border-top:2px dashed var(--accent);}
+    .iframe-result.show{display:block;}
+    .result-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+    .iframe-code{
+      display:block;background:#eef3fb;border:1px solid #c5d7f0;border-radius:6px;
+      padding:10px 12px;font-size:11px;word-break:break-all;color:var(--text);line-height:1.8;
+      font-family:"SFMono-Regular","Consolas","Courier New",monospace;
+    }
+    .copy-btn{
+      margin-top:8px;background:var(--accent);color:#fff;border:none;border-radius:6px;
+      padding:8px 18px;font-size:13px;cursor:pointer;font-family:inherit;transition:opacity .15s;
+    }
+    .copy-btn:hover{opacity:.85;} .copy-btn.copied{background:var(--win);}
+    .iframe-note{
+      margin-top:10px;padding:9px 12px;background:#fffbeb;border:1px solid #fde68a;
+      border-radius:6px;font-size:12px;color:#92400e;line-height:1.7;
+    }
+    .new-btn{
+      margin-top:12px;background:none;border:1px solid var(--border);border-radius:6px;
+      padding:8px 16px;font-size:13px;cursor:pointer;color:var(--text-dim);font-family:inherit;
+      transition:background .15s;width:100%;
+    }
+    .new-btn:hover{background:var(--surface2);}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚾ スコア作成ツール</h1>
+  <div class="nav">
+    <button class="btn sub sm" onclick="location.href='monitor_index.html'">📊 スコアモニター</button>
+    <button class="btn sub sm" onclick="location.href='score_history.html'">📋 過去のスコア一覧</button>
+    <button class="btn sub sm" onclick="toggleSettings()">⚙️ GitHub設定</button>
+  </div>
+</header>
+
+<!-- GitHub設定パネル -->
+<div class="panel" id="settingsPanel" style="display:none;">
+  <div class="panel-inner">
+    <h2>GitHub 接続設定</h2>
+    <div class="cfg-grid">
+      <label>Personal Access Token</label>
+      <input type="password" id="cfgToken" placeholder="ghp_xxxxxxxxxxxx" style="width:260px;">
+      <label>Owner</label>
+      <input id="cfgOwner" placeholder="asanohr" style="width:130px;">
+      <label>Repository</label>
+      <input id="cfgRepo" placeholder="koya-score" style="width:150px;">
+      <label>Branch</label>
+      <input id="cfgBranch" placeholder="main" style="width:90px;">
+      <button class="btn sm" onclick="saveGitHubConfig()">💾 保存</button>
+      <button class="btn sm sub" onclick="testGitHub()">🔌 テスト接続</button>
+      <span id="cfgStatus" style="font-size:12px;"></span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- ── 左：入力フォーム ── -->
+  <div class="card">
+    <div class="card-title">📝 試合情報を入力</div>
+
+    <div class="field">
+      <label>タイトル（ヘッダー表示）</label>
+      <input id="titleInput" placeholder="例：2026春季大会　1回戦　姫路球場" oninput="updatePreview()">
+      <div class="field-hint">ウィジェットのヘッダーに表示されます。自由に記述してください。</div>
+    </div>
+
+    <div class="team-grid">
+      <div class="field">
+        <label>先攻チーム</label>
+        <input id="team1Input" placeholder="チームA" oninput="onTeamNameChange()">
+      </div>
+      <div class="field">
+        <label>後攻チーム</label>
+        <input id="team2Input" placeholder="チームB" oninput="onTeamNameChange()">
+      </div>
+    </div>
+
+    <!-- スコアテーブル -->
+    <div class="section-label">イニングスコア（プルダウンで選択）</div>
+    <div class="score-wrap">
+      <table class="score-tbl" id="scoreTable">
+        <thead><tr id="hdrRow"></tr></thead>
+        <tbody>
+          <tr id="row1"></tr>
+          <tr id="row2"></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- イニング操作 + 試合状況 -->
+    <div class="inn-bar">
+      <button class="btn sm sub" onclick="addInning()">＋ 延長回追加</button>
+      <button class="btn sm sub" id="removeInnBtn" onclick="removeInning()" disabled>－ 延長回削除</button>
+      <div class="status-group">
+        <label for="statusSelect">試合状況</label>
+        <select id="statusSelect" onchange="updatePreview()">
+          <option value="">試合前</option>
+          <option value="試合中">試合中</option>
+          <option value="終了">終了</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="formMsg"></div>
+    <button class="confirm-btn" id="confirmBtn" onclick="confirmScore()">
+      <span class="spinner" id="spinner"></span>
+      確定してiframeタグを生成
+    </button>
+  </div>
+
+  <!-- ── 右：プレビュー + 結果 ── -->
+  <div class="card">
+    <div class="card-title">👀 プレビュー</div>
+
+    <div class="preview-wrap">
+      <div id="preview"></div>
+    </div>
+
+    <!-- 確定後に表示されるiframeタグ -->
+    <div class="iframe-result" id="iframeResult">
+      <div class="result-label">✅ iframeタグ（コピーして貼り付けてください）</div>
+      <code class="iframe-code" id="iframeCode"></code>
+      <button class="copy-btn" id="copyBtn" onclick="copyIframe()">📋 コピー</button>
+      <div class="iframe-note">
+        ⚠️ 反映まで数分かかります（GitHub Pagesのビルドを待ちます）。<br>
+        📝 ヘッダーやスコアを修正して再度「確定」を押すと、<br>
+        　 <strong>同じiframeタグのまま</strong>内容だけが更新されます。
+      </div>
+      <button class="new-btn" onclick="newGame()">＋ 別の試合を新規作成</button>
+    </div>
+  </div>
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════
+// 定数・状態
+// ═══════════════════════════════════════════════════
+const CONFIG_KEY = 'koya_config';
+
+// イニングスコアの選択肢: 空 (未入力) / 0〜20 / ✕ (コールド等)
+const INN_OPTIONS = ['', '0','1','2','3','4','5','6','7','8','9','10',
+  '11','12','13','14','15','16','17','18','19','20','✕'];
+
+let innCount = 9;
+let inn1Values = new Array(9).fill(''); // 先攻イニングスコア
+let inn2Values = new Array(9).fill(''); // 後攻イニングスコア
+let currentGameId = null; // null=未確定、確定後はIDが固定される
+
+// ═══════════════════════════════════════════════════
+// ユーティリティ
+// ═══════════════════════════════════════════════════
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function pad(a, n) {
+  const r = [...a];
+  while (r.length < n) r.push('');
+  return r;
+}
+function wl(a, b) {
+  const x = parseInt(a), y = parseInt(b);
+  if (isNaN(x) || isNaN(y)) return [null, null];
+  return x > y ? [true, false] : x < y ? [false, true] : [null, null];
+}
+
+// ═══════════════════════════════════════════════════
+// GitHub設定
+// ═══════════════════════════════════════════════════
+function loadConfig() {
+  try { return JSON.parse(localStorage.getItem(CONFIG_KEY)) || {}; } catch { return {}; }
+}
+function saveConfig(c) { localStorage.setItem(CONFIG_KEY, JSON.stringify(c)); }
+
+function toggleSettings() {
+  const p = document.getElementById('settingsPanel');
+  if (p.style.display === 'none') {
+    const cfg = loadConfig();
+    document.getElementById('cfgToken').value  = cfg.gh_token  || '';
+    document.getElementById('cfgOwner').value  = cfg.gh_owner  || '';
+    document.getElementById('cfgRepo').value   = cfg.gh_repo   || '';
+    document.getElementById('cfgBranch').value = cfg.gh_branch || 'main';
+    p.style.display = 'block';
+  } else {
+    p.style.display = 'none';
+  }
+}
+function saveGitHubConfig() {
+  const cfg = loadConfig();
+  cfg.gh_token  = document.getElementById('cfgToken').value.trim();
+  cfg.gh_owner  = document.getElementById('cfgOwner').value.trim();
+  cfg.gh_repo   = document.getElementById('cfgRepo').value.trim();
+  cfg.gh_branch = document.getElementById('cfgBranch').value.trim() || 'main';
+  saveConfig(cfg);
+  setCfgStatus('💾 保存しました', 'var(--win)');
+}
+async function testGitHub() {
+  saveGitHubConfig();
+  setCfgStatus('テスト中...', 'var(--text-dim)');
+  try {
+    const r = await ghRequest('GET', '');
+    setCfgStatus('✅ 接続成功：' + (r?.name || ''), 'var(--win)');
+  } catch(e) {
+    setCfgStatus('❌ ' + e.message, '#dc2626');
+  }
+}
+function setCfgStatus(msg, color) {
+  const el = document.getElementById('cfgStatus');
+  el.textContent = msg; el.style.color = color;
+}
+
+// ═══════════════════════════════════════════════════
+// GitHub API
+// ═══════════════════════════════════════════════════
+async function ghRequest(method, path, body) {
+  const cfg = loadConfig();
+  if (!cfg.gh_token) throw new Error('GitHubトークンが未設定です（⚙️ GitHub設定）');
+  if (!cfg.gh_owner || !cfg.gh_repo) throw new Error('Owner/Repoが未設定です（⚙️ GitHub設定）');
+  const url = `https://api.github.com/repos/${cfg.gh_owner}/${cfg.gh_repo}/contents/${path}`;
+  const opts = {
+    method,
+    headers: {
+      'Authorization': 'token ' + cfg.gh_token,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(url, opts);
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    throw new Error('GitHub API (' + res.status + '): ' + (e.message || '不明'));
+  }
+  return res.status === 204 ? null : await res.json();
+}
+async function ghRead(path) { return await ghRequest('GET', path); }
+function ghEncode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin);
+}
+async function ghWrite(path, content, msg) {
+  const existing = await ghRead(path);
+  const body = {
+    message: msg || 'データ更新',
+    content: ghEncode(JSON.stringify(content, null, 2)),
+    branch:  loadConfig().gh_branch || 'main',
+  };
+  if (existing?.sha) body.sha = existing.sha;
+  return await ghRequest('PUT', path, body);
+}
+
+// ═══════════════════════════════════════════════════
+// スコアテーブル構築
+// ═══════════════════════════════════════════════════
+function buildSelect(team, idx, val) {
+  let html = `<select class="inn-sel" onchange="onInnChange(${team},${idx},this.value)">`;
+  for (const v of INN_OPTIONS) {
+    const sel = (v === val) ? ' selected' : '';
+    const label = v === '' ? '−' : v;
+    html += `<option value="${v}"${sel}>${label}</option>`;
+  }
+  html += '</select>';
+  return html;
+}
+
+function buildTable() {
+  const hdr = document.getElementById('hdrRow');
+  const r1  = document.getElementById('row1');
+  const r2  = document.getElementById('row2');
+
+  const t1 = document.getElementById('team1Input').value.trim() || '先攻チーム';
+  const t2 = document.getElementById('team2Input').value.trim() || '後攻チーム';
+
+  // ヘッダー行
+  let hdrHtml = '<th class="th-team">チーム</th>';
+  for (let i = 1; i <= innCount; i++) hdrHtml += `<th>${i}</th>`;
+  hdrHtml += '<th>計</th>';
+  hdr.innerHTML = hdrHtml;
+
+  // 先攻行
+  let r1Html = `<td class="td-team" id="tn1Cell">${esc(t1)}</td>`;
+  for (let i = 0; i < innCount; i++) r1Html += `<td>${buildSelect(1, i, inn1Values[i])}</td>`;
+  r1Html += `<td class="td-tot" id="tot1Cell">${totalDisplay(inn1Values)}</td>`;
+  r1.innerHTML = r1Html;
+
+  // 後攻行
+  let r2Html = `<td class="td-team" id="tn2Cell">${esc(t2)}</td>`;
+  for (let i = 0; i < innCount; i++) r2Html += `<td>${buildSelect(2, i, inn2Values[i])}</td>`;
+  r2Html += `<td class="td-tot" id="tot2Cell">${totalDisplay(inn2Values)}</td>`;
+  r2.innerHTML = r2Html;
+
+  document.getElementById('removeInnBtn').disabled = (innCount <= 9);
+}
+
+function onInnChange(team, idx, val) {
+  if (team === 1) inn1Values[idx] = val;
+  else            inn2Values[idx] = val;
+  // 合計セルだけ更新（テーブル再構築なし）
+  const tot1 = document.getElementById('tot1Cell');
+  const tot2 = document.getElementById('tot2Cell');
+  if (tot1) tot1.textContent = totalDisplay(inn1Values);
+  if (tot2) tot2.textContent = totalDisplay(inn2Values);
+  updatePreview();
+}
+
+function onTeamNameChange() {
+  // チーム名セルだけ更新
+  const t1 = document.getElementById('team1Input').value.trim() || '先攻チーム';
+  const t2 = document.getElementById('team2Input').value.trim() || '後攻チーム';
+  const tn1 = document.getElementById('tn1Cell');
+  const tn2 = document.getElementById('tn2Cell');
+  if (tn1) tn1.textContent = t1;
+  if (tn2) tn2.textContent = t2;
+  updatePreview();
+}
+
+function addInning() {
+  inn1Values.push('');
+  inn2Values.push('');
+  innCount++;
+  buildTable();
+  updatePreview();
+}
+
+function removeInning() {
+  if (innCount <= 9) return;
+  inn1Values.pop();
+  inn2Values.pop();
+  innCount--;
+  buildTable();
+  updatePreview();
+}
+
+// ═══════════════════════════════════════════════════
+// スコア合計計算
+// ═══════════════════════════════════════════════════
+function calcTotal(vals) {
+  let sum = 0, hasAny = false;
+  for (const v of vals) {
+    if (v === '' || v === null) continue;
+    if (v === '✕') { hasAny = true; continue; } // ✕は加算しない
+    const n = parseInt(v);
+    if (!isNaN(n)) { sum += n; hasAny = true; }
+  }
+  return hasAny ? String(sum) : '';
+}
+function totalDisplay(vals) {
+  const t = calcTotal(vals);
+  return t === '' ? '−' : t;
+}
+
+// ═══════════════════════════════════════════════════
+// プレビュー描画（score_widget.html の表示をインライン再現）
+// ═══════════════════════════════════════════════════
+function getGameObj() {
+  const title  = document.getElementById('titleInput').value.trim();
+  const team1  = document.getElementById('team1Input').value.trim() || 'チームA';
+  const team2  = document.getElementById('team2Input').value.trim() || 'チームB';
+  const status = document.getElementById('statusSelect').value;
+  return {
+    id: currentGameId || '',
+    round: title,
+    team1, team2,
+    innings1: [...inn1Values],
+    innings2: [...inn2Values],
+    total1: calcTotal(inn1Values),
+    total2: calcTotal(inn2Values),
+    game_status: status,
+    game_date_label: '',
+    venue: '',
+  };
+}
+
+function renderWidgetHtml(g) {
+  const raw1 = g.innings1 || [], raw2 = g.innings2 || [];
+
+  // 延長判定：10回以降に得点があるところまで表示
+  let maxInn = 9;
+  const rawMax = Math.max(raw1.length, raw2.length);
+  for (let i = 9; i < rawMax; i++) {
+    const v1 = raw1[i] != null ? String(raw1[i]) : '';
+    const v2 = raw2[i] != null ? String(raw2[i]) : '';
+    if (v1 !== '' || v2 !== '') maxInn = i + 1;
+  }
+  const i1 = pad(raw1, maxInn).slice(0, maxInn);
+  const i2 = pad(raw2, maxInn).slice(0, maxInn);
+  const [w1, w2] = wl(g.total1, g.total2);
+
+  const parts = [];
+  if (g.game_date_label) parts.push(g.game_date_label);
+  if (g.venue)           parts.push(g.venue);
+  if (g.round)           parts.push(g.round);
+  const title = parts.join('　') || '試合スコア';
+
+  const isEnd     = (g.game_status || '').includes('終了');
+  const isPlaying = !isEnd && (raw1.some(v => v !== '' && v != null) || raw2.some(v => v !== '' && v != null));
+  const headerBg  = isPlaying ? 'var(--playing)' : isEnd ? 'var(--accent)' : 'var(--pre)';
+  const endBadge  = isEnd ? '<span class="eb">終了</span>' : '';
+
+  let th = '<th class="th-nm">チーム</th>';
+  for (let i = 1; i <= maxInn; i++) th += '<th>' + i + '</th>';
+  th += '<th>計</th>';
+
+  const row = (nm, ins, tot, win) => {
+    let r = '<tr><td class="nm">' + (esc(nm) || '(未定)') + '</td>';
+    ins.forEach(s => {
+      const ok = s !== '' && s != null;
+      r += '<td class="inn' + (ok ? ' s' : '') + '">' + (ok ? esc(s) : '−') + '</td>';
+    });
+    const wc = win === true ? ' win' : win === false ? ' lose' : '';
+    r += '<td class="tot' + wc + '">' + (esc(tot) || '−') + '</td></tr>';
+    return r;
+  };
+
+  return (
+    '<div class="wid-wrap">'
+    + '<div class="wid-hdr" style="background:' + headerBg + '">'
+    + '<span class="ti">⚾ ' + esc(title) + '</span>' + endBadge
+    + '</div>'
+    + '<div class="wid-gl">'
+    + '<table class="wid-st"><thead><tr>' + th + '</tr></thead><tbody>'
+    + row(g.team1, i1, g.total1, w1)
+    + row(g.team2, i2, g.total2, w2)
+    + '</tbody></table></div></div>'
+  );
+}
+
+function updatePreview() {
+  document.getElementById('preview').innerHTML = renderWidgetHtml(getGameObj());
+}
+
+// ═══════════════════════════════════════════════════
+// 確定処理（GitHub保存 → iframeタグ生成）
+// ═══════════════════════════════════════════════════
+function setMsg(msg, type) {
+  const el = document.getElementById('formMsg');
+  el.innerHTML = '';
+  if (!msg) { el.className = ''; return; }
+  el.className = 'msg ' + type;
+  el.textContent = msg;
+}
+
+async function confirmScore() {
+  const cfg = loadConfig();
+  if (!cfg.gh_token || !cfg.gh_owner || !cfg.gh_repo) {
+    setMsg('GitHub設定が必要です。右上の「⚙️ GitHub設定」から設定してください。', 'err');
+    return;
+  }
+
+  const btn     = document.getElementById('confirmBtn');
+  const spinner = document.getElementById('spinner');
+  btn.disabled = true;
+  spinner.style.display = 'inline-block';
+  setMsg('', '');
+
+  try {
+    // 初回確定のみIDを生成（再確定は同じIDを使い回す）
+    if (!currentGameId) {
+      currentGameId = 'm_' + Date.now();
+    }
+
+    const g = getGameObj();
+    g.id = currentGameId;
+
+    // GitHub に data/{id}.json として保存
+    const path = 'data/' + currentGameId + '.json';
+    const content = {
+      last_updated: new Date().toISOString(),
+      games: [g],
+    };
+    await ghWrite(path, content, 'スコア手動入力: ' + (g.round || currentGameId));
+
+    // iframeタグ生成（GitHub Pages URL）
+    const baseUrl  = 'https://' + cfg.gh_owner + '.github.io/' + cfg.gh_repo + '/';
+    const widgetUrl = baseUrl + 'score_widget.html'
+      + '?tournament=' + encodeURIComponent(currentGameId)
+      + '&id='         + encodeURIComponent(currentGameId);
+    const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+
+    document.getElementById('iframeCode').textContent = iframeTag;
+    document.getElementById('iframeResult').className = 'iframe-result show';
+    setMsg('✅ GitHubに保存しました。数分後にiframeが表示されます。', 'ok');
+
+  } catch(e) {
+    setMsg('❌ エラー: ' + e.message, 'err');
+    // エラー時はIDをリセット（次の試行で再生成）
+    currentGameId = null;
+  } finally {
+    btn.disabled = false;
+    spinner.style.display = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// コピー
+// ═══════════════════════════════════════════════════
+function copyIframe() {
+  const code = document.getElementById('iframeCode').textContent;
+  const done = () => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✅ コピーしました！';
+    btn.className = 'copy-btn copied';
+    setTimeout(() => {
+      btn.textContent = '📋 コピー';
+      btn.className = 'copy-btn';
+    }, 2500);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).then(done).catch(() => fallbackCopy(code, done));
+  } else {
+    fallbackCopy(code, done);
+  }
+}
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+  cb();
+}
+
+// ═══════════════════════════════════════════════════
+// 新規作成（フォームリセット）
+// ═══════════════════════════════════════════════════
+function newGame() {
+  if (!confirm('新しい試合を作成しますか？\n現在のiframeタグは引き続き有効です。')) return;
+  currentGameId = null;
+  inn1Values = new Array(9).fill('');
+  inn2Values = new Array(9).fill('');
+  innCount = 9;
+  document.getElementById('titleInput').value  = '';
+  document.getElementById('team1Input').value  = '';
+  document.getElementById('team2Input').value  = '';
+  document.getElementById('statusSelect').value = '';
+  document.getElementById('iframeResult').className = 'iframe-result';
+  setMsg('', '');
+  buildTable();
+  updatePreview();
+}
+
+// ═══════════════════════════════════════════════════
+// 初期化
+// ═══════════════════════════════════════════════════
+buildTable();
+updatePreview();
+</script>
+</body>
+</html>
