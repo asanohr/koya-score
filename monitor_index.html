@@ -360,6 +360,7 @@ function enrichGamesWithMeta(games, session) {
       ...g,
       tournament_name: m.tournament_name !== undefined ? m.tournament_name : (session?.tournament_name || ''),
       extra_info:      m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session),
+      note:            m.note            !== undefined ? m.note            : (g.note || ''),
     };
   });
 }
@@ -879,6 +880,7 @@ function buildCard(g) {
     +'</tbody></table>'
     +commHtml+confirmHtml
     +buildMetaPanel(g)
+    +buildNotePanel(g)
     +buildEmbedPanel(g)
     +'</div></div>';
 }
@@ -935,6 +937,106 @@ function buildMetaPanel(g) {
     +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
     +'<span class="meta-preview" id="meta-prev-'+gid+'">表示：⚾ '+preview+'</span>'
     +'</div></div>';
+}
+
+function buildNotePanel(g) {
+  const m    = loadGameMeta()[g.id] || {};
+  const note = m.note !== undefined ? m.note : (g.note || '');
+  const gid  = esc(g.id);
+  const taId = 'note-ta-' + gid;
+  const taHtml = '<textarea id="' + taId + '" rows="3"'
+    + ' style="width:100%;background:#fff;border:1px solid var(--border);border-radius:5px;'
+    + 'padding:7px 9px;font-size:13px;font-family:inherit;resize:vertical;"'
+    + ' placeholder="例：7回コールド&#10;投手交代：先発●● → 5回●●">'
+    + esc(note) + '</textarea>';
+  return '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
+    + '<button class="embed-btn" onclick="toggleNotePanel(this)">📝 テキスト追加</button>'
+    + '<span style="font-size:11px;color:var(--text-dim);">戦評・投手交代・コールドなど</span>'
+    + '</div>'
+    + '<div class="note-panel" style="display:none;border-top:1px solid var(--border);padding:10px 14px;background:#fffef0;">'
+    + '<label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:5px;">テキスト（スコアの下に表示されます）</label>'
+    + taHtml
+    + '<button class="meta-save-btn" style="margin-top:6px;" onclick="saveNote(\'' + gid + '\')">💾 保存</button>'
+    + '</div>';
+}
+
+function toggleNotePanel(btn) {
+  const panel = btn.closest('div').nextElementSibling;
+  const open  = panel.style.display === 'none';
+  panel.style.display  = open ? 'block' : 'none';
+  btn.textContent = open ? '📝 テキストを閉じる' : '📝 テキスト追加';
+}
+
+async function saveNote(gameId) {
+  const ta = document.getElementById('note-ta-' + gameId);
+  if (!ta) return;
+  const note = ta.value.trim();
+
+  // localStorage 保存
+  const meta = loadGameMeta();
+  if (!meta[gameId]) meta[gameId] = {};
+  meta[gameId].note = note;
+  saveGameMeta(meta);
+
+  const cfg     = loadConfig();
+  const session = loadSession();
+  const tid     = session.tournament_id;
+  if (!cfg.gh_token || !tid) { alert('✅ ローカルに保存しました。\n（GitHub設定または大会IDが未設定のためGitHubへの書き込みはスキップしました）'); return; }
+
+  const btn  = ta.parentElement.querySelector('.meta-save-btn') || ta.nextElementSibling;
+  const orig = btn?.textContent || '';
+  if (btn) { btn.disabled = true; btn.textContent = '保存中...'; }
+  try {
+    const games    = loadCurrentData().games || [];
+    const enriched = enrichGamesWithMeta(games, session);
+    const now      = new Date().toISOString().slice(0, 19);
+    await ghWrite('data/' + tid + '.json', {
+      tournament_id:   tid,
+      tournament_name: session.tournament_name || '',
+      game_date:       session.game_date || '',
+      games:           enriched,
+      last_updated:    now,
+    }, 'テキスト更新: ' + gameId);
+    if (btn) btn.textContent = '✅ 保存しました';
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 2500);
+  } catch(e) {
+    if (btn) btn.textContent = '❌ ' + e.message;
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 4000);
+  }
+}
+
+async function saveCustomNote(id) {
+  const ta = document.getElementById('note-ta-' + id);
+  if (!ta) return;
+  const note = ta.value.trim();
+
+  const btn  = ta.parentElement.querySelector('.meta-save-btn') || ta.nextElementSibling;
+  const orig = btn?.textContent || '';
+
+  // キャッシュを更新
+  const cached = cachedManualScores.find(s => s.id === id);
+  if (cached) cached.game.note = note;
+
+  const cfg = loadConfig();
+  if (!cfg.gh_token || !cfg.gh_owner || !cfg.gh_repo) { alert('GitHub設定が必要です。'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = '保存中...'; }
+  try {
+    const path = 'data/' + id + '.json';
+    const existing = await ghRead(path);
+    let content = { last_updated: new Date().toISOString(), games: [] };
+    if (existing?.content) {
+      const bin = atob(existing.content.replace(/\n/g, ''));
+      content = JSON.parse(new TextDecoder('utf-8').decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
+    }
+    if (content.games?.[0]) content.games[0].note = note;
+    content.last_updated = new Date().toISOString();
+    await ghWrite(path, content, 'テキスト更新: ' + id);
+    if (btn) btn.textContent = '✅ 保存しました';
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 2500);
+  } catch(e) {
+    if (btn) btn.textContent = '❌ ' + e.message;
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 4000);
+  }
 }
 
 function updateMetaPreview(gameId) {
@@ -1162,6 +1264,18 @@ function buildCustomCard(id, game) {
     + row(game.team1 || '?', inn1, game.total1, w1)
     + row(game.team2 || '?', inn2, game.total2, w2)
     + '</tbody></table>'
+    + '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
+    + '<button class="embed-btn" onclick="toggleNotePanel(this)">📝 テキスト追加</button>'
+    + '<span style="font-size:11px;color:var(--text-dim);">戦評・投手交代・コールドなど</span>'
+    + '</div>'
+    + '<div class="note-panel" style="display:none;border-top:1px solid var(--border);padding:10px 14px;background:#fffef0;">'
+    + '<label style="font-size:11px;color:var(--text-dim);display:block;margin-bottom:5px;">テキスト（スコアの下に表示されます）</label>'
+    + '<textarea id="note-ta-' + safeId + '" rows="3"'
+    + ' style="width:100%;background:#fff;border:1px solid var(--border);border-radius:5px;padding:7px 9px;font-size:13px;font-family:inherit;resize:vertical;"'
+    + ' placeholder="例：7回コールド&#10;投手交代：先発●● → 5回●●">'
+    + esc(game.note || '') + '</textarea>'
+    + '<button class="meta-save-btn" style="margin-top:6px;" onclick="saveCustomNote(\'' + safeId + '\')">💾 保存</button>'
+    + '</div>'
     + '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
     + '<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
     + '<span style="font-size:11px;color:var(--text-dim);">他サイトの HTML に貼り付けられます</span>'

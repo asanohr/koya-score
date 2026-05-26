@@ -73,13 +73,30 @@
     .score-tbl td{text-align:center;padding:6px 3px;border-top:1px solid var(--border);min-width:40px;}
     .score-tbl td.td-team{text-align:left;padding-left:14px;font-weight:700;font-size:14px;min-width:110px;color:var(--text);}
     .score-tbl td.td-tot{font-size:16px;font-weight:800;border-left:1px solid var(--border);min-width:44px;color:var(--text);}
-    select.inn-sel{
-      width:44px;height:34px;padding:2px 2px;font-size:14px;font-weight:600;
-      border:1px solid var(--border);border-radius:4px;background:var(--surface);
-      cursor:pointer;font-family:inherit;
-      appearance:auto;-webkit-appearance:auto;overflow:hidden;
+    /* ── カスタムドロップダウン（イニングスコア） ── */
+    .inn-dd{position:relative;display:inline-block;}
+    .inn-dd-btn{
+      width:44px;height:34px;padding:0;
+      background:var(--surface);border:1px solid var(--border);border-radius:4px;
+      font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text);
+      transition:border-color .15s;
     }
-    select.inn-sel:focus{outline:2px solid var(--accent);outline-offset:0;}
+    .inn-dd-btn:hover{border-color:var(--accent);}
+    .inn-dd-btn:focus{outline:2px solid var(--accent);outline-offset:0;}
+    .inn-dd-list{
+      display:none;position:fixed;z-index:9999;
+      background:var(--surface);border:1px solid var(--border);border-radius:6px;
+      min-width:48px;max-height:180px;overflow-y:auto;
+      list-style:none;padding:3px 0;margin:0;
+      box-shadow:0 4px 16px rgba(0,0,0,.14);
+    }
+    .inn-dd-list.open{display:block;}
+    .inn-dd-list li{
+      padding:5px 10px;cursor:pointer;font-size:14px;font-weight:600;
+      text-align:center;white-space:nowrap;color:var(--text);
+    }
+    .inn-dd-list li:hover{background:var(--surface2);}
+    .inn-dd-list li.sel{color:var(--accent);background:rgba(29,111,216,.07);}
 
     /* ── イニング操作 ── */
     .inn-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;}
@@ -242,6 +259,19 @@
       </div>
     </div>
 
+    <!-- テキスト追加（戦評・投手交代など） -->
+    <div style="margin-bottom:10px;display:flex;align-items:center;gap:10px;">
+      <button type="button" class="btn sub sm" id="noteToggleBtn" onclick="toggleNoteInput()">📝 テキスト追加</button>
+      <span style="font-size:11px;color:var(--text-dim);">戦評・投手交代・コールドなど</span>
+    </div>
+    <div id="noteSection" style="display:none;" class="field">
+      <label>テキスト（スコアの下に表示）</label>
+      <textarea id="noteInput" rows="4"
+        placeholder="例：7回コールド&#10;投手交代：先発●● → 5回●●"
+        style="width:100%;resize:vertical;"
+        oninput="updatePreview()"></textarea>
+    </div>
+
     <div id="formMsg"></div>
     <button class="confirm-btn" id="confirmBtn" onclick="confirmScore()">
       <span class="spinner" id="spinner"></span>
@@ -394,16 +424,52 @@ async function ghWrite(path, content, msg) {
 // ═══════════════════════════════════════════════════
 // スコアテーブル構築
 // ═══════════════════════════════════════════════════
-function buildSelect(team, idx, val) {
-  let html = `<select class="inn-sel" size="1" onchange="onInnChange(${team},${idx},this.value)">`;
+function buildInnDd(team, idx, val) {
+  const display = (val === '' || val == null) ? '−' : val;
+  let html = '<div class="inn-dd">'
+    + '<button class="inn-dd-btn" type="button" onclick="toggleInnDd(this)">' + esc(display) + '</button>'
+    + '<ul class="inn-dd-list">';
   for (const v of INN_OPTIONS) {
-    const sel = (v === val) ? ' selected' : '';
-    const label = v === '' ? '−' : v;
-    html += `<option value="${v}"${sel}>${label}</option>`;
+    const label  = v === '' ? '−' : v;
+    const selCls = v === (val ?? '') ? ' class="sel"' : '';
+    html += '<li' + selCls + ' data-val="' + esc(v) + '" onclick="selectInnDd(this,' + team + ',' + idx + ')">' + label + '</li>';
   }
-  html += '</select>';
+  html += '</ul></div>';
   return html;
 }
+
+function toggleInnDd(btn) {
+  const list   = btn.parentElement.querySelector('.inn-dd-list');
+  const isOpen = list.classList.contains('open');
+  closeAllInnDd();
+  if (!isOpen) {
+    const rect  = btn.getBoundingClientRect();
+    list.style.top  = (rect.bottom + 2) + 'px';
+    list.style.left = rect.left + 'px';
+    list.classList.add('open');
+    requestAnimationFrame(() => {
+      const sel = list.querySelector('.sel');
+      if (sel) sel.scrollIntoView({ block: 'nearest' });
+    });
+  }
+}
+
+function selectInnDd(li, team, idx) {
+  const val  = li.dataset.val;
+  const dd   = li.closest('.inn-dd');
+  const btn  = dd.querySelector('.inn-dd-btn');
+  const list = dd.querySelector('.inn-dd-list');
+  btn.textContent = val === '' ? '−' : val;
+  list.querySelectorAll('li').forEach(l => l.classList.remove('sel'));
+  li.classList.add('sel');
+  list.classList.remove('open');
+  onInnChange(team, idx, val);
+}
+
+function closeAllInnDd() {
+  document.querySelectorAll('.inn-dd-list.open').forEach(l => l.classList.remove('open'));
+}
+document.addEventListener('click', closeAllInnDd);
 
 function buildTable() {
   const hdr = document.getElementById('hdrRow');
@@ -421,13 +487,13 @@ function buildTable() {
 
   // 先攻行
   let r1Html = `<td class="td-team" id="tn1Cell">${esc(t1)}</td>`;
-  for (let i = 0; i < innCount; i++) r1Html += `<td>${buildSelect(1, i, inn1Values[i])}</td>`;
+  for (let i = 0; i < innCount; i++) r1Html += `<td>${buildInnDd(1, i, inn1Values[i])}</td>`;
   r1Html += `<td class="td-tot" id="tot1Cell">${totalDisplay(inn1Values)}</td>`;
   r1.innerHTML = r1Html;
 
   // 後攻行
   let r2Html = `<td class="td-team" id="tn2Cell">${esc(t2)}</td>`;
-  for (let i = 0; i < innCount; i++) r2Html += `<td>${buildSelect(2, i, inn2Values[i])}</td>`;
+  for (let i = 0; i < innCount; i++) r2Html += `<td>${buildInnDd(2, i, inn2Values[i])}</td>`;
   r2Html += `<td class="td-tot" id="tot2Cell">${totalDisplay(inn2Values)}</td>`;
   r2.innerHTML = r2Html;
 
@@ -513,7 +579,17 @@ function getGameObj() {
     game_date_label: '',
     venue: '',
     round: '',
+    note: (document.getElementById('noteInput')?.value || '').trim(),
   };
+}
+
+function toggleNoteInput() {
+  const sec = document.getElementById('noteSection');
+  const btn = document.getElementById('noteToggleBtn');
+  const isHidden = sec.style.display === 'none';
+  sec.style.display = isHidden ? 'block' : 'none';
+  btn.textContent   = isHidden ? '📝 テキストを閉じる' : '📝 テキスト追加';
+  updatePreview();
 }
 
 function renderWidgetHtml(g) {
@@ -562,6 +638,11 @@ function renderWidgetHtml(g) {
     return r;
   };
 
+  const noteHtml = g.note
+    ? '<div style="border-top:1px solid var(--border);padding:8px 12px;font-size:13px;color:var(--text-dim);line-height:1.6;background:var(--surface);border-radius:0 0 var(--radius) var(--radius);">'
+      + esc(g.note).replace(/\n/g, '<br>') + '</div>'
+    : '';
+
   return (
     '<div class="wid-wrap">'
     + '<div class="wid-hdr" style="background:' + headerBg + '">'
@@ -571,7 +652,9 @@ function renderWidgetHtml(g) {
     + '<table class="wid-st"><thead><tr>' + th + '</tr></thead><tbody>'
     + row(g.team1, i1, g.total1, w1)
     + row(g.team2, i2, g.total2, w2)
-    + '</tbody></table></div></div>'
+    + '</tbody></table></div>'
+    + noteHtml
+    + '</div>'
   );
 }
 
@@ -718,7 +801,10 @@ function newGame() {
   document.getElementById('team1Input').value  = '';
   document.getElementById('team2Input').value  = '';
   document.getElementById('statusSelect').value = '';
-  document.getElementById('iframeResult').className = 'iframe-result';
+  document.getElementById('iframeResult').className    = 'iframe-result';
+  document.getElementById('noteInput').value            = '';
+  document.getElementById('noteSection').style.display = 'none';
+  document.getElementById('noteToggleBtn').textContent  = '📝 テキスト追加';
   setMsg('', '');
   buildTable();
   updatePreview();
@@ -753,6 +839,13 @@ async function loadEditGame(id) {
     inn2Values = [...(game.innings2 || [])];
     while (inn1Values.length < innCount) inn1Values.push('');
     while (inn2Values.length < innCount) inn2Values.push('');
+
+    // ノートを復元
+    if (game.note) {
+      document.getElementById('noteInput').value            = game.note;
+      document.getElementById('noteSection').style.display = 'block';
+      document.getElementById('noteToggleBtn').textContent  = '📝 テキストを閉じる';
+    }
 
     buildTable();
     updatePreview();

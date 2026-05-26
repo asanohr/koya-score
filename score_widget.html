@@ -70,6 +70,11 @@
       background:var(--surface);border:1px solid var(--border);
       border-top:none;border-radius:0 0 var(--radius) var(--radius);
     }
+    .gn{
+      border-top:1px solid var(--border);
+      padding:8px 12px;font-size:13px;color:var(--text-dim);line-height:1.7;
+      background:var(--surface);
+    }
   </style>
 </head>
 <body>
@@ -161,6 +166,10 @@ function renderGame(g) {
     return r;
   };
 
+  const noteHtml = g.note
+    ? '<div class="gn">' + esc(g.note).replace(/\n/g, '<br>') + '</div>'
+    : '';
+
   setRoot(
     '<div class="wh" style="background:' + headerBg + '"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
     + '<div class="gl"><div class="gi">'
@@ -168,6 +177,7 @@ function renderGame(g) {
     + row(g.team1, i1, g.total1, w1)
     + row(g.team2, i2, g.total2, w2)
     + '</tbody></table></div></div>'
+    + noteHtml
   );
 }
 
