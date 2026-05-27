@@ -1209,24 +1209,52 @@ let cachedManualScores = [];
 async function loadAndRenderManualScores() {
   const el = document.getElementById('custom-scores-content');
   if (!el) return;
-  const ids = loadManualIds();
-  if (!ids.length) {
-    el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">'
-      +'カスタムスコアはありません。<a href="score_creator.html" style="color:var(--accent);">スコア作成ツール</a>で作成できます。</div>';
-    return;
-  }
   el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">読み込み中...</div>';
+
   const base = location.href.replace(/\?.*$/,'').replace(/[^/]*$/,'');
   cachedManualScores = [];
-  for (const id of ids) {
-    try {
-      const res = await fetch(base + 'data/' + encodeURIComponent(id) + '.json?_=' + Date.now());
-      if (!res.ok) continue;
-      const data = await res.json();
-      const game = (data.games || [])[0];
-      if (game) cachedManualScores.push({ id, game });
-    } catch(e) { console.warn('カスタムスコア読み込み失敗:', id, e); }
+
+  try {
+    // GitHub Pages の index.json から type:"manual" エントリを取得
+    // → localStorageに依存しないのでどのPCからでも全カスタムスコアが見える
+    const idxRes = await fetch(base + 'data/index.json?_=' + Date.now());
+    if (!idxRes.ok) throw new Error('index.json が取得できません');
+    const index = await idxRes.json();
+    const manualEntries = (index.tournaments || [])
+      .filter(t => t.type === 'manual')
+      .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+    if (!manualEntries.length) {
+      el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">'
+        + 'カスタムスコアはありません。'
+        + '<a href="score_creator.html" style="color:var(--accent);">スコア作成ツール</a>で作成できます。</div>';
+      return;
+    }
+
+    for (const entry of manualEntries) {
+      try {
+        const res = await fetch(base + 'data/' + encodeURIComponent(entry.id) + '.json?_=' + Date.now());
+        if (!res.ok) continue;
+        const data = await res.json();
+        const game = (data.games || [])[0];
+        if (game) cachedManualScores.push({ id: entry.id, game });
+      } catch(e) { console.warn('カスタムスコア読み込み失敗:', entry.id, e); }
+    }
+  } catch(e) {
+    // フォールバック：index.json が取得できない場合は localStorage のIDリストを使用
+    console.warn('index.json 読み込み失敗、localStorageにフォールバック:', e);
+    const ids = loadManualIds();
+    for (const id of ids) {
+      try {
+        const res = await fetch(base + 'data/' + encodeURIComponent(id) + '.json?_=' + Date.now());
+        if (!res.ok) continue;
+        const data = await res.json();
+        const game = (data.games || [])[0];
+        if (game) cachedManualScores.push({ id, game });
+      } catch(e2) { console.warn('カスタムスコア読み込み失敗:', id, e2); }
+    }
   }
+
   renderManualScores();
 }
 
