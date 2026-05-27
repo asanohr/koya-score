@@ -11,9 +11,7 @@
       --win:#16a34a;--lose:#6b7280;--radius:10px;--playing:#d97757;--pre:#9ca3af;
     }
     *{box-sizing:border-box;margin:0;padding:0;}
-    /* スクロールバーを非表示（overflow は維持してレイアウト・高さ計測に影響させない） */
-    html,body{scrollbar-width:none;-ms-overflow-style:none;}
-    html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;}
+    html,body{overflow:hidden;}
     body{background:transparent;color:var(--text);font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;font-size:15px;}
     .wh{
       background:var(--accent);color:#fff;
@@ -103,10 +101,15 @@ function esc(s) {
 }
 function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
 function notifyHeight() {
-  // レイアウト確定後に高さを親フレームへ通知（スクロールバーなし自動リサイズ）
+  // overflow:hidden を一時解除して正確な高さを取得し、すぐ戻す（再描画は次tickなので見た目に影響しない）
   setTimeout(function() {
     try {
-      const h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      const de = document.documentElement, bd = document.body;
+      de.style.overflow = 'visible';
+      bd.style.overflow = 'visible';
+      const h = Math.max(de.scrollHeight, bd.scrollHeight);
+      de.style.overflow = '';
+      bd.style.overflow = '';
       window.parent.postMessage({ type: 'koya-resize', height: h }, '*');
     } catch(e) {}
   }, 80);
