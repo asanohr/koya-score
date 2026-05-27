@@ -100,19 +100,32 @@ function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
+let _ro = null;
 function notifyHeight() {
-  // overflow:hidden を一時解除して正確な高さを取得し、すぐ戻す（再描画は次tickなので見た目に影響しない）
-  setTimeout(function() {
-    try {
-      const de = document.documentElement, bd = document.body;
-      de.style.overflow = 'visible';
-      bd.style.overflow = 'visible';
-      const h = Math.max(de.scrollHeight, bd.scrollHeight);
-      de.style.overflow = '';
-      bd.style.overflow = '';
-      window.parent.postMessage({ type: 'koya-resize', height: h }, '*');
-    } catch(e) {}
-  }, 80);
+  const root = document.getElementById('root');
+  if (!root) return;
+  // ResizeObserver: 親のoverflow:hiddenに関係なく#root自体の高さを正確に取得
+  if (window.ResizeObserver) {
+    if (!_ro) {
+      _ro = new ResizeObserver(function(entries) {
+        for (const e of entries) {
+          try {
+            const h = Math.ceil(e.contentRect.height) + 2;
+            if (h > 10) window.parent.postMessage({ type: 'koya-resize', height: h }, '*');
+          } catch(ex) {}
+        }
+      });
+      _ro.observe(root);
+    }
+  } else {
+    // フォールバック: offsetHeight（overflow:hiddenの影響外）
+    setTimeout(function() {
+      try {
+        const h = root.offsetHeight + 2;
+        if (h > 10) window.parent.postMessage({ type: 'koya-resize', height: h }, '*');
+      } catch(e) {}
+    }, 100);
+  }
 }
 function setRoot(h) { document.getElementById('root').innerHTML = h; notifyHeight(); }
 
