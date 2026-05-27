@@ -408,6 +408,46 @@ async function toggleGroup(header) {
   renderGames(body, allGames);
 }
 
+function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
+
+function buildScoreTable(g) {
+  const raw1 = g.innings1 || [], raw2 = g.innings2 || [];
+  let maxInn = 9;
+  const rawMax = Math.max(raw1.length, raw2.length);
+  for (let i = 9; i < rawMax; i++) {
+    if ((raw1[i] != null && raw1[i] !== '') || (raw2[i] != null && raw2[i] !== '')) maxInn = i + 1;
+  }
+  const i1 = pad(raw1, maxInn).slice(0, maxInn);
+  const i2 = pad(raw2, maxInn).slice(0, maxInn);
+  const a = parseInt(g.total1), b = parseInt(g.total2);
+  const [w1, w2] = (!isNaN(a)&&!isNaN(b)) ? (a>b?[true,false]:a<b?[false,true]:[null,null]) : [null,null];
+
+  const tdBase = 'text-align:center;padding:5px 3px;border-top:1px solid var(--border);font-size:13px;font-weight:600;min-width:22px;';
+  const thBase = 'text-align:center;padding:4px 3px;font-size:12px;color:var(--text-dim);font-weight:600;background:var(--surface2);border-top:1px solid var(--border);min-width:22px;';
+
+  let th = '<th style="' + thBase + 'text-align:left;padding-left:10px;min-width:90px;">チーム</th>';
+  for (let i = 1; i <= maxInn; i++) th += '<th style="' + thBase + '">' + i + '</th>';
+  th += '<th style="' + thBase + 'border-left:1px solid var(--border);">計</th>';
+
+  const row = (nm, inns, tot, win) => {
+    let r = '<tr><td style="' + tdBase + 'text-align:left;padding-left:10px;font-weight:700;white-space:nowrap;">' + esc(nm || '(未定)') + '</td>';
+    inns.forEach(s => {
+      const ok = s !== '' && s != null;
+      r += '<td style="' + tdBase + 'color:' + (ok ? 'var(--text)' : 'var(--text-dim)') + ';">' + (ok ? esc(String(s)) : '−') + '</td>';
+    });
+    const wc = win===true ? 'color:var(--win);' : win===false ? 'color:#6b7280;' : '';
+    const totStr = (tot !== '' && tot != null) ? esc(String(tot)) : '−';
+    r += '<td style="' + tdBase + 'font-size:17px;font-weight:800;border-left:1px solid var(--border);' + wc + '">' + totStr + '</td></tr>';
+    return r;
+  };
+
+  return '<div style="overflow-x:auto;margin-bottom:8px;border:1px solid var(--border);border-radius:6px;">'
+    + '<table style="width:100%;border-collapse:collapse;">'
+    + '<thead><tr>' + th + '</tr></thead>'
+    + '<tbody>' + row(g.team1, i1, g.total1, w1) + row(g.team2, i2, g.total2, w2) + '</tbody>'
+    + '</table></div>';
+}
+
 function renderGames(body, games) {
   if (!games.length) {
     body.innerHTML = '<div class="empty" style="padding:20px;">試合データがありません。</div>';
@@ -415,29 +455,32 @@ function renderGames(body, games) {
   }
   const byRegion = {};
   for (const g of games) {
-    const k = g.region || '不明';
+    // 手動作成スコア（m_xxx）は「カスタム」として分類
+    const k = (g._tid || '').startsWith('m_') ? 'カスタム' : (g.region || '不明');
     if (!byRegion[k]) byRegion[k] = [];
     byRegion[k].push(g);
   }
   body.innerHTML = Object.entries(byRegion).map(([region, gs]) => {
     const rows = gs.map(g => {
-      const tid    = g._tid || '';
-      const isEnd  = (g.game_status||'').includes('終了');
-      // ヘッダー表示：tournament_name + extra_info（設定済みの場合）
+      const tid      = g._tid || '';
+      const isEnd    = (g.game_status||'').includes('終了');
+      const isManual = tid.startsWith('m_');
+
+      // タイトル組み立て
       const tn = g.tournament_name || '';
       const ei = g.extra_info || '';
       const titleParts = [];
       if (tn) titleParts.push(tn);
       if (ei) titleParts.push(ei);
-      // fallback
       if (!titleParts.length) {
         if (g.game_date_label) titleParts.push(g.game_date_label);
-        if (g.venue) titleParts.push(g.venue);
-        if (g.round) titleParts.push(g.round);
+        if (g.venue)           titleParts.push(g.venue);
+        if (g.round)           titleParts.push(g.round);
       }
       if (g.team1 && g.team2) titleParts.push(g.team1 + ' vs ' + g.team2);
       const titleStr = titleParts.join('　') || g.round || '試合';
-      const scoreStr = (g.total1 !== '' && g.total2 !== '') ? g.total1 + '－' + g.total2 : '';
+      const scoreStr = (g.total1 !== '' && g.total1 != null && g.total2 !== '' && g.total2 != null)
+        ? g.total1 + '－' + g.total2 : '';
 
       const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tid);
       const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : (g.round || '');
@@ -445,6 +488,21 @@ function renderGames(body, games) {
 
       const delBtn = manageMode
         ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tid) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
+        : '';
+
+      // スコアテーブル
+      const scoreTable = buildScoreTable(g);
+
+      // ノート（テキスト追加済みの場合）
+      const noteHtml = g.note
+        ? '<div style="padding:6px 2px 8px;font-size:12px;color:var(--text-dim);line-height:1.7;">'
+          + esc(g.note).replace(/\n/g, '<br>') + '</div>'
+        : '';
+
+      // 編集ボタン（手動スコアのみ）
+      const editBtn = isManual
+        ? '<a href="score_creator.html?edit=' + encodeURIComponent(tid) + '" class="btn sub"'
+          + ' style="font-size:11px;padding:4px 10px;margin-top:8px;display:inline-block;">✏️ 編集</a>'
         : '';
 
       return '<div class="game-row">'
@@ -456,14 +514,19 @@ function renderGames(body, games) {
         + '<span class="g-arrow">▼</span>'
         + '</div>'
         + '<div class="embed-detail">'
-        + '<label>iframeコード（他サイトのHTMLに貼り付けて使用）：</label>'
+        + scoreTable
+        + noteHtml
+        + '<label style="margin-top:4px;">iframeコード（他サイトのHTMLに貼り付けて使用）：</label>'
         + '<code>' + esc(iframeCode) + '</code>'
         + '<button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>'
+        + editBtn
         + '<div class="id-note">🔑 試合ID: <b>' + esc(g.id) + '</b>　大会ID: <b>' + esc(tid) + '</b></div>'
         + '</div>'
         + '</div>';
     }).join('');
-    return '<div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--text-dim);">🏟 ' + esc(region) + '</div>' + rows;
+    const regionIcon = region === 'カスタム' ? '📝' : '🏟';
+    return '<div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--text-dim);">'
+      + regionIcon + ' ' + esc(region) + '</div>' + rows;
   }).join('');
 }
 
