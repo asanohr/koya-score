@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-26T07:32:15.837Z",
+  "last_updated": "2026-05-27T10:20:17.034Z",
   "games": [
     {
       "id": "m_1779778666895",
@@ -34,7 +34,8 @@
       "game_status": "終了",
       "game_date_label": "",
       "venue": "",
-      "round": ""
+      "round": "",
+      "note": ""
     }
   ]
 }
