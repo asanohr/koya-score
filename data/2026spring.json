@@ -1,6 +1,6 @@
 {
   "tournament_id": "2026spring",
-  "tournament_name": "2026春季大会",
+  "tournament_name": "2026年春季大会",
   "game_date": "2026-05-23",
   "games": [
     {
@@ -11,7 +11,7 @@
       "game_status": "試合終了",
       "commentary": "10:00試合開始。\n1回表東洋：先頭1番椙森が内野安打。犠打失敗で1死後、3番松本が中前打で1、2塁とするも4番瀬口は内野ｺﾞﾛ4-6-3のDP。\n1回裏明商：1死後、2番青柳が四球。WPで2進。3番市村の中前適時打で先制。\n2回表東洋：先頭5番峰松が中前打。1死後、内野ｺﾞﾛで2進するも無得点。\n2回裏明商：1死後、7番山本が四球。犠打で2進。9番船本が四球で1、2塁とするが\n無得点。\n5回裏明商：先頭9番船本が内野安打。内野ｺﾞﾛで2進。2番青柳が四球で1、2塁。ﾀﾞﾌﾞﾙｽﾁｰﾙで2、3塁。2死後、4番大塚の左前打で2点を追加。\n6回表東洋：先頭2番月田が右前打。2死後、5番峰松が左前打で1、2塁とするも得点ならず。\n7回裏明商：先頭8番貝口が死球。1死後、犠打で2進。2番青柳が中前打で1、3塁とするが追加点ならず。\n9回表東洋：先頭6番渡邊が右前打。内野ｺﾞﾛで2進するも後続が断たれ得点ならず。\n11:52試合終了。\n明石商業が完封で第３位を決めた。",
       "team1": "東洋大姫路",
-      "team2": "明石商",
+      "team2": "明石商業",
       "innings1": [
         "0",
         "0",
@@ -51,11 +51,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-05-26T05:45:33",
+      "last_changed": "2026-05-23T08:34:23",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
       "note": ""
     },
@@ -66,7 +66,7 @@
       "venue": "姫路",
       "game_status": "試合終了",
       "commentary": "12:44試合開始。\n1回表報徳：2番古橋が敵失で出塁、3番降旗四球などで2死一三塁とし5番丸尾の右前打で先制。さらに6番横井の左翼線二塁打、敵失がからみ3点追加、計4点。2回表報徳：先頭9番大路は中前打で出塁も後続なし。3回裏高砂：先頭7番竹内は死球、犠打で二進、ﾜｲﾙﾄﾞﾋﾟｯﾁで三進、9番中西の内野ゴロの間に生還。1番青木の左中間二塁打でﾁｬﾝｽ続くも1点止まり。4回裏高砂：先頭3番杉山左越二塁打、6番小口左前打で2死一三塁も無得点。5回表報徳：先頭1番中尾ｾﾌﾃｨｰﾊﾞﾝﾄで出塁、二盗、犠打で1死三塁、3番降旗右前適時打で加点。5回裏高砂：1死から9番中西四球を選ぶも後続なし。8回表報徳：先頭2番古橋中前打、犠打で二進後4番藤本中前打、1死一三塁とし5番丸尾の左犠飛、6番横井の右前適時打で2点加点。ここで高砂投手は紀にｽｲｯﾁ、後続断つ。8回裏高砂：2死から2番森本は四球出塁も後続なし。9回表報徳：先頭9番大路は遊撃内野安打、2番古橋四球も無得点。9回裏高砂：最後の攻撃も3者凡退に倒れる。\n14:35試合終了。",
-      "team1": "報徳",
+      "team1": "報徳学園",
       "team2": "高砂",
       "innings1": [
         "4",
@@ -107,11 +107,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
       "note": ""
     },
@@ -163,11 +163,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=11",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
       "note": ""
     },
@@ -219,14 +219,14 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=31",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
       "note": ""
     }
   ],
-  "last_updated": "2026-05-27T11:08:18"
+  "last_updated": "2026-05-27T11:10:19"
 }
