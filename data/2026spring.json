@@ -1,6 +1,6 @@
 {
   "tournament_id": "2026spring",
-  "tournament_name": "2026春季大会",
+  "tournament_name": "2026年春季大会",
   "game_date": "2026-05-23",
   "games": [
     {
@@ -51,11 +51,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-05-26T05:45:33",
+      "last_changed": "2026-05-23T08:34:23",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日　第1試合　姫路",
       "note": ""
     },
@@ -107,11 +107,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日　第2試合　姫路",
       "note": ""
     },
@@ -163,11 +163,11 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=11",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日　第1試合　軟式",
       "note": ""
     },
@@ -219,14 +219,14 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=31",
       "is_new": true,
       "is_updated": false,
-      "last_changed": "2026-05-23T02:24:15",
+      "last_changed": "2026-05-23T06:46:14",
       "game_date": "2026-05-23",
       "game_date_label": "5月23日",
       "confirmed_snapshot": null,
-      "tournament_name": "2026春季大会",
+      "tournament_name": "2026年春季大会",
       "extra_info": "5月23日　第2試合　軟式",
       "note": ""
     }
   ],
-  "last_updated": "2026-05-27T08:59:14"
+  "last_updated": "2026-05-27T09:02:58"
 }
