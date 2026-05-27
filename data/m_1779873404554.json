@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-27T09:17:31.536Z",
+  "last_updated": "2026-05-27T10:12:26.557Z",
   "games": [
     {
       "id": "m_1779873404554",
@@ -31,7 +31,7 @@
       ],
       "total1": "20",
       "total2": "1",
-      "game_status": "",
+      "game_status": "試合中",
       "game_date_label": "",
       "venue": "",
       "round": "",
