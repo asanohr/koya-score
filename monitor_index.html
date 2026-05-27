@@ -344,11 +344,8 @@ function localUpdateInfo(g, confirmed) {
 
 // デフォルトのその他情報を生成（日付・回戦・会場）
 function buildDefaultExtraInfo(g, session) {
-  const parts = [];
-  if (session?.game_date_label) parts.push(session.game_date_label);
-  if (g.round) parts.push(g.round);
-  if (g.venue) parts.push(g.venue);
-  return parts.join('　');
+  // デフォルトは試合日のみ。回戦・会場はユーザーが自由記述
+  return session?.game_date_label || '';
 }
 
 // ゲームにメタ情報（大会名・その他情報）を付加して返す
@@ -361,6 +358,8 @@ function enrichGamesWithMeta(games, session) {
       tournament_name: m.tournament_name !== undefined ? m.tournament_name : (session?.tournament_name || ''),
       extra_info:      m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session),
       note:            m.note            !== undefined ? m.note            : (g.note || ''),
+      team1:           m.team1           !== undefined ? m.team1           : (g.team1 || ''),
+      team2:           m.team2           !== undefined ? m.team2           : (g.team2 || ''),
     };
   });
 }
@@ -921,9 +920,12 @@ function buildMetaPanel(g) {
   const m  = loadGameMeta()[g.id] || {};
   const tn = m.tournament_name !== undefined ? m.tournament_name : (session.tournament_name || '');
   const ei = m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session);
+  const t1 = m.team1           !== undefined ? m.team1           : (g.team1 || '');
+  const t2 = m.team2           !== undefined ? m.team2           : (g.team2 || '');
   const gid = esc(g.id);
   return '<div class="meta-panel">'
-    +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:0;gap:6px 10px;">'
+    // ── 行1：ヘッダー情報 ──
+    +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:6px;gap:6px 10px;">'
     +'<span style="font-weight:700;color:#3d5a99;font-size:12px;white-space:nowrap;">ヘッダー情報</span>'
     +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">大会名</label>'
     +'<input type="text" id="meta-tn-'+gid+'" value="'+esc(tn)+'" placeholder="例：26年春季大会"'
@@ -932,7 +934,18 @@ function buildMetaPanel(g) {
     +'<input type="text" id="meta-ei-'+gid+'" value="'+esc(ei)+'" placeholder="例：5月5日　決勝　姫路"'
     +' style="flex:2;min-width:140px;" oninput="updateMetaPreview(\''+gid+'\')">'
     +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
-    +'</div></div>';
+    +'</div>'
+    // ── 行2：チーム名 ──
+    +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:0;gap:6px 10px;">'
+    +'<span style="font-weight:700;color:#3d5a99;font-size:12px;white-space:nowrap;">チーム名</span>'
+    +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">先攻</label>'
+    +'<input type="text" id="meta-t1-'+gid+'" value="'+esc(t1)+'" placeholder="先攻チーム名（空欄=元の表記）"'
+    +' style="flex:1;min-width:120px;">'
+    +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">後攻</label>'
+    +'<input type="text" id="meta-t2-'+gid+'" value="'+esc(t2)+'" placeholder="後攻チーム名（空欄=元の表記）"'
+    +' style="flex:1;min-width:120px;">'
+    +'</div>'
+    +'</div>';
 }
 
 function buildNotePanel(g) {
@@ -1046,10 +1059,15 @@ async function confirmMeta(event, gameId) {
   event.stopPropagation();
   const tn = document.getElementById('meta-tn-'+gameId)?.value?.trim() ?? '';
   const ei = document.getElementById('meta-ei-'+gameId)?.value?.trim() ?? '';
+  const t1 = document.getElementById('meta-t1-'+gameId)?.value?.trim() ?? '';
+  const t2 = document.getElementById('meta-t2-'+gameId)?.value?.trim() ?? '';
 
   // localStorage 保存
   const meta = loadGameMeta();
   meta[gameId] = { tournament_name: tn, extra_info: ei };
+  // チーム名：入力がある場合のみ保存。空欄はスクレイピング元の表記を使う
+  if (t1) meta[gameId].team1 = t1; else delete meta[gameId].team1;
+  if (t2) meta[gameId].team2 = t2; else delete meta[gameId].team2;
   saveGameMeta(meta);
 
   const cfg = loadConfig();
@@ -1165,15 +1183,18 @@ function renderGames(games) {
 }
 
 function render() {
-  const d     = loadCurrentData();
+  const d       = loadCurrentData();
+  const session = loadSession();
+  // メタ情報（チーム名・ヘッダー情報）を適用してから描画
+  const games   = enrichGamesWithMeta(d.games || [], session);
   const ok    = d.crawl_status !== 'error';
   const last  = d.last_updated ? fmt(d.last_updated) : '未取得';
-  const count = (d.games||[]).filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw))).length;
+  const count = games.filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw))).length;
   document.getElementById('statusDot').className  = 'dot ' + (ok ? 'ok' : 'err');
   document.getElementById('statusText').textContent = ok
     ? '最終: ' + last + '　' + count + '試合'
     : 'エラー: ' + (d.error || '不明');
-  document.getElementById('content').innerHTML = renderGames(d.games);
+  document.getElementById('content').innerHTML = renderGames(games);
 }
 
 function openHistory() {
