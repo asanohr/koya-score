@@ -56,14 +56,13 @@
     .st td.inn{color:var(--text-dim);}
     .st td.inn.ok{color:var(--text);}
     .st td.tot{font-size:18px;font-weight:800;border-left:1px solid var(--border);}
-    .st td.tot.win{color:var(--win);}
-    .st td.tot.lose{color:var(--lose);}
     @media(max-width:480px){
       .wh .ti{font-size:clamp(10px, 3.3vw, 13px);}
       .st th{font-size:11px;padding:3px 2px;min-width:18px;}
       .st td{font-size:13px;padding:4px 2px;min-width:18px;}
       .st td.tn{font-size:14px;min-width:72px;max-width:100px;padding-left:8px;}
       .st td.tot{font-size:15px;}
+      .gn{font-size:12px;}
     }
     .nm{
       padding:20px;text-align:center;color:var(--text-dim);font-size:13px;line-height:1.8;
@@ -71,7 +70,7 @@
       border-top:none;border-radius:0 0 var(--radius) var(--radius);
     }
     .gn{
-      padding:8px 12px;font-size:13px;color:var(--text-dim);line-height:1.7;
+      padding:8px 12px;font-size:14px;font-weight:600;color:var(--text-dim);line-height:1.7;
       background:var(--surface);
     }
   </style>
@@ -100,12 +99,15 @@ function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
-function wl(a, b) {
-  const x = parseInt(a), y = parseInt(b);
-  if (isNaN(x) || isNaN(y)) return [null, null];
-  return x > y ? [true, false] : x < y ? [false, true] : [null, null];
+function notifyHeight() {
+  requestAnimationFrame(function() {
+    try {
+      const h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+      window.parent.postMessage({ type: 'koya-resize', height: h }, '*');
+    } catch(e) {}
+  });
 }
-function setRoot(h) { document.getElementById('root').innerHTML = h; }
+function setRoot(h) { document.getElementById('root').innerHTML = h; notifyHeight(); }
 
 // ── 表示 ──
 function showLoading() {
@@ -129,7 +131,6 @@ function renderGame(g) {
   }
   const i1 = pad(raw1, maxInn).slice(0, maxInn);
   const i2 = pad(raw2, maxInn).slice(0, maxInn);
-  const [w1, w2] = wl(g.total1, g.total2);
 
   // ヘッダー：大会名　その他情報（日付・回戦・会場）
   const parts = [];
@@ -154,14 +155,13 @@ function renderGame(g) {
   for (let i = 1; i <= maxInn; i++) th += '<th>' + i + '</th>';
   th += '<th>計</th>';
 
-  const row = (nm, ins, tot, win) => {
+  const row = (nm, ins, tot) => {
     let r = '<tr><td class="tn">' + (esc(nm) || '(未定)') + '</td>';
     ins.forEach(s => {
       const ok = s !== '' && s != null;
       r += '<td class="inn' + (ok ? ' ok' : '') + '">' + (ok ? esc(s) : '−') + '</td>';
     });
-    const wc = win === true ? 'win' : win === false ? 'lose' : '';
-    r += '<td class="tot ' + wc + '">' + (esc(tot) || '−') + '</td></tr>';
+    r += '<td class="tot">' + (esc(tot) || '−') + '</td></tr>';
     return r;
   };
 
@@ -173,8 +173,8 @@ function renderGame(g) {
     '<div class="wh" style="background:' + headerBg + '"><span class="ti">⚾ ' + esc(title) + '</span>' + endBadge + '</div>'
     + '<div class="gl"><div class="gi">'
     + '<table class="st"><thead><tr>' + th + '</tr></thead><tbody>'
-    + row(g.team1, i1, g.total1, w1)
-    + row(g.team2, i2, g.total2, w2)
+    + row(g.team1, i1, g.total1)
+    + row(g.team2, i2, g.total2)
     + '</tbody></table></div></div>'
     + noteHtml
   );
