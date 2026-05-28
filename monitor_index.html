@@ -906,11 +906,10 @@ function buildEmbedPanel(g) {
 
   return '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
     +'<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
-    +'<span style="font-size:11px;color:var(--text-dim);">他サイトの HTML に貼り付けられます</span>'
+    +'<span style="font-size:11px;color:var(--text-dim);">他サイトに貼り付けて使用</span>'
     +'</div>'
     +'<div class="embed-panel">'
     +warnHtml
-    +'<label>埋め込みコード（他サイトに貼り付けて使用）</label>'
     +'<code id="embed-code-'+esc(g.id)+'">'+esc(iframeCode)+'</code>'
     +'<button class="embed-copy-btn" onclick="copyEmbed(this,\''+esc(g.id)+'\')">📋 コードをコピー</button>'
     +idNote+'</div>';
@@ -1327,10 +1326,9 @@ function buildCustomCard(id, game) {
     + '</div>'
     + '<div style="border-top:1px solid var(--border);padding:6px 14px;background:var(--surface2);display:flex;align-items:center;gap:8px;">'
     + '<button class="embed-btn" onclick="toggleEmbed(this)">🔗 埋め込みコード</button>'
-    + '<span style="font-size:11px;color:var(--text-dim);">他サイトの HTML に貼り付けられます</span>'
+    + '<span style="font-size:11px;color:var(--text-dim);">他サイトに貼り付けて使用</span>'
     + '</div>'
     + '<div class="embed-panel">'
-    + '<label>埋め込みコード（他サイトに貼り付けて使用）</label>'
     + '<code id="cs-code-' + safeId + '">' + esc(iframeTag) + '</code>'
     + '<button class="embed-copy-btn" onclick="copyManualEmbed(\'' + safeId + '\')">📋 コードをコピー</button>'
     + '</div>'
