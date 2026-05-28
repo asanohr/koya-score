@@ -156,7 +156,7 @@
     .result-label{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
     .iframe-code{
       display:block;background:#eef3fb;border:1px solid #c5d7f0;border-radius:6px;
-      padding:10px 12px;font-size:11px;word-break:break-all;color:var(--text);line-height:1.8;
+      padding:10px 12px;font-size:11px;word-break:break-all;white-space:pre-wrap;color:var(--text);line-height:1.8;
       font-family:"SFMono-Regular","Consolas","Courier New",monospace;
     }
     .copy-btn{
@@ -289,7 +289,7 @@
 
     <!-- 確定後に表示されるiframeタグ -->
     <div class="iframe-result" id="iframeResult">
-      <div class="result-label">✅ iframeタグ（コピーして貼り付けてください）</div>
+      <div class="result-label">✅ 埋め込みコード（他サイトに貼り付けて使用）</div>
       <code class="iframe-code" id="iframeCode"></code>
       <button class="copy-btn" id="copyBtn" onclick="copyIframe()">📋 コピー</button>
       <div class="iframe-note">
@@ -742,7 +742,8 @@ async function confirmScore() {
     const widgetUrl = baseUrl + 'score_widget.html'
       + '?tournament=' + encodeURIComponent(currentGameId)
       + '&id='         + encodeURIComponent(currentGameId);
-    const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+    const csafeId  = currentGameId.replace(/[^a-zA-Z0-9_-]/g, '_');
+    const iframeTag = '<iframe id="ks-' + csafeId + '" src="' + widgetUrl + '" width="100%" height="160" frameborder="0" scrolling="no" style="border:none;border-radius:10px;display:block;"></iframe>\n<script>(function(){var f=document.getElementById(\'ks-' + csafeId + '\');if(!f)return;window.addEventListener(\'message\',function(e){if(e.data&&e.data.type===\'koya-resize\'&&e.source===f.contentWindow)f.style.height=e.data.height+\'px\';});})();<\\/script>';
 
     document.getElementById('iframeCode').textContent = iframeTag;
     document.getElementById('iframeResult').className = 'iframe-result show';
@@ -859,7 +860,8 @@ async function loadEditGame(id) {
       const widgetUrl = baseUrl + 'score_widget.html'
         + '?tournament=' + encodeURIComponent(id)
         + '&id='         + encodeURIComponent(game.id || id);
-      const iframeTag = '<iframe src="' + widgetUrl + '" width="100%" height="175" frameborder="0" scrolling="no" style="border:none;max-width:600px;display:block;"></iframe>';
+      const esafeId  = (game.id || id).replace(/[^a-zA-Z0-9_-]/g, '_');
+      const iframeTag = '<iframe id="ks-' + esafeId + '" src="' + widgetUrl + '" width="100%" height="160" frameborder="0" scrolling="no" style="border:none;border-radius:10px;display:block;"></iframe>\n<script>(function(){var f=document.getElementById(\'ks-' + esafeId + '\');if(!f)return;window.addEventListener(\'message\',function(e){if(e.data&&e.data.type===\'koya-resize\'&&e.source===f.contentWindow)f.style.height=e.data.height+\'px\';});})();<\\/script>';
       document.getElementById('iframeCode').textContent = iframeTag;
       document.getElementById('iframeResult').className = 'iframe-result show';
     }
