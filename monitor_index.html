@@ -1264,7 +1264,9 @@ function buildCustomCard(id, game) {
   const scoreStr = hasScore
     ? (game.team1||'?') + '　' + (game.total1||'−') + '－' + (game.total2||'−') + '　' + (game.team2||'?')
     : (game.team1||'?') + ' vs ' + (game.team2||'?');
-  const isEnd = (game.game_status || '').includes('終了');
+  const isEnd     = (game.game_status || '').includes('終了');
+  const isPlaying = !isEnd && ((game.innings1||[]).some(v => v !== '' && v != null)
+                            || (game.innings2||[]).some(v => v !== '' && v != null));
 
   // iframeタグ
   const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
@@ -1300,7 +1302,7 @@ function buildCustomCard(id, game) {
 
   return '<div class="game-card" data-custom-id="' + safeId + '">'
     + '<div class="card-header" onclick="toggleCustomCard(this)">'
-    + (isEnd ? '<span class="badge ended">終了</span>' : '')
+    + (isEnd ? '<span class="badge ended">終了</span>' : isPlaying ? '<span class="badge playing">試合中</span>' : '')
     + '<span class="card-summary">' + esc(scoreStr) + '</span>'
     + '<button class="btn sub sm" style="flex-shrink:0;" onclick="event.stopPropagation();location.href=\'' + editUrl + '\'">✏️ 編集</button>'
     + '<button class="btn danger sm" style="flex-shrink:0;" onclick="event.stopPropagation();deleteManualScore(\'' + safeId + '\',this)">🗑 削除</button>'
