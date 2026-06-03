@@ -84,7 +84,7 @@ const params      = new URLSearchParams(location.search);
 const P_TOURNAMENT = (params.get('tournament') || '').trim(); // 大会ID（必須）
 const P_ID         = (params.get('id')         || '').trim(); // 試合ID（必須）
 const P_THEME      = params.get('theme') || 'light';
-const REFRESH      = parseInt(params.get('refresh') || '5') * 60 * 1000;
+const P_REFRESH    = params.get('refresh'); // 指定時はその値（分）を固定使用
 
 // ── ダークモード ──
 if (P_THEME === 'dark') {
@@ -100,6 +100,14 @@ function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }
+// 試合中は2分、試合前後は5分で自動更新（refreshパラメータ指定時はその値を優先）
+let _refreshTimer = null;
+function scheduleRefresh(isPlaying) {
+  clearTimeout(_refreshTimer);
+  const minutes = P_REFRESH ? parseInt(P_REFRESH) : (isPlaying ? 2 : 5);
+  _refreshTimer = setTimeout(load, minutes * 60 * 1000);
+}
+
 let _ro = null;
 function notifyHeight() {
   const root = document.getElementById('root');
@@ -200,6 +208,7 @@ function renderGame(g) {
     + '</tbody></table></div></div>'
     + noteHtml
   );
+  scheduleRefresh(isPlaying);
 }
 
 // ── データ取得 ──
@@ -236,11 +245,11 @@ async function load() {
     renderGame(game);
   } catch(e) {
     showError(String(e));
+    scheduleRefresh(false);
   }
 }
 
 load();
-setInterval(load, REFRESH);
 </script>
 </body>
 </html>
