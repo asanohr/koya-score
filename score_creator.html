@@ -212,14 +212,11 @@
   <div class="card">
     <div class="card-title">📝 試合情報を入力</div>
 
-    <div class="field">
-      <label>大会名</label>
-      <input id="tournamentNameInput" placeholder="例：2026年春季大会" oninput="updatePreview()">
-    </div>
-    <div class="field">
-      <label>日付・回戦・会場（その他情報）</label>
-      <input id="extraInfoInput" placeholder="例：5月5日　決勝　姫路球場" oninput="updatePreview()">
-      <div class="field-hint">ヘッダー表示：「大会名　その他情報」の形式になります。</div>
+    <div class="field" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <label style="white-space:nowrap;margin-bottom:0;min-width:auto;">大会名</label>
+      <input id="tournamentNameInput" placeholder="例：2026年春季大会" oninput="updatePreview()" style="flex:1;min-width:120px;">
+      <label style="white-space:nowrap;margin-bottom:0;min-width:auto;">日付・回戦・会場</label>
+      <input id="extraInfoInput" placeholder="例：5月5日　決勝　姫路球場" oninput="updatePreview()" style="flex:2;min-width:160px;">
     </div>
 
     <div class="team-grid">
