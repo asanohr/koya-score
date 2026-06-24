@@ -70,8 +70,8 @@
 
     /* ── メイン ── */
     main{max-width:1100px;margin:0 auto;padding:18px 14px 40px;}
-    .legend{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
-    .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-dim);}
+    .legend{display:flex;gap:12px;flex-wrap:wrap;}
+    .legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-dim);}
     .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
     .badge.new    {background:var(--new-bg);    color:var(--new);     border:1px solid rgba(107,114,128,.3);}
     .badge.updated{background:var(--updated-bg);color:var(--updated); border:1px solid rgba(220,38,38,.4);}
@@ -105,9 +105,9 @@
     /* カスタムカード互換 */
     .card-body.collapsed{display:none;}
     .score-table{width:100%;border-collapse:collapse;}
-    .score-table th,.score-table td{text-align:center;padding:5px 2px;border-top:1px solid var(--border);min-width:27px;}
+    .score-table th,.score-table td{text-align:center;padding:4px 3px;border-top:1px solid var(--border);min-width:30px;}
     .score-table th{font-size:11px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
-    .score-table td.team-name{text-align:left;padding-left:8px;font-weight:700;font-size:14px;min-width:70px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .score-table td.team-name{text-align:left;padding-left:9px;font-weight:700;font-size:14px;min-width:70px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     .score-table td.inn{font-size:13px;font-weight:700;color:var(--text-dim);}
     .score-table td.inn.scored{color:var(--text);}
     .score-table td.total{font-size:16px;font-weight:800;border-left:1px solid var(--border);}
@@ -237,16 +237,16 @@
         <span class="date-badge" id="sesDateLabel" style="display:none;"></span>
       </div>
     </div>
+    <div class="legend" style="margin-left:auto;margin-bottom:0;align-self:center;">
+      <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
+      <div class="legend-item"><span class="badge playing">試合中</span> プレー中</div>
+      <div class="legend-item"><span class="badge updated">更新</span> 赤字を追加</div>
+      <div class="legend-item"><span class="badge ended">終了</span> 試合終了</div>
+    </div>
   </div>
 </div>
 
 <main id="mainContent">
-  <div class="legend">
-    <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
-    <div class="legend-item"><span class="badge playing">試合中</span> プレー中</div>
-    <div class="legend-item"><span class="badge updated">更新</span> 赤字を追加</div>
-    <div class="legend-item"><span class="badge ended">終了</span> 試合終了</div>
-  </div>
   <div id="content"></div>
 </main>
 
@@ -929,6 +929,10 @@ function buildMetaPanel(g) {
   const t2 = m.team2           !== undefined ? m.team2           : (g.team2 || '');
   const gid = esc(g.id);
   return '<div class="meta-panel">'
+    // ── 保存ボタン（最上部）──
+    +'<div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:8px;">'
+    +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
+    +'</div>'
     // ── 行1：ヘッダー情報 ──
     +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:6px;gap:6px 10px;">'
     +'<span style="font-weight:700;color:#3d5a99;font-size:12px;white-space:nowrap;">ヘッダー情報</span>'
@@ -938,7 +942,6 @@ function buildMetaPanel(g) {
     +'<label style="min-width:auto;font-size:12px;white-space:nowrap;">日付・回戦・会場</label>'
     +'<input type="text" id="meta-ei-'+gid+'" value="'+esc(ei)+'" placeholder="例：5月5日　決勝　姫路"'
     +' style="flex:2;min-width:140px;" oninput="updateMetaPreview(\''+gid+'\')">'
-    +'<button class="meta-save-btn" id="meta-btn-'+gid+'" onclick="confirmMeta(event,\''+gid+'\')">💾 確定して保存</button>'
     +'</div>'
     // ── 行2：チーム名 ──
     +'<div class="meta-row" style="flex-wrap:wrap;margin-bottom:0;gap:6px 10px;">'
