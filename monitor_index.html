@@ -92,29 +92,30 @@
     @keyframes pulse-upd{0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}   50%{box-shadow:0 0 0 4px rgba(255,77,77,.2)}}
     .card-header{padding:8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
     .card-header:hover{background:rgba(0,0,0,.02);}
-    .card-round{font-size:13px;font-weight:600;color:var(--text);flex:1;}
+    .card-round-wrap{display:flex;align-items:center;gap:6px;flex:1;min-width:0;}
+    .card-round{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;}
     .card-time{font-size:11px;color:var(--text-dim);white-space:nowrap;flex-shrink:0;}
     .card-toggle-btn{font-size:12px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:background .15s;}
     .card-toggle-btn:hover{background:var(--border);}
     /* スコア表：常に表示 */
-    .card-score{border-top:1px solid var(--border);}
+    .card-score{border-top:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;}
     /* 詳細パネル：開くで表示 */
     .card-detail{border-top:1px solid var(--border);}
     .card-detail.collapsed{display:none;}
     /* カスタムカード互換 */
     .card-body.collapsed{display:none;}
     .score-table{width:100%;border-collapse:collapse;}
-    .score-table th,.score-table td{text-align:center;padding:6px 3px;border-top:1px solid var(--border);min-width:24px;}
-    .score-table th{font-size:12px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
-    .score-table td.team-name{text-align:left;padding-left:10px;font-weight:700;font-size:15px;min-width:100px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .score-table td.inn{font-size:14px;font-weight:700;color:var(--text-dim);}
+    .score-table th,.score-table td{text-align:center;padding:5px 2px;border-top:1px solid var(--border);min-width:27px;}
+    .score-table th{font-size:11px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
+    .score-table td.team-name{text-align:left;padding-left:8px;font-weight:700;font-size:14px;min-width:70px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .score-table td.inn{font-size:13px;font-weight:700;color:var(--text-dim);}
     .score-table td.inn.scored{color:var(--text);}
-    .score-table td.total{font-size:18px;font-weight:800;border-left:1px solid var(--border);}
+    .score-table td.total{font-size:16px;font-weight:800;border-left:1px solid var(--border);}
     .score-table td.total.win{color:var(--win);} .score-table td.total.lose{color:var(--lose);}
     .game-card.is-new td.scored,.game-card.is-new td.total{color:var(--updated)!important;}
     .game-card.is-updated td.changed{color:var(--updated)!important;}
-    .confirm-btn{display:block;width:100%;padding:8px;background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.4);border-top:none;color:var(--updated);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;text-align:center;transition:background .15s;}
-    .confirm-btn:hover{background:rgba(255,77,77,.2);}
+    .badge.updated{cursor:pointer;}
+    .badge.updated:hover{opacity:.8;}
     .commentary-toggle{width:100%;text-align:left;padding:6px 14px;background:none;border:none;border-top:1px solid var(--border);color:var(--text-dim);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:inherit;}
     .commentary-toggle:hover{background:rgba(0,0,0,.02);}
     .commentary-body{display:none;padding:10px 14px;font-size:12px;color:var(--text-dim);line-height:1.7;border-top:1px solid var(--border);background:var(--surface2);}
@@ -822,7 +823,7 @@ function statusBadge(g, confirmed) {
   const isPlaying = !isEnd && hasScore;
   const { updated } = localUpdateInfo(g, confirmed); // このPCの確認状態で判定
 
-  if (updated)   return '<span class="badge updated">更新</span>';
+  if (updated)   return '<span class="badge updated" onclick="confirmGame(event,\''+esc(g.id)+'\')" title="クリックで確認（赤字を消す）">更新 ✓</span>';
   if (isEnd)     return '<span class="badge ended">終了</span>';
   if (isPlaying) return '<span class="badge playing">試合中</span>';
   if (isNew)     return '<span class="badge new">NEW</span>';
@@ -864,14 +865,14 @@ function buildCard(g) {
     ? '<button class="commentary-toggle" onclick="toggleComm(this)">📋 試合経過を表示</button>'
       +'<div class="commentary-body">'+esc(comm)+'</div>'
     : '';
-  const confirmHtml = isUpdatedLocal
-    ? '<button class="confirm-btn" onclick="confirmGame(event,\''+esc(g.id)+'\')">✔ 確認（赤字を消す）</button>'
-    : '';
 
   return '<div class="game-card '+cardCls+'" data-id="'+esc(g.id)+'">'
     +'<div class="card-header" onclick="toggleCard(this)">'
+    +'<span class="card-round-wrap">'
     +'<span class="card-round">'+esc(g.round)+'</span>'
-    +statusBadge(g, confirmed)+changedAt
+    +statusBadge(g, confirmed)
+    +'</span>'
+    +changedAt
     +'<button class="card-toggle-btn">'+btnLabel+'</button>'
     +'</div>'
     +'<div class="card-score">'
@@ -879,9 +880,9 @@ function buildCard(g) {
     +row(g.team1,inn1,g.total1,w1,snap?.innings1,snap?.total1)
     +row(g.team2,inn2,g.total2,w2,snap?.innings2,snap?.total2)
     +'</tbody></table>'
-    +commHtml+confirmHtml
     +'</div>'
     +'<div class="card-detail '+(isOpen?'':'collapsed')+'">'
+    +commHtml
     +buildMetaPanel(g)
     +buildNotePanel(g)
     +buildEmbedPanel(g)
