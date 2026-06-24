@@ -78,8 +78,12 @@
     .badge.playing{background:#fef3c7;color:var(--status-play);border:1px solid rgba(180,83,9,.3);}
     .badge.ended  {background:rgba(29,111,216,.08);color:var(--status-end);border:1px solid rgba(29,111,216,.4);}
 
+    /* ── 2カラムグリッド ── */
+    .region-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+    @media(max-width:800px){.region-grid{grid-template-columns:1fr;}}
+
     /* ── カード ── */
-    .region-section{margin-bottom:26px;}
+    .region-section{margin-bottom:0;}
     .region-header{font-size:15px;font-weight:700;color:var(--text-dim);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;}
     .game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .3s;}
     .game-card.is-new    {border-color:rgba(107,114,128,.5); animation:pulse-new 1.5s ease 3;}
@@ -88,20 +92,24 @@
     @keyframes pulse-upd{0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}   50%{box-shadow:0 0 0 4px rgba(255,77,77,.2)}}
     .card-header{padding:8px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;}
     .card-header:hover{background:rgba(0,0,0,.02);}
-    .card-round{font-size:13px;font-weight:600;color:var(--text);}
-    .card-summary{font-size:15px;font-weight:700;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .card-round{font-size:13px;font-weight:600;color:var(--text);flex:1;}
     .card-time{font-size:11px;color:var(--text-dim);white-space:nowrap;flex-shrink:0;}
     .card-toggle-btn{font-size:12px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:3px 10px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:background .15s;}
     .card-toggle-btn:hover{background:var(--border);}
-    .card-body{border-top:1px solid var(--border);}
+    /* スコア表：常に表示 */
+    .card-score{border-top:1px solid var(--border);}
+    /* 詳細パネル：開くで表示 */
+    .card-detail{border-top:1px solid var(--border);}
+    .card-detail.collapsed{display:none;}
+    /* カスタムカード互換 */
     .card-body.collapsed{display:none;}
     .score-table{width:100%;border-collapse:collapse;}
-    .score-table th,.score-table td{text-align:center;padding:7px 4px;border-top:1px solid var(--border);min-width:26px;}
-    .score-table th{font-size:13px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
-    .score-table td.team-name{text-align:left;padding-left:14px;font-weight:700;font-size:16px;min-width:120px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .score-table td.inn{font-size:15px;font-weight:700;color:var(--text-dim);}
+    .score-table th,.score-table td{text-align:center;padding:6px 3px;border-top:1px solid var(--border);min-width:24px;}
+    .score-table th{font-size:12px;color:var(--text-dim);font-weight:600;background:var(--surface2);}
+    .score-table td.team-name{text-align:left;padding-left:10px;font-weight:700;font-size:15px;min-width:100px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .score-table td.inn{font-size:14px;font-weight:700;color:var(--text-dim);}
     .score-table td.inn.scored{color:var(--text);}
-    .score-table td.total{font-size:19px;font-weight:800;border-left:1px solid var(--border);}
+    .score-table td.total{font-size:18px;font-weight:800;border-left:1px solid var(--border);}
     .score-table td.total.win{color:var(--win);} .score-table td.total.lose{color:var(--lose);}
     .game-card.is-new td.scored,.game-card.is-new td.total{color:var(--updated)!important;}
     .game-card.is-updated td.changed{color:var(--updated)!important;}
@@ -832,12 +840,6 @@ function buildCard(g) {
   const isOpen   = openCards.has(g.id);
   const btnLabel = isOpen ? '閉じる ▲' : '開く ▼';
   const changedAt = g.last_changed ? '<span class="card-time">' + fmt(g.last_changed) + '</span>' : '';
-  const t1 = g.team1 || '(未定)', t2 = g.team2 || '(未定)';
-  const hasScore  = !!(g.total1 || g.total2);
-  const summaryText = hasScore ? t1+'　'+g.total1+'－'+g.total2+'　'+t2 : t1+' vs '+t2;
-  const summaryHtml = !isOpen
-    ? '<span class="card-summary">'+esc(summaryText)+'</span>'
-    : '<span class="card-summary"></span>';
 
   let th = '<th class="team-name">チーム</th>';
   for (let i = 1; i <= inn1.length; i++) th += '<th>' + i + '</th>';
@@ -869,15 +871,17 @@ function buildCard(g) {
   return '<div class="game-card '+cardCls+'" data-id="'+esc(g.id)+'">'
     +'<div class="card-header" onclick="toggleCard(this)">'
     +'<span class="card-round">'+esc(g.round)+'</span>'
-    +statusBadge(g, confirmed)+summaryHtml+changedAt
+    +statusBadge(g, confirmed)+changedAt
     +'<button class="card-toggle-btn">'+btnLabel+'</button>'
     +'</div>'
-    +'<div class="card-body '+(isOpen?'':'collapsed')+'">'
+    +'<div class="card-score">'
     +'<table class="score-table"><thead><tr>'+th+'</tr></thead><tbody>'
     +row(g.team1,inn1,g.total1,w1,snap?.innings1,snap?.total1)
     +row(g.team2,inn2,g.total2,w2,snap?.innings2,snap?.total2)
     +'</tbody></table>'
     +commHtml+confirmHtml
+    +'</div>'
+    +'<div class="card-detail '+(isOpen?'':'collapsed')+'">'
     +buildMetaPanel(g)
     +buildNotePanel(g)
     +buildEmbedPanel(g)
@@ -1103,35 +1107,25 @@ async function confirmMeta(event, gameId) {
 }
 
 function toggleCard(header) {
-  const card = header.closest('.game-card');
-  const body = card.querySelector('.card-body');
-  const btn  = card.querySelector('.card-toggle-btn');
-  const sum  = card.querySelector('.card-summary');
-  if (body.classList.contains('collapsed')) {
-    body.classList.remove('collapsed'); btn.textContent='閉じる ▲'; sum.textContent='';
+  const card   = header.closest('.game-card');
+  const detail = card.querySelector('.card-detail');
+  const btn    = card.querySelector('.card-toggle-btn');
+  if (detail.classList.contains('collapsed')) {
+    detail.classList.remove('collapsed'); btn.textContent='閉じる ▲';
     openCards.add(card.dataset.id);
   } else {
-    body.classList.add('collapsed'); btn.textContent='開く ▼';
-    const tds  = card.querySelectorAll('td.team-name');
-    const tots = card.querySelectorAll('td.total');
-    const t1=tds[0]?.textContent||'', t2=tds[1]?.textContent||'';
-    const s1=tots[0]?.textContent||'', s2=tots[1]?.textContent||'';
-    sum.textContent = (s1||s2) ? t1+'　'+s1+'－'+s2+'　'+t2 : t1+' vs '+t2;
+    detail.classList.add('collapsed'); btn.textContent='開く ▼';
     openCards.delete(card.dataset.id);
   }
 }
 function toggleAll(open) {
   document.querySelectorAll('.game-card').forEach(card => {
-    const body=card.querySelector('.card-body'), btn=card.querySelector('.card-toggle-btn'), sum=card.querySelector('.card-summary');
+    const detail=card.querySelector('.card-detail'), btn=card.querySelector('.card-toggle-btn');
     if (open) {
-      body.classList.remove('collapsed'); btn.textContent='閉じる ▲'; sum.textContent='';
+      detail.classList.remove('collapsed'); btn.textContent='閉じる ▲';
       openCards.add(card.dataset.id);
     } else {
-      body.classList.add('collapsed'); btn.textContent='開く ▼';
-      const tds=card.querySelectorAll('td.team-name'), tots=card.querySelectorAll('td.total');
-      const t1=tds[0]?.textContent||'', t2=tds[1]?.textContent||'';
-      const s1=tots[0]?.textContent||'', s2=tots[1]?.textContent||'';
-      sum.textContent=(s1||s2)?t1+'　'+s1+'－'+s2+'　'+t2:t1+' vs '+t2;
+      detail.classList.add('collapsed'); btn.textContent='開く ▼';
       openCards.delete(card.dataset.id);
     }
   });
@@ -1176,10 +1170,12 @@ function renderGames(games) {
     return '<div class="no-games">試合データがありません。</div>';
   const byRegion = {};
   for (const g of visible) { const k=g.region||'不明'; if(!byRegion[k])byRegion[k]=[]; byRegion[k].push(g); }
-  return Object.entries(byRegion).map(([region, gs]) =>
-    '<div class="region-section"><div class="region-header">🏟 '+esc(region)+'</div>'
-    + gs.map(buildCard).join('') + '</div>'
-  ).join('');
+  return '<div class="region-grid">'
+    + Object.entries(byRegion).map(([region, gs]) =>
+        '<div class="region-section"><div class="region-header">🏟 '+esc(region)+'</div>'
+        + gs.map(buildCard).join('') + '</div>'
+      ).join('')
+    + '</div>';
 }
 
 function render() {
