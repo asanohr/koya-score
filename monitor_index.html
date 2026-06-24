@@ -84,7 +84,9 @@
 
     /* ── カード ── */
     .region-section{margin-bottom:0;}
-    .region-header{font-size:15px;font-weight:700;color:var(--text-dim);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;}
+    .region-header{font-size:15px;font-weight:700;color:var(--text-dim);border-left:3px solid var(--accent);padding-left:10px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;}
+    .region-toggle-btn{font-size:11px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 7px;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit;transition:background .15s;}
+    .region-toggle-btn:hover{background:var(--border);}
     .game-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;transition:border-color .3s;}
     .game-card.is-new    {border-color:rgba(107,114,128,.5); animation:pulse-new 1.5s ease 3;}
     .game-card.is-updated{border-color:rgba(255,77,77,.5);  animation:pulse-upd 1.5s ease 3;}
@@ -1110,6 +1112,13 @@ async function confirmMeta(event, gameId) {
   }
 }
 
+function toggleRegion(btn) {
+  const section = btn.closest('.region-section');
+  const cards   = section.querySelectorAll('.game-card');
+  const closing = btn.textContent === '閉じる';
+  cards.forEach(c => c.style.display = closing ? 'none' : '');
+  btn.textContent = closing ? '開く' : '閉じる';
+}
 function toggleCard(header) {
   const card   = header.closest('.game-card');
   const detail = card.querySelector('.card-detail');
@@ -1176,7 +1185,11 @@ function renderGames(games) {
   for (const g of visible) { const k=g.region||'不明'; if(!byRegion[k])byRegion[k]=[]; byRegion[k].push(g); }
   return '<div class="region-grid">'
     + Object.entries(byRegion).map(([region, gs]) =>
-        '<div class="region-section"><div class="region-header">🏟 '+esc(region)+'</div>'
+        '<div class="region-section">'
+        +'<div class="region-header">'
+        +'<span>🏟 '+esc(region)+'</span>'
+        +'<button class="region-toggle-btn" onclick="toggleRegion(this)">閉じる</button>'
+        +'</div>'
         + gs.map(buildCard).join('') + '</div>'
       ).join('')
     + '</div>';
