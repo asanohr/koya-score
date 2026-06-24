@@ -1,13 +1,6 @@
 {
   "tournaments": [
     {
-      "id": "2026spring",
-      "name": "2026spring",
-      "date": "2026-06-24",
-      "game_count": 3,
-      "last_updated": "2026-06-24T08:30:49"
-    },
-    {
       "id": "m_1779873404554",
       "name": "26年春季大会",
       "date": "2026-06-03",
@@ -38,7 +31,14 @@
       "game_count": 1,
       "last_updated": "2026-05-27T10:20:34.598Z",
       "type": "manual"
+    },
+    {
+      "id": "2026spring",
+      "name": "2026年春季大会",
+      "date": "2026-05-23",
+      "game_count": 5,
+      "last_updated": "2026-06-24T08:43:14"
     }
   ],
-  "last_updated": "2026-06-24T08:30:49"
+  "last_updated": "2026-06-24T08:43:14"
 }
