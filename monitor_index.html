@@ -277,7 +277,8 @@ const SESSION_KEY   = 'koya_session';
 const CURRENT_KEY   = 'koya_current';
 const CONFIRMED_KEY = 'koya_confirmed'; // このPCの確認済みスナップショット（PC固有）
 const GAME_META_KEY = 'koya_game_meta'; // 試合ごとの大会名・その他情報（PC固有）
-const MANUAL_IDS_KEY = 'koya_manual_ids'; // 手動作成スコアID一覧
+const MANUAL_IDS_KEY  = 'koya_manual_ids';  // 手動作成スコアID一覧
+const DELETED_IDS_KEY = 'koya_deleted_ids'; // score_history で削除されたゲームIDブラックリスト
 const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
@@ -681,8 +682,12 @@ async function fetchAndUpdate() {
     return result;
   });
 
-  autoConfirmNew(merged); // 初回出現ゲームをこのPCで自動確認
-  saveCurrentData({ games:merged, last_updated:now, crawl_status:'ok', error:null, game_count:newGames.length });
+  // ブラックリストに登録済みのゲームは復活させない
+  const _deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
+  const filteredMerged = merged.filter(g => !_deletedIds.has(g.id));
+
+  autoConfirmNew(filteredMerged); // 初回出現ゲームをこのPCで自動確認
+  saveCurrentData({ games:filteredMerged, last_updated:now, crawl_status:'ok', error:null, game_count:filteredMerged.length });
 
   // GitHub に書き込み
   const cfg = loadConfig();
@@ -696,7 +701,7 @@ async function fetchAndUpdate() {
       tournament_id:   tournamentId,
       tournament_name: session.tournament_name || '',
       game_date:       session.game_date       || '',
-      games:           enrichGamesWithMeta(merged, session), // メタ情報（大会名・その他情報）を付加
+      games:           enrichGamesWithMeta(filteredMerged, session), // メタ情報（大会名・その他情報）を付加
       last_updated:    now,
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
@@ -741,7 +746,8 @@ async function refreshDisplay() {
       const res = await fetch(base + 'data/' + encodeURIComponent(tid) + '.json?_=' + Date.now());
       if (res.ok) {
         const data = await res.json();
-        const games = data.games || [];
+        const deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
+        const games = (data.games || []).filter(g => !deletedIds.has(g.id));
         autoConfirmNew(games); // 初回出現ゲームをこのPCで自動確認
         saveCurrentData({ games, last_updated: data.last_updated || null,
           crawl_status: 'ok', error: null, game_count: games.length });

@@ -304,6 +304,22 @@ async function deleteGame(tournamentId, gameId, event) {
     }
 
     loadedGames[tournamentId] = newGames.map(g => ({ ...g, _tid: tournamentId }));
+
+    // koya_current から削除済みゲームを除去（monitor_index.html と共有 localStorage）
+    try {
+      const cur = JSON.parse(localStorage.getItem('koya_current') || '{}');
+      if (cur.games) {
+        cur.games = cur.games.filter(g => g.id !== gameId);
+        localStorage.setItem('koya_current', JSON.stringify(cur));
+      }
+    } catch(ex) {}
+    // 削除 ID をブラックリストに追加（再クロール時に復活しないよう）
+    try {
+      const bl = new Set(JSON.parse(localStorage.getItem('koya_deleted_ids') || '[]'));
+      bl.add(gameId);
+      localStorage.setItem('koya_deleted_ids', JSON.stringify([...bl]));
+    } catch(ex) {}
+
     // グループ内の全試合を結合して再描画
     const groupCard = [...document.querySelectorAll('.tournament-card')]
       .find(c => (c.dataset.ids || '').split(',').includes(tournamentId));
