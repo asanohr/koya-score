@@ -64,7 +64,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "13:03  試合開始",
       "team1": "松陽",
       "team2": "舞子",
@@ -732,5 +732,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-04T04:35:18"
+  "last_updated": "2026-07-04T04:37:18"
 }
