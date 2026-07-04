@@ -278,7 +278,8 @@ const CURRENT_KEY   = 'koya_current';
 const CONFIRMED_KEY = 'koya_confirmed'; // このPCの確認済みスナップショット（PC固有）
 const GAME_META_KEY = 'koya_game_meta'; // 試合ごとの大会名・その他情報（PC固有）
 const MANUAL_IDS_KEY  = 'koya_manual_ids';  // 手動作成スコアID一覧
-const DELETED_IDS_KEY = 'koya_deleted_ids'; // score_history で削除されたゲームIDブラックリスト
+const DELETED_IDS_KEY   = 'koya_deleted_ids';   // score_history で削除されたゲームIDブラックリスト
+const COLLAPSED_RGNS_KEY = 'koya_collapsed_rgns'; // 閉じた会場名リスト
 const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 const PROXY_LIST = [
   u => 'https://corsproxy.io/?' + encodeURIComponent(u),
@@ -802,7 +803,9 @@ function esc(s) {
 }
 function fmt(iso) {
   if (!iso) return '';
-  return new Date(iso).toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  // toISOString() で保存した文字列は UTC だが末尾の Z が省略されている場合があるため補完
+  const s = (iso.endsWith('Z') || iso.includes('+')) ? iso : iso + 'Z';
+  return new Date(s).toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
 }
 function pad(arr, n) { const a = [...arr]; while (a.length < n) a.push(''); return a; }
 function effectiveInnCount(inn1, inn2) {
@@ -847,7 +850,7 @@ function buildCard(g) {
   const [w1, w2] = winLose(g.total1, g.total2);
   const cardCls  = isUpdatedLocal ? 'is-updated' : '';
   const isOpen   = openCards.has(g.id);
-  const btnLabel = isOpen ? '閉じる ▲' : '開く ▼';
+  const btnLabel = isOpen ? 'スコアのみ ▲' : '詳細 ▼';
   const changedAt = g.last_changed ? '<span class="card-time">' + fmt(g.last_changed) + '</span>' : '';
 
   let th = '<th class="team-name">チーム</th>';
@@ -1119,21 +1122,26 @@ async function confirmMeta(event, gameId) {
 }
 
 function toggleRegion(btn) {
-  const section = btn.closest('.region-section');
-  const cards   = section.querySelectorAll('.game-card');
-  const closing = btn.textContent === '閉じる';
+  const section    = btn.closest('.region-section');
+  const regionName = section.dataset.region || '';
+  const cards      = section.querySelectorAll('.game-card');
+  const closing    = btn.textContent === '閉じる';
   cards.forEach(c => c.style.display = closing ? 'none' : '');
   btn.textContent = closing ? '開く' : '閉じる';
+  // 閉じた会場を localStorage に保存
+  const collapsed = new Set(JSON.parse(localStorage.getItem(COLLAPSED_RGNS_KEY) || '[]'));
+  if (closing) { collapsed.add(regionName); } else { collapsed.delete(regionName); }
+  localStorage.setItem(COLLAPSED_RGNS_KEY, JSON.stringify([...collapsed]));
 }
 function toggleCard(header) {
   const card   = header.closest('.game-card');
   const detail = card.querySelector('.card-detail');
   const btn    = card.querySelector('.card-toggle-btn');
   if (detail.classList.contains('collapsed')) {
-    detail.classList.remove('collapsed'); btn.textContent='閉じる ▲';
+    detail.classList.remove('collapsed'); btn.textContent='スコアのみ ▲';
     openCards.add(card.dataset.id);
   } else {
-    detail.classList.add('collapsed'); btn.textContent='開く ▼';
+    detail.classList.add('collapsed'); btn.textContent='詳細 ▼';
     openCards.delete(card.dataset.id);
   }
 }
@@ -1141,10 +1149,10 @@ function toggleAll(open) {
   document.querySelectorAll('.game-card').forEach(card => {
     const detail=card.querySelector('.card-detail'), btn=card.querySelector('.card-toggle-btn');
     if (open) {
-      detail.classList.remove('collapsed'); btn.textContent='閉じる ▲';
+      detail.classList.remove('collapsed'); btn.textContent='スコアのみ ▲';
       openCards.add(card.dataset.id);
     } else {
-      detail.classList.add('collapsed'); btn.textContent='開く ▼';
+      detail.classList.add('collapsed'); btn.textContent='詳細 ▼';
       openCards.delete(card.dataset.id);
     }
   });
@@ -1191,7 +1199,7 @@ function renderGames(games) {
   for (const g of visible) { const k=g.region||'不明'; if(!byRegion[k])byRegion[k]=[]; byRegion[k].push(g); }
   return '<div class="region-grid">'
     + Object.entries(byRegion).map(([region, gs]) =>
-        '<div class="region-section">'
+        '<div class="region-section" data-region="'+esc(region)+'">'
         +'<div class="region-header">'
         +'<span>🏟 '+esc(region)+'</span>'
         +'<button class="region-toggle-btn" onclick="toggleRegion(this)">閉じる</button>'
@@ -1214,6 +1222,15 @@ function render() {
     ? '最終: ' + last + '　' + count + '試合'
     : 'エラー: ' + (d.error || '不明');
   document.getElementById('content').innerHTML = renderGames(games);
+  // 閉じていた会場を復元
+  const collapsedRgns = new Set(JSON.parse(localStorage.getItem(COLLAPSED_RGNS_KEY) || '[]'));
+  document.querySelectorAll('.region-section[data-region]').forEach(sec => {
+    if (collapsedRgns.has(sec.dataset.region)) {
+      sec.querySelectorAll('.game-card').forEach(c => c.style.display = 'none');
+      const btn = sec.querySelector('.region-toggle-btn');
+      if (btn) btn.textContent = '開く';
+    }
+  });
 }
 
 function openHistory() {
