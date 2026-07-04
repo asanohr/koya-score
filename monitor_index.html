@@ -525,11 +525,14 @@ async function updateTournamentIndex(session, gameCount, lastUpdated) {
 //  スクレイピング
 // ═══════════════════════════════════════════════════
 async function fetchRaw(url) {
+  // プロキシ側キャッシュを回避するためソースURLにタイムスタンプを付加
+  const bustUrl = url + (url.includes('?') ? '&' : '?') + '_=' + Date.now();
   const order = [workingProxyIdx, ...PROXY_LIST.map((_,i)=>i).filter(i=>i!==workingProxyIdx)];
   const errors = [];
   for (const i of order) {
     try {
-      const res = await fetch(PROXY_LIST[i](url));
+      // ブラウザキャッシュも無効化
+      const res = await fetch(PROXY_LIST[i](bustUrl), { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       workingProxyIdx = i;
       return await res.arrayBuffer();
@@ -824,14 +827,13 @@ function winLose(t1, t2) {
   return a>b ? [true,false] : a<b ? [false,true] : [null,null];
 }
 function statusBadge(g, confirmed) {
-  const s = g.game_status || '';
-  const isEnd    = s.includes('終了');
-  const hasScore = (g.innings1||[]).some(v => v !== '' && v != null)
-                || (g.innings2||[]).some(v => v !== '' && v != null)
-                || (g.total1 !== '' && g.total1 != null)
-                || (g.total2 !== '' && g.total2 != null);
-  const isNew     = !hasScore && !isEnd;
-  const isPlaying = !isEnd && hasScore;
+  const s    = g.game_status || '';
+  const isEnd = s.includes('終了');
+  const inn1  = g.innings1 || [];
+  // 試合中：1回表に数値が入った時点
+  const isPlaying = !isEnd && inn1[0] !== '' && inn1[0] != null;
+  // NEW：チーム名はあるがまだ1回表が未記録
+  const isNew = !isEnd && !isPlaying && !!(g.team1 || g.team2);
   const { updated } = localUpdateInfo(g, confirmed); // このPCの確認状態で判定
 
   if (updated)   return '<span class="badge updated" onclick="confirmGame(event,\''+esc(g.id)+'\')" title="クリックで確認（赤字を消す）">更新 ✓</span>';
@@ -1300,8 +1302,9 @@ function buildCustomCard(id, game) {
     ? (game.team1||'?') + '　' + (game.total1||'−') + '－' + (game.total2||'−') + '　' + (game.team2||'?')
     : (game.team1||'?') + ' vs ' + (game.team2||'?');
   const isEnd     = (game.game_status || '').includes('終了');
-  const isPlaying = !isEnd && ((game.innings1||[]).some(v => v !== '' && v != null)
-                            || (game.innings2||[]).some(v => v !== '' && v != null));
+  const _inn1c    = (game.innings1 || [])[0];
+  const isPlaying = !isEnd && _inn1c !== '' && _inn1c != null;
+  const isNew     = !isEnd && !isPlaying && !!(game.team1 || game.team2);
 
   // iframeタグ
   const origin = (location.origin && location.origin !== 'null') ? location.origin : '';
@@ -1337,7 +1340,7 @@ function buildCustomCard(id, game) {
 
   return '<div class="game-card" data-custom-id="' + safeId + '">'
     + '<div class="card-header" onclick="toggleCustomCard(this)">'
-    + (isEnd ? '<span class="badge ended">終了</span>' : isPlaying ? '<span class="badge playing">試合中</span>' : '')
+    + (isEnd ? '<span class="badge ended">終了</span>' : isPlaying ? '<span class="badge playing">試合中</span>' : isNew ? '<span class="badge new">NEW</span>' : '')
     + '<span class="card-summary">' + esc(scoreStr) + '</span>'
     + '<button class="btn sub sm" style="flex-shrink:0;" onclick="event.stopPropagation();location.href=\'' + editUrl + '\'">✏️ 編集</button>'
     + '<button class="btn danger sm" style="flex-shrink:0;" onclick="event.stopPropagation();deleteManualScore(\'' + safeId + '\',this)">🗑 削除</button>'

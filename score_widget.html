@@ -173,7 +173,8 @@ function renderGame(g) {
   const title = parts.join('　') || '試合スコア';
 
   const isEnd     = (g.game_status || '').includes('終了');
-  const isPlaying = !isEnd && (raw1.some(v => v !== '' && v != null) || raw2.some(v => v !== '' && v != null));
+  // 試合中：1回表（raw1[0]）に数値が入った時点
+  const isPlaying = !isEnd && raw1[0] !== '' && raw1[0] != null;
   const headerBg  = isPlaying ? 'var(--playing)' : isEnd ? 'var(--accent)' : 'var(--pre)';
   const endBadge = isEnd
     ? '<span style="background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:4px;font-size:10px;font-weight:700;padding:2px 8px;white-space:nowrap;flex-shrink:0;">終了</span>'
