@@ -724,7 +724,10 @@ async function fetchAndUpdate() {
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
     await updateTournamentIndex(session, merged.length, now);
-    setGhStatus('ok', '✅ ' + new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'}) + ' 書き込み完了');
+    const _now = new Date();
+    const _date = _now.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/');
+    const _time = _now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
+    setGhStatus('ok', '✅ ' + _date + '　' + _time + ' 書き込み完了');
   } catch(e) {
     setGhStatus('error', '❌ ' + e.message);
     console.error('GitHub write error:', e);
