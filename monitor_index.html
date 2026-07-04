@@ -867,7 +867,7 @@ function buildCard(g) {
   const cardCls  = isUpdatedLocal ? 'is-updated' : '';
   const isOpen   = openCards.has(g.id);
   const btnLabel = isOpen ? 'スコアのみ ▲' : '詳細 ▼';
-  const changedAt = g.last_changed ? '<span class="card-time">' + fmt(g.last_changed) + '</span>' : '';
+  const changedAt = '';
 
   let th = '<th class="team-name">チーム</th>';
   for (let i = 1; i <= inn1.length; i++) th += '<th>' + i + '</th>';
@@ -1240,7 +1240,7 @@ function render() {
   const count = games.filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw))).length;
   document.getElementById('statusDot').className  = 'dot ' + (ok ? 'ok' : 'err');
   document.getElementById('statusText').textContent = ok
-    ? '最終: ' + last + '　' + count + '試合'
+    ? count + '試合'
     : 'エラー: ' + (d.error || '不明');
   document.getElementById('content').innerHTML = renderGames(games);
   // 閉じていた会場を復元
