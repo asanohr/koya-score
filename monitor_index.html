@@ -707,6 +707,14 @@ async function fetchAndUpdate() {
   autoConfirmNew(filteredMerged); // 初回出現ゲームをこのPCで自動確認
   saveCurrentData({ games:filteredMerged, last_updated:now, crawl_status:'ok', error:null, game_count:filteredMerged.length });
 
+  // スコアに変化がなければ GitHub 書き込みをスキップ（不要なコミット＝Pages deployを抑制）
+  const hasChanges = filteredMerged.some(g => g.is_new || g.is_updated)
+                  || filteredMerged.length !== (Object.keys(oldById).length);
+  if (!hasChanges) {
+    setGhStatus('ok', '変更なし');
+    return;
+  }
+
   // GitHub に書き込み
   const cfg = loadConfig();
   if (!cfg.gh_token || !cfg.gh_owner || !cfg.gh_repo) {
