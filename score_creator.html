@@ -415,7 +415,16 @@ async function ghWrite(path, content, msg) {
     branch:  loadConfig().gh_branch || 'main',
   };
   if (existing?.sha) body.sha = existing.sha;
-  return await ghRequest('PUT', path, body);
+  try {
+    return await ghRequest('PUT', path, body);
+  } catch(e) {
+    if (e.message.includes('409')) {
+      const fresh = await ghRead(path);
+      if (fresh?.sha) body.sha = fresh.sha;
+      return await ghRequest('PUT', path, body);
+    }
+    throw e;
+  }
 }
 
 // ═══════════════════════════════════════════════════
