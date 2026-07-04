@@ -80,7 +80,11 @@
 
     /* ── 2カラムグリッド ── */
     .region-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
-    @media(max-width:800px){.region-grid{grid-template-columns:1fr;}}
+    .region-col{display:flex;flex-direction:column;gap:16px;}
+    @media(max-width:800px){
+      .region-grid{grid-template-columns:1fr;}
+      .region-grid .region-col:last-child{margin-top:0;}
+    }
 
     /* ── カード ── */
     .region-section{margin-bottom:0;}
@@ -1199,15 +1203,20 @@ function renderGames(games) {
     return '<div class="no-games">試合データがありません。</div>';
   const byRegion = {};
   for (const g of visible) { const k=g.region||'不明'; if(!byRegion[k])byRegion[k]=[]; byRegion[k].push(g); }
+  const entries = Object.entries(byRegion);
+  // 奇数インデックス→左列、偶数インデックス→右列（読み順：左右左右…）
+  const leftCol  = entries.filter((_, i) => i % 2 === 0);
+  const rightCol = entries.filter((_, i) => i % 2 === 1);
+  const buildSection = ([region, gs]) =>
+    '<div class="region-section" data-region="'+esc(region)+'">'
+    +'<div class="region-header">'
+    +'<span>🏟 '+esc(region)+'</span>'
+    +'<button class="region-toggle-btn" onclick="toggleRegion(this)">閉じる</button>'
+    +'</div>'
+    + gs.map(buildCard).join('') + '</div>';
   return '<div class="region-grid">'
-    + Object.entries(byRegion).map(([region, gs]) =>
-        '<div class="region-section" data-region="'+esc(region)+'">'
-        +'<div class="region-header">'
-        +'<span>🏟 '+esc(region)+'</span>'
-        +'<button class="region-toggle-btn" onclick="toggleRegion(this)">閉じる</button>'
-        +'</div>'
-        + gs.map(buildCard).join('') + '</div>'
-      ).join('')
+    + '<div class="region-col">' + leftCol.map(buildSection).join('') + '</div>'
+    + '<div class="region-col">' + rightCol.map(buildSection).join('') + '</div>'
     + '</div>';
 }
 
