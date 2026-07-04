@@ -1,7 +1,7 @@
 {
   "tournament_id": "2026summer",
   "tournament_name": "2026年夏季大会",
-  "game_date": "2026-07-05",
+  "game_date": "2026-07-04",
   "games": [
     {
       "id": "d4be6930",
@@ -51,12 +51,12 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-04T23:57:09",
-      "game_date": "2026-07-05",
-      "game_date_label": "7月5日",
+      "last_changed": "2026-07-04T23:57:42",
+      "game_date": "2026-07-04",
+      "game_date_label": "7月4日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月5日",
+      "extra_info": "7月4日",
       "note": ""
     },
     {
@@ -108,11 +108,11 @@
       "is_new": true,
       "is_updated": false,
       "last_changed": "2026-07-02T07:12:04",
-      "game_date": "2026-07-05",
-      "game_date_label": "7月5日",
+      "game_date": "2026-07-04",
+      "game_date_label": "7月4日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月5日",
+      "extra_info": "7月4日",
       "note": ""
     },
     {
@@ -164,13 +164,13 @@
       "is_new": true,
       "is_updated": false,
       "last_changed": "2026-07-02T07:12:04",
-      "game_date": "2026-07-05",
-      "game_date_label": "7月5日",
+      "game_date": "2026-07-04",
+      "game_date_label": "7月4日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月5日",
+      "extra_info": "7月4日",
       "note": ""
     }
   ],
-  "last_updated": "2026-07-04T23:57:09"
+  "last_updated": "2026-07-04T23:57:42"
 }
