@@ -87,7 +87,7 @@
       ],
       "innings2": [
         "1",
-        "2",
+        "3",
         "",
         "",
         "",
@@ -103,11 +103,11 @@
         ""
       ],
       "total1": "2",
-      "total2": "3",
+      "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-04T04:33:18",
+      "last_changed": "2026-07-04T04:35:18",
       "game_date": "2026-07-04",
       "game_date_label": "7月4日",
       "confirmed_snapshot": null,
@@ -732,5 +732,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-04T04:33:18"
+  "last_updated": "2026-07-04T04:35:18"
 }
