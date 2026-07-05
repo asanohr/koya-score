@@ -176,7 +176,7 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "７回裏",
+      "game_status": "８回表",
       "commentary": "9:52試合開始",
       "team1": "園田学園",
       "team2": "神港学園",
@@ -204,7 +204,7 @@
         "1",
         "0",
         "2",
-        "",
+        "0",
         "",
         "",
         "",
@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-05T02:14:05",
+      "last_changed": "2026-07-05T02:17:05",
       "game_date": "2026-07-05",
       "game_date_label": "7月5日",
       "confirmed_snapshot": null,
@@ -396,5 +396,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T02:14:05"
+  "last_updated": "2026-07-05T02:17:05"
 }
