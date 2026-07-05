@@ -232,8 +232,8 @@
       "region": "豊　岡",
       "round": "第1試合",
       "venue": "豊岡",
-      "game_status": "９回裏",
-      "commentary": "10:00試合開始",
+      "game_status": "試合終了",
+      "commentary": "10:00試合開始、11:55試合終了",
       "team1": "伊丹北",
       "team2": "佐用・千種・姫路別所・太子",
       "innings1": [
@@ -262,7 +262,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -275,7 +275,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=8",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-05T02:50:05",
+      "last_changed": "2026-07-05T02:59:05",
       "game_date": "2026-07-05",
       "game_date_label": "7月5日",
       "confirmed_snapshot": null,
@@ -396,5 +396,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T02:56:05"
+  "last_updated": "2026-07-05T02:59:05"
 }
