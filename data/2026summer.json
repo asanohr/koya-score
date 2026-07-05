@@ -9,7 +9,7 @@
       "round": "第1試合",
       "venue": "尼崎",
       "game_status": "試合開始前",
-      "commentary": "",
+      "commentary": "9:45試合開始予定",
       "team1": "淡路三原",
       "team2": "鳴尾",
       "innings1": [
@@ -340,5 +340,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T00:37:31"
+  "last_updated": "2026-07-05T00:40:26"
 }
