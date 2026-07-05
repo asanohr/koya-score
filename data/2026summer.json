@@ -9,7 +9,7 @@
       "round": "第1試合",
       "venue": "尼崎",
       "game_status": "６回表",
-      "commentary": "9:45試合開始",
+      "commentary": "9:45　試合開始\n11:52　5回終了継続試合",
       "team1": "淡路三原",
       "team2": "鳴尾",
       "innings1": [
@@ -64,7 +64,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "9：53試合開始。",
       "team1": "甲陽学院",
       "team2": "神戸鈴蘭台",
@@ -93,7 +93,7 @@
         "1",
         "1",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -103,11 +103,11 @@
         ""
       ],
       "total1": "4",
-      "total2": "6",
+      "total2": "7",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-05T02:38:05",
+      "last_changed": "2026-07-05T02:53:05",
       "game_date": "2026-07-05",
       "game_date_label": "7月5日",
       "confirmed_snapshot": null,
@@ -396,5 +396,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T02:50:05"
+  "last_updated": "2026-07-05T02:53:05"
 }
