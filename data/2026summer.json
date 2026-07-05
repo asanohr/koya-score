@@ -8,7 +8,7 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:45試合開始",
       "team1": "淡路三原",
       "team2": "鳴尾",
@@ -30,7 +30,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "2",
         "",
         "",
         "",
@@ -47,11 +47,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-05T00:52:26",
+      "last_changed": "2026-07-05T01:07:26",
       "game_date": "2026-07-05",
       "game_date_label": "7月5日",
       "confirmed_snapshot": null,
@@ -396,5 +396,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T01:04:26"
+  "last_updated": "2026-07-05T01:07:26"
 }
