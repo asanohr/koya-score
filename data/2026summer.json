@@ -120,14 +120,14 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "8:52試合開始。",
       "team1": "淳心学院",
       "team2": "上郡",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-05T00:16:29",
+      "last_changed": "2026-07-05T00:19:26",
       "game_date": "2026-07-05",
       "game_date_label": "7月5日",
       "confirmed_snapshot": null,
@@ -340,5 +340,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T00:16:29"
+  "last_updated": "2026-07-05T00:19:26"
 }
