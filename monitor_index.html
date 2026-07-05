@@ -213,6 +213,11 @@
       <input id="cfgRepo" placeholder="koya-score" style="width:150px;">
       <label>Branch</label>
       <input id="cfgBranch" placeholder="main" style="width:90px;">
+      <label>GitHub書き込み</label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" id="cfgWriteEnabled" checked onchange="saveGitHubConfig()">
+        <span id="cfgWriteLabel" style="font-size:12px;color:var(--text-dim);">この端末から書き込む（複数端末使用時は1台のみON）</span>
+      </label>
       <button class="btn sm" onclick="saveGitHubConfig()">💾 保存</button>
       <button class="btn sm sub" onclick="testGitHub()">🔌 テスト接続</button>
       <span id="cfgStatus" style="font-size:12px;"></span>
@@ -429,10 +434,11 @@ function toggleSettings() {
 }
 function saveGitHubConfig() {
   const cfg = loadConfig();
-  cfg.gh_token  = document.getElementById('cfgToken').value.trim();
-  cfg.gh_owner  = document.getElementById('cfgOwner').value.trim();
-  cfg.gh_repo   = document.getElementById('cfgRepo').value.trim();
-  cfg.gh_branch = document.getElementById('cfgBranch').value.trim() || 'main';
+  cfg.gh_token        = document.getElementById('cfgToken').value.trim();
+  cfg.gh_owner        = document.getElementById('cfgOwner').value.trim();
+  cfg.gh_repo         = document.getElementById('cfgRepo').value.trim();
+  cfg.gh_branch       = document.getElementById('cfgBranch').value.trim() || 'main';
+  cfg.gh_write_enabled = document.getElementById('cfgWriteEnabled').checked;
   saveConfig(cfg);
   setCfgStatus('💾 保存しました', 'var(--win)');
 }
@@ -719,6 +725,11 @@ async function fetchAndUpdate() {
   const cfg = loadConfig();
   if (!cfg.gh_token || !cfg.gh_owner || !cfg.gh_repo) {
     setGhStatus('error', '⚠️ GitHub未設定（⚙️設定）');
+    return;
+  }
+  // 書き込みOFFの端末はスキップ（複数端末使用時の競合防止）
+  if (cfg.gh_write_enabled === false) {
+    setGhStatus('ok', '📖 読み取り専用（書き込みOFF）');
     return;
   }
   setGhStatus('pending', '📤 GitHub書き込み中...');
@@ -1480,6 +1491,7 @@ async function init() {
   if (cfg.gh_owner) document.getElementById('cfgOwner').value = cfg.gh_owner;
   if (cfg.gh_repo)  document.getElementById('cfgRepo').value  = cfg.gh_repo;
   document.getElementById('cfgBranch').value = cfg.gh_branch || 'main';
+  document.getElementById('cfgWriteEnabled').checked = cfg.gh_write_enabled !== false; // デフォルトON
 
   // セッションを復元
   const ses = loadSession();
