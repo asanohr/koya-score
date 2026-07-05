@@ -64,8 +64,8 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "9：50開始予定",
+      "game_status": "１回表",
+      "commentary": "9：53試合開始。",
       "team1": "甲陽学院",
       "team2": "神戸鈴蘭台",
       "innings1": [
@@ -176,8 +176,8 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "試合開始前",
-      "commentary": "10:00試合開始予定",
+      "game_status": "１回表",
+      "commentary": "9:52試合開始",
       "team1": "園田学園",
       "team2": "神港学園",
       "innings1": [
@@ -340,5 +340,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-05T00:52:26"
+  "last_updated": "2026-07-05T00:55:26"
 }
