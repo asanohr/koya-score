@@ -8,7 +8,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "６回表",
+      "game_status": "７回表",
       "commentary": "7/4(土)第2試合の継続試合。\n5回裏、舞子高校の攻撃中。2死二・三塁、カウント2ボール1ストライク、打者6番藤野で13:54試合再開。",
       "team1": "松陽",
       "team2": "舞子",
@@ -18,7 +18,7 @@
         "0",
         "1",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -35,7 +35,7 @@
         "1",
         "3",
         "3",
-        "",
+        "1",
         "",
         "",
         "",
@@ -47,11 +47,11 @@
         ""
       ],
       "total1": "3",
-      "total2": "11",
+      "total2": "12",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-08T05:00:20",
+      "last_changed": "2026-07-08T05:18:19",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -60,5 +60,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-08T05:15:19"
+  "last_updated": "2026-07-08T05:18:19"
 }
