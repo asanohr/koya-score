@@ -1,7 +1,7 @@
 {
   "tournament_id": "2026summer",
   "tournament_name": "2026年夏季大会",
-  "game_date": "2026-07-04",
+  "game_date": "2026-07-08",
   "games": [
     {
       "id": "d4be6930",
@@ -56,7 +56,7 @@
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月4日",
+      "extra_info": "7月8日",
       "note": ""
     },
     {
@@ -64,7 +64,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "９回表",
+      "game_status": "９回裏",
       "commentary": "7/5(日)ベイコム野球場第1試合の継続試合。\n6回表、淡路三原高校の攻撃、無死走者なし。打者富本、カウント0ボール、0ストライクから15:08試合再開。",
       "team1": "淡路三原",
       "team2": "鳴尾",
@@ -77,7 +77,7 @@
         "1",
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -107,14 +107,14 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-08T06:50:27",
+      "last_changed": "2026-07-08T06:59:27",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "1回戦",
+      "extra_info": "7月8日",
       "note": ""
     }
   ],
-  "last_updated": "2026-07-08T06:56:39"
+  "last_updated": "2026-07-08T06:59:27"
 }
