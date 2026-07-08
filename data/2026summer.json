@@ -64,8 +64,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "９回裏",
-      "commentary": "7/5(日)ベイコム野球場第1試合の継続試合。\n6回表、淡路三原高校の攻撃、無死走者なし。打者富本、カウント0ボール、0ストライクから15:08試合再開。",
+      "game_status": "試合終了",
+      "commentary": "7/5(日)ベイコム野球場第1試合の継続試合。\n6回表、淡路三原高校の攻撃、無死走者なし。打者富本、カウント0ボール、0ストライクから15:08試合再開。\n16:06試合終了。",
       "team1": "淡路三原",
       "team2": "鳴尾",
       "innings1": [
@@ -94,7 +94,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -107,7 +107,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-08T06:59:27",
+      "last_changed": "2026-07-08T07:08:27",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -116,5 +116,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-08T07:05:27"
+  "last_updated": "2026-07-08T07:08:27"
 }
