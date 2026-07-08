@@ -1,7 +1,7 @@
 {
   "tournament_id": "2026summer",
   "tournament_name": "2026年夏季大会",
-  "game_date": "2026-07-04",
+  "game_date": "2026-07-08",
   "games": [
     {
       "id": "d4be6930",
@@ -56,7 +56,7 @@
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月4日",
+      "extra_info": "7月8日",
       "note": ""
     },
     {
@@ -112,9 +112,9 @@
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "1回戦",
+      "extra_info": "7月8日",
       "note": ""
     }
   ],
-  "last_updated": "2026-07-08T06:54:00"
+  "last_updated": "2026-07-08T06:56:27"
 }
