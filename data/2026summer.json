@@ -177,8 +177,8 @@
       "round": "第2試合",
       "venue": "神戸",
       "game_status": "コールド終了",
-      "commentary": "12:40試合開始 14:50試合終了",
-      "team1": "姫飾西",
+      "commentary": "12:40試合開始。 \n14:50試合終了。\n（7回コールド）",
+      "team1": "姫路飾西",
       "team2": "西宮南",
       "innings1": [
         "0",
@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:52:27",
+      "last_changed": "2026-07-09T05:56:27",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -848,8 +848,8 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "７回表",
-      "commentary": "試合開始13:07",
+      "game_status": "コールド終了",
+      "commentary": "試合開始13:07、試合終了14:52（7回コールドゲーム）",
       "team1": "加古川南",
       "team2": "飾磨工業",
       "innings1": [
@@ -859,7 +859,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -876,7 +876,7 @@
         "0",
         "1",
         "3",
-        "",
+        "X",
         "",
         "",
         "",
@@ -891,7 +891,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:50:27",
+      "last_changed": "2026-07-09T05:56:27",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T05:54:27"
+  "last_updated": "2026-07-09T05:56:27"
 }
