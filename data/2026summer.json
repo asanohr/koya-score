@@ -64,7 +64,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "12時32分試合開始。",
       "team1": "須磨翔風",
       "team2": "神戸高塚",
@@ -176,8 +176,8 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "",
+      "game_status": "１回表",
+      "commentary": "12:40試合開始",
       "team1": "姫飾西",
       "team2": "西宮南",
       "innings1": [
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:39:43"
+  "last_updated": "2026-07-09T03:42:43"
 }
