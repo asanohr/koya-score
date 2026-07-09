@@ -513,9 +513,9 @@
       "round": "第1試合",
       "venue": "淡路",
       "game_status": "コールド終了",
-      "commentary": "9:54開始。11:50終了。",
-      "team1": "市飾磨",
-      "team2": "育英",
+      "commentary": "9:54試合開始。\n11:50試合終了。（7回コールド）",
+      "team1": "飾　磨",
+      "team2": "育　英",
       "innings1": [
         "1",
         "0",
@@ -555,7 +555,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T02:51:44",
+      "last_changed": "2026-07-09T03:27:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -788,5 +788,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:25:10"
+  "last_updated": "2026-07-09T03:27:44"
 }
