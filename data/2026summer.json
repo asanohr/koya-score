@@ -8,8 +8,8 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "試合開始前",
-      "commentary": "10時試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "9時57試合開始。",
       "team1": "尼崎西",
       "team2": "市立尼崎",
       "innings1": [
@@ -288,8 +288,8 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "試合開始前",
-      "commentary": "10:00開始予定。",
+      "game_status": "１回表",
+      "commentary": "9:54開始。",
       "team1": "市飾磨",
       "team2": "育英",
       "innings1": [
@@ -344,8 +344,8 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "試合開始前",
-      "commentary": "10：00開始予定",
+      "game_status": "１回表",
+      "commentary": "9：56試合開始",
       "team1": "東播工業",
       "team2": "八鹿",
       "innings1": [
@@ -452,5 +452,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T00:54:37"
+  "last_updated": "2026-07-09T00:57:43"
 }
