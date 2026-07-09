@@ -736,13 +736,13 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "12：43試合開始",
       "team1": "加古川北",
       "team2": "浜坂",
       "innings1": [
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:53:14",
+      "last_changed": "2026-07-09T03:59:14",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:56:13"
+  "last_updated": "2026-07-09T03:59:14"
 }
