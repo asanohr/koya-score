@@ -64,8 +64,8 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "５回裏",
-      "commentary": "12時32分試合開始。",
+      "game_status": "コールド終了",
+      "commentary": "12時32分試合開始。\n13時50分試合終了。\n(5回コールド)",
       "team1": "須磨翔風",
       "team2": "神戸高塚",
       "innings1": [
@@ -107,7 +107,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T04:50:13",
+      "last_changed": "2026-07-09T04:53:13",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T04:50:13"
+  "last_updated": "2026-07-09T04:53:13"
 }
