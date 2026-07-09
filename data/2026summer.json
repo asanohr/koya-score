@@ -69,7 +69,7 @@
       "team1": "須磨翔風",
       "team2": "神戸高塚",
       "innings1": [
-        "2",
+        "3",
         "",
         "",
         "",
@@ -102,12 +102,12 @@
         "",
         ""
       ],
-      "total1": "2",
+      "total1": "3",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:37:10",
+      "last_changed": "2026-07-09T03:39:43",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:37:10"
+  "last_updated": "2026-07-09T03:39:43"
 }
