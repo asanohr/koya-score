@@ -396,6 +396,62 @@
       "note": ""
     },
     {
+      "id": "30d6e594",
+      "region": "高　砂",
+      "round": "第2試合",
+      "venue": "高砂",
+      "game_status": "試合開始前",
+      "commentary": "13:00試合開始予定。",
+      "team1": "姫路工",
+      "team2": "須磨友が丘",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-07-09T03:15:44",
+      "game_date": "2026-07-08",
+      "game_date_label": "7月8日",
+      "confirmed_snapshot": null,
+      "tournament_name": "2026年夏季大会",
+      "extra_info": "7月8日",
+      "note": ""
+    },
+    {
       "id": "0dea5939",
       "region": "姫　路",
       "round": "第1試合",
@@ -732,5 +788,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:12:43"
+  "last_updated": "2026-07-09T03:15:44"
 }
