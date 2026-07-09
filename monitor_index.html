@@ -692,11 +692,23 @@ async function fetchAndUpdate() {
   const oldById = Object.fromEntries((loadCurrentData().games || []).map(g => [g.id, g]));
   const merged  = newGames.map(ng => {
     const old  = oldById[ng.id];
+
+    // ① イニング退行防止: 新クロールがイニング空でも既存に実績があれば保持
+    //    （元サイトが一時的に空を返した場合に「試合中」→「NEW」に退行するのを防ぐ）
+    if (old) {
+      const oldHasInnings = (old.innings1 || []).some(v => v !== '' && v != null);
+      const newHasInnings = (ng.innings1 || []).some(v => v !== '' && v != null);
+      if (!newHasInnings && oldHasInnings && !(ng.game_status || '').includes('終了')) {
+        ng = { ...ng, innings1: old.innings1, innings2: old.innings2, total1: old.total1, total2: old.total2 };
+      }
+    }
+
     const snap = scoreSnapshot(ng);
     if (!old) return { ...ng, is_new:true, is_updated:false, confirmed_snapshot:null, last_changed:now };
     const confirmedSnap = old.confirmed_snapshot ?? null;
     let result;
-    if (snap !== scoreSnapshot(old)) {
+    // スコアまたは試合状態が変わった場合は更新フラグを立てる
+    if (snap !== scoreSnapshot(old) || (ng.game_status||'') !== (old.game_status||'')) {
       result = { ...ng, is_new:false, is_updated:true, last_changed:now };
     } else {
       result = { ...ng, is_new:old.is_new||false, is_updated:old.is_updated||false, last_changed:old.last_changed||null };
@@ -710,12 +722,23 @@ async function fetchAndUpdate() {
   const _deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
   const filteredMerged = merged.filter(g => !_deletedIds.has(g.id));
 
+  // ② 試合終了・実績ある試合を自動保持
+  //    元サイトから消えた試合（終了または途中経過あり）をデータに残し続ける
+  const newIds = new Set(filteredMerged.map(g => g.id));
+  const autoSaved = (loadCurrentData().games || []).filter(g =>
+    !newIds.has(g.id) &&
+    !_deletedIds.has(g.id) &&
+    ((g.game_status || '').includes('終了') || (g.innings1 || []).some(v => v !== '' && v != null))
+  );
+  if (autoSaved.length > 0) filteredMerged.push(...autoSaved);
+
   autoConfirmNew(filteredMerged); // 初回出現ゲームをこのPCで自動確認
   saveCurrentData({ games:filteredMerged, last_updated:now, crawl_status:'ok', error:null, game_count:filteredMerged.length });
 
   // スコアに変化がなければ GitHub 書き込みをスキップ（不要なコミット＝Pages deployを抑制）
   const hasChanges = filteredMerged.some(g => g.is_new || g.is_updated)
-                  || filteredMerged.length !== (Object.keys(oldById).length);
+                  || filteredMerged.length !== (Object.keys(oldById).length)
+                  || autoSaved.length > 0;
   if (!hasChanges) {
     setGhStatus('ok', '変更なし');
     return;
