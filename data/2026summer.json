@@ -71,7 +71,7 @@
       "innings1": [
         "3",
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -102,12 +102,12 @@
         "",
         ""
       ],
-      "total1": "3",
+      "total1": "5",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:56:13",
+      "last_changed": "2026-07-09T04:02:14",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -176,13 +176,13 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "12:40試合開始",
       "team1": "姫飾西",
       "team2": "西宮南",
       "innings1": [
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -214,12 +214,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:56:13",
+      "last_changed": "2026-07-09T04:02:14",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -736,7 +736,7 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "12：43試合開始",
       "team1": "加古川北",
       "team2": "浜坂",
@@ -759,7 +759,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:59:14",
+      "last_changed": "2026-07-09T04:02:14",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:59:14"
+  "last_updated": "2026-07-09T04:02:14"
 }
