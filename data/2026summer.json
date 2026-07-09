@@ -120,7 +120,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "9：59試合開始。",
       "team1": "神戸商業",
       "team2": "尼崎小田",
@@ -147,7 +147,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T02:12:43",
+      "last_changed": "2026-07-09T02:18:43",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -344,7 +344,7 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "７回表",
+      "game_status": "７回裏",
       "commentary": "9：56試合開始",
       "team1": "東播工業",
       "team2": "八鹿",
@@ -355,7 +355,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T02:12:43",
+      "last_changed": "2026-07-09T02:18:43",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -452,5 +452,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T02:15:43"
+  "last_updated": "2026-07-09T02:18:43"
 }
