@@ -64,12 +64,12 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "",
+      "game_status": "１回裏",
+      "commentary": "9:57試合開始",
       "team1": "県西宮",
       "team2": "香　寺",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -105,9 +105,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-09T00:31:54",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-09T01:03:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -232,8 +232,8 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "10:00試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "10:00試合開始。",
       "team1": "淡路",
       "team2": "姫路南・網干",
       "innings1": [
@@ -452,5 +452,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T01:00:43"
+  "last_updated": "2026-07-09T01:03:44"
 }
