@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:21:18",
+      "last_changed": "2026-07-09T05:20:42",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:21:18",
+      "last_changed": "2026-07-09T05:20:42",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -443,7 +443,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:21:18",
+      "last_changed": "2026-07-09T05:20:42",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -555,7 +555,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:21:18",
+      "last_changed": "2026-07-09T05:20:42",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -891,7 +891,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:21:18",
+      "last_changed": "2026-07-09T05:20:42",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T05:21:18"
+  "last_updated": "2026-07-09T05:22:36"
 }
