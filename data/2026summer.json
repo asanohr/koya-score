@@ -64,7 +64,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "12時32分試合開始。",
       "team1": "須磨翔風",
       "team2": "神戸高塚",
@@ -86,7 +86,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -107,7 +107,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:39:43",
+      "last_changed": "2026-07-09T03:45:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -512,8 +512,8 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "12:45試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:43試合開始。",
       "team1": "香住",
       "team2": "川西北陵",
       "innings1": [
@@ -624,8 +624,8 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "試合開始前",
-      "commentary": "12:40開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:44開始。",
       "team1": "市川",
       "team2": "明石城西",
       "innings1": [
@@ -736,8 +736,8 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "試合開始前",
-      "commentary": "12：45試合開始予定",
+      "game_status": "１回表",
+      "commentary": "12：43試合開始",
       "team1": "加古川北",
       "team2": "浜坂",
       "innings1": [
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:42:43"
+  "last_updated": "2026-07-09T03:45:44"
 }
