@@ -69,7 +69,7 @@
       "team1": "須磨翔風",
       "team2": "神戸高塚",
       "innings1": [
-        "",
+        "2",
         "",
         "",
         "",
@@ -102,12 +102,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "2",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-09T02:42:44",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-09T03:37:10",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -508,6 +508,62 @@
       "note": ""
     },
     {
+      "id": "0ee141d5",
+      "region": "姫　路",
+      "round": "第2試合",
+      "venue": "姫路",
+      "game_status": "試合開始前",
+      "commentary": "12:45試合開始予定。",
+      "team1": "香住",
+      "team2": "川西北陵",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-07-09T03:37:10",
+      "game_date": "2026-07-08",
+      "game_date_label": "7月8日",
+      "confirmed_snapshot": null,
+      "tournament_name": "2026年夏季大会",
+      "extra_info": "7月8日",
+      "note": ""
+    },
+    {
       "id": "9b463153",
       "region": "淡　路",
       "round": "第1試合",
@@ -844,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:34:10"
+  "last_updated": "2026-07-09T03:37:10"
 }
