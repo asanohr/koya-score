@@ -120,7 +120,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "５回表",
+      "game_status": "５回裏",
       "commentary": "9：59試合開始。",
       "team1": "神戸商業",
       "team2": "尼崎小田",
@@ -129,7 +129,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T01:48:43",
+      "last_changed": "2026-07-09T01:51:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -344,7 +344,7 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "５回表",
+      "game_status": "５回裏",
       "commentary": "9：56試合開始",
       "team1": "東播工業",
       "team2": "八鹿",
@@ -353,7 +353,7 @@
         "0",
         "1",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T01:42:43",
+      "last_changed": "2026-07-09T01:51:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -422,7 +422,7 @@
         ""
       ],
       "innings2": [
-        "3",
+        "4",
         "",
         "",
         "",
@@ -439,11 +439,11 @@
         ""
       ],
       "total1": "1",
-      "total2": "3",
+      "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=8",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T01:48:43",
+      "last_changed": "2026-07-09T01:51:44",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -452,5 +452,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T01:48:43"
+  "last_updated": "2026-07-09T01:51:44"
 }
