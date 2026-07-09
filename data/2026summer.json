@@ -9,7 +9,7 @@
       "round": "第1試合",
       "venue": "尼崎",
       "game_status": "コールド終了",
-      "commentary": "9時57分試合開始。\n\n11時37分試合終了。",
+      "commentary": "9時57分試合開始。\n\n11時37分試合終了。\n（7回コールド）",
       "team1": "尼崎西",
       "team2": "市立尼崎",
       "innings1": [
@@ -345,7 +345,7 @@
       "round": "第1試合",
       "venue": "高砂",
       "game_status": "コールド終了",
-      "commentary": "9:58試合開始。12:11試合終了。（7回ｺｰﾙﾄﾞｹﾞｰﾑ)",
+      "commentary": "9:58試合開始。\n12:11試合終了。（7回コールド)",
       "team1": "市伊丹",
       "team2": "北須磨",
       "innings1": [
@@ -625,7 +625,7 @@
       "round": "第1試合",
       "venue": "春日/城山",
       "game_status": "試合終了",
-      "commentary": "9：56試合開始　11：47試合終了",
+      "commentary": "9：56試合開始。\n11：47試合終了。",
       "team1": "東播工業",
       "team2": "八鹿",
       "innings1": [
@@ -737,8 +737,8 @@
       "round": "第1試合",
       "venue": "豊岡",
       "game_status": "コールド終了",
-      "commentary": "10:31試合開始、12:11試合終了（7回コールドゲーム）",
-      "team1": "和田山",
+      "commentary": "10:31試合開始。\n12:11試合終了。（7回コールド）",
+      "team1": "和　田　山",
       "team2": "三田祥雲館",
       "innings1": [
         "1",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=8",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T03:12:43",
+      "last_changed": "2026-07-09T03:25:10",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -788,5 +788,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T03:21:43"
+  "last_updated": "2026-07-09T03:25:10"
 }
