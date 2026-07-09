@@ -400,8 +400,8 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "９回裏",
-      "commentary": "13:05試合開始。",
+      "game_status": "試合終了",
+      "commentary": "13:05試合開始。15:10試合終了。",
       "team1": "姫路工",
       "team2": "須磨友が丘",
       "innings1": [
@@ -430,7 +430,7 @@
         "0",
         "0",
         "2",
-        "",
+        "0",
         "",
         "",
         "",
@@ -443,7 +443,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T06:05:10",
+      "last_changed": "2026-07-09T06:11:10",
       "game_date": "2026-07-08",
       "game_date_label": "7月8日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-09T06:09:10"
+  "last_updated": "2026-07-09T06:11:10"
 }
