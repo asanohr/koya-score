@@ -821,7 +821,7 @@
         "0",
         "0",
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -831,11 +831,11 @@
         ""
       ],
       "total1": "3",
-      "total2": "4",
+      "total2": "6",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=8",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T03:34:47",
+      "last_changed": "2026-07-10T03:41:57",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T03:39:57"
+  "last_updated": "2026-07-10T03:41:57"
 }
