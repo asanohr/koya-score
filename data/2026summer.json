@@ -848,8 +848,8 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "７回裏",
-      "commentary": "試合開始13:44",
+      "game_status": "８回表",
+      "commentary": "試合開始13:44、",
       "team1": "猪名川・西宮甲山",
       "team2": "宝塚東",
       "innings1": [
@@ -876,7 +876,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -887,11 +887,11 @@
         ""
       ],
       "total1": "6",
-      "total2": "5",
+      "total2": "6",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T06:26:47",
+      "last_changed": "2026-07-10T06:34:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T06:32:47"
+  "last_updated": "2026-07-10T06:34:47"
 }
