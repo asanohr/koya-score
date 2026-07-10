@@ -176,7 +176,7 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "12：49試合開始",
       "team1": "洲本",
       "team2": "葺合",
@@ -199,7 +199,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:16:47",
+      "last_changed": "2026-07-10T04:20:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -736,13 +736,13 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "12：57試合開始",
       "team1": "篠山産業",
       "team2": "神戸鈴蘭台",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:14:47",
+      "last_changed": "2026-07-10T04:20:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:18:47"
+  "last_updated": "2026-07-10T04:20:47"
 }
