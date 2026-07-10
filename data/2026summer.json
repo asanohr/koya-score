@@ -736,7 +736,7 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "４回表",
+      "game_status": "４回裏",
       "commentary": "12：57試合開始",
       "team1": "篠山産業",
       "team2": "神戸鈴蘭台",
@@ -744,7 +744,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -774,12 +774,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:42:47",
+      "last_changed": "2026-07-10T04:52:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -849,7 +849,7 @@
       "round": "第2試合",
       "venue": "豊岡",
       "game_status": "１回裏",
-      "commentary": "試合開始13:45",
+      "commentary": "試合開始13:44",
       "team1": "猪名川・西宮甲山",
       "team2": "宝塚東",
       "innings1": [
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:50:47"
+  "last_updated": "2026-07-10T04:52:47"
 }
