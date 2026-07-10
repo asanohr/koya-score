@@ -9,7 +9,7 @@
       "round": "第1試合",
       "venue": "尼崎",
       "game_status": "８回表",
-      "commentary": "",
+      "commentary": "10:00試合開始。",
       "team1": "三木",
       "team2": "仁川学院",
       "innings1": [
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T02:56:48"
+  "last_updated": "2026-07-10T02:58:48"
 }
