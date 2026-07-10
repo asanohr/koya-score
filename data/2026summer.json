@@ -8,8 +8,8 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "試合開始前",
-      "commentary": "10:00試合開始予定",
+      "game_status": "１回表",
+      "commentary": "10:00試合開始。",
       "team1": "三木",
       "team2": "仁川学院",
       "innings1": [
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T00:16:47",
+      "last_changed": "2026-07-10T01:00:56",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -120,8 +120,8 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "10：00試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "9：58試合開始。",
       "team1": "尼崎双星",
       "team2": "須磨学園",
       "innings1": [
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T00:16:47",
+      "last_changed": "2026-07-10T01:00:56",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -344,8 +344,8 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "試合開始前",
-      "commentary": "10:00 試合開始予定",
+      "game_status": "１回表",
+      "commentary": "9:59 試合開始",
       "team1": "姫路市立",
       "team2": "須磨東",
       "innings1": [
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T00:16:47",
+      "last_changed": "2026-07-10T01:00:56",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T00:58:55"
+  "last_updated": "2026-07-10T01:00:56"
 }
