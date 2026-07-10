@@ -402,7 +402,7 @@
       "venue": "高砂",
       "game_status": "試合終了",
       "commentary": "12:45試合開始。15:16試合終了。",
-      "team1": "北条",
+      "team1": "北　条",
       "team2": "明石南",
       "innings1": [
         "0",
@@ -443,7 +443,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T06:18:51",
+      "last_changed": "2026-07-10T06:20:51",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T06:18:51"
+  "last_updated": "2026-07-10T06:20:51"
 }
