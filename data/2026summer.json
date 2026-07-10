@@ -65,7 +65,7 @@
       "round": "第2試合",
       "venue": "尼崎",
       "game_status": "試合終了",
-      "commentary": "13:08試合開始。",
+      "commentary": "13:08試合開始。15:08試合終了。",
       "team1": "北摂三田",
       "team2": "三田松聖",
       "innings1": [
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T06:10:51"
+  "last_updated": "2026-07-10T06:12:51"
 }
