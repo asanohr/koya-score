@@ -8,7 +8,7 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "８回表",
+      "game_status": "８回裏",
       "commentary": "10:00試合開始。",
       "team1": "三木",
       "team2": "仁川学院",
@@ -20,7 +20,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T02:56:48",
+      "last_changed": "2026-07-10T03:08:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T03:06:48"
+  "last_updated": "2026-07-10T03:08:48"
 }
