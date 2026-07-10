@@ -8,7 +8,7 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "10:00試合開始。",
       "team1": "三木",
       "team2": "仁川学院",
@@ -31,7 +31,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T01:16:48",
+      "last_changed": "2026-07-10T01:20:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -288,7 +288,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "9:55試合開始",
       "team1": "明石",
       "team2": "神戸第一",
@@ -311,7 +311,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T01:14:48",
+      "last_changed": "2026-07-10T01:20:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -344,13 +344,13 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "9:59 試合開始",
       "team1": "姫路市立",
       "team2": "須磨東",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T01:16:48",
+      "last_changed": "2026-07-10T01:20:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T01:18:48"
+  "last_updated": "2026-07-10T01:20:48"
 }
