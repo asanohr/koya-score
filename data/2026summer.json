@@ -288,7 +288,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "9:55試合開始",
       "team1": "明石",
       "team2": "神戸第一",
@@ -315,7 +315,7 @@
         "0",
         "1",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T02:34:48",
+      "last_changed": "2026-07-10T02:40:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T02:38:48"
+  "last_updated": "2026-07-10T02:40:48"
 }
