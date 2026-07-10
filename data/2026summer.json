@@ -176,7 +176,7 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "12：49試合開始",
       "team1": "洲本",
       "team2": "葺合",
@@ -198,7 +198,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T03:57:33",
+      "last_changed": "2026-07-10T04:06:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -624,7 +624,7 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "12:54試合開始",
       "team1": "福崎・夢前・播磨福崎",
       "team2": "星陵",
@@ -646,7 +646,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -663,11 +663,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:00:32",
+      "last_changed": "2026-07-10T04:06:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -848,10 +848,10 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "コールド終了",
-      "commentary": "試合開始13:07、試合終了14:52（7回コールドゲーム）",
-      "team1": "加古川南",
-      "team2": "飾磨工業",
+      "game_status": "試合開始前",
+      "commentary": "試合開始予定13:45",
+      "team1": "猪名川・西宮甲山",
+      "team2": "宝塚東",
       "innings1": [
         "0",
         "0",
@@ -891,14 +891,14 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-09T05:56:27",
-      "game_date": "2026-07-08",
-      "game_date_label": "7月8日",
+      "last_changed": "2026-07-10T04:06:47",
+      "game_date": "2026-07-10",
+      "game_date_label": "7月10日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月10日",
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:04:47"
+  "last_updated": "2026-07-10T04:06:47"
 }
