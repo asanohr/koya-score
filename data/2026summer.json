@@ -512,7 +512,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "12:51試合開始。",
       "team1": "科学技術",
       "team2": "吉川・三木北・多可",
@@ -537,7 +537,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -555,7 +555,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:34:47",
+      "last_changed": "2026-07-10T04:40:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:38:47"
+  "last_updated": "2026-07-10T04:40:47"
 }
