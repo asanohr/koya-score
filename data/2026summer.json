@@ -288,7 +288,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "12：52　試合開始。",
       "team1": "西脇",
       "team2": "神戸学院大附",
@@ -311,7 +311,7 @@
       ],
       "innings2": [
         "4",
-        "",
+        "0",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:16:47",
+      "last_changed": "2026-07-10T04:26:51",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:24:47"
+  "last_updated": "2026-07-10T04:26:51"
 }
