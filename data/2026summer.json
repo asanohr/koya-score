@@ -176,8 +176,8 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "９回表",
-      "commentary": "9:58試合開始。",
+      "game_status": "試合終了",
+      "commentary": "9:58試合開始。11:49試合終了。",
       "team1": "六甲アイランド",
       "team2": "社",
       "innings1": [
@@ -189,7 +189,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -206,7 +206,7 @@
         "0",
         "2",
         "0",
-        "",
+        "X",
         "",
         "",
         "",
@@ -219,7 +219,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T02:44:48",
+      "last_changed": "2026-07-10T02:50:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -410,7 +410,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -438,12 +438,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=8",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T02:34:48",
+      "last_changed": "2026-07-10T02:50:48",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T02:48:48"
+  "last_updated": "2026-07-10T02:50:48"
 }
