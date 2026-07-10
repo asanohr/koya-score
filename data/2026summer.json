@@ -288,8 +288,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "12：50　試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12：52　試合開始。",
       "team1": "西脇",
       "team2": "神戸学院大附",
       "innings1": [
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T03:06:48",
+      "last_changed": "2026-07-10T03:53:57",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -512,8 +512,8 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "12:50試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:51試合開始。",
       "team1": "科学技術",
       "team2": "吉川・三木北・多可",
       "innings1": [
@@ -555,7 +555,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T03:10:48",
+      "last_changed": "2026-07-10T03:53:57",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T03:51:57"
+  "last_updated": "2026-07-10T03:53:57"
 }
