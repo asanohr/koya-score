@@ -64,16 +64,16 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "13:08試合開始。",
       "team1": "北摂三田",
       "team2": "三田松聖",
       "innings1": [
-        "3",
-        "0",
-        "2",
-        "3",
-        "5",
+        "1",
+        "",
+        "",
+        "",
+        "",
         "",
         "",
         "",
@@ -86,11 +86,11 @@
         ""
       ],
       "innings2": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
+        "",
+        "",
+        "",
+        "",
+        "",
         "",
         "",
         "",
@@ -102,12 +102,12 @@
         "",
         ""
       ],
-      "total1": "13",
-      "total2": "1",
+      "total1": "1",
+      "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-10T04:08:47",
+      "last_changed": "2026-07-10T04:18:47",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -900,5 +900,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-10T04:16:47"
+  "last_updated": "2026-07-10T04:18:47"
 }
