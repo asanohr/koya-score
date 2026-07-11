@@ -120,8 +120,8 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "試合開始前",
-      "commentary": "9:00試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "8:53試合開始。",
       "team1": "小野",
       "team2": "姫路南・網干",
       "innings1": [
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T23:11:31",
+      "last_changed": "2026-07-11T23:56:31",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T23:53:31"
+  "last_updated": "2026-07-11T23:56:31"
 }
