@@ -288,7 +288,7 @@
       "region": "明　石",
       "round": "第3試合",
       "venue": "明石",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "14：58試合開始。",
       "team1": "伊丹北",
       "team2": "神戸国際大附",
@@ -313,7 +313,7 @@
         "1",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=45",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T06:44:37",
+      "last_changed": "2026-07-11T06:50:37",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T06:47:37"
+  "last_updated": "2026-07-11T06:50:37"
 }
