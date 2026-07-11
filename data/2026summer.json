@@ -792,7 +792,7 @@
       "region": "淡　路",
       "round": "第3試合",
       "venue": "淡路",
-      "game_status": "７回裏",
+      "game_status": "８回表",
       "commentary": "15:35開始。",
       "team1": "氷上",
       "team2": "柏原",
@@ -820,7 +820,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -831,11 +831,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=50",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T08:05:37",
+      "last_changed": "2026-07-11T08:18:12",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T08:14:37"
+  "last_updated": "2026-07-11T08:18:12"
 }
