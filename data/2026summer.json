@@ -456,7 +456,7 @@
       "region": "高　砂",
       "round": "第3試合",
       "venue": "高砂",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "14:51試合開始。",
       "team1": "出石・村岡",
       "team2": "東播磨",
@@ -480,7 +480,7 @@
       "innings2": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -499,7 +499,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=46",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T06:18:14",
+      "last_changed": "2026-07-11T06:24:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T06:22:14"
+  "last_updated": "2026-07-11T06:24:14"
 }
