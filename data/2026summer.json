@@ -8,8 +8,8 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "試合開始前",
-      "commentary": "9:00試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "8:52試合開始。",
       "team1": "宝塚西",
       "team2": "宝塚",
       "innings1": [
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T23:23:31",
+      "last_changed": "2026-07-11T23:53:31",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T23:50:31"
+  "last_updated": "2026-07-11T23:53:31"
 }
