@@ -624,7 +624,7 @@
       "region": "姫　路",
       "round": "第3試合",
       "venue": "姫路",
-      "game_status": "８回表",
+      "game_status": "８回裏",
       "commentary": "14:30試合開始。",
       "team1": "芦屋",
       "team2": "加古川東",
@@ -636,7 +636,7 @@
         "1",
         "0",
         "0",
-        "",
+        "3",
         "",
         "",
         "",
@@ -662,12 +662,12 @@
         "",
         ""
       ],
-      "total1": "4",
+      "total1": "7",
       "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=47",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T07:57:03",
+      "last_changed": "2026-07-11T07:59:37",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -792,7 +792,7 @@
       "region": "淡　路",
       "round": "第3試合",
       "venue": "淡路",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "15:35開始。",
       "team1": "氷上",
       "team2": "柏原",
@@ -819,7 +819,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -835,7 +835,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=50",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T07:54:12",
+      "last_changed": "2026-07-11T07:59:37",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T07:57:03"
+  "last_updated": "2026-07-11T07:59:37"
 }
