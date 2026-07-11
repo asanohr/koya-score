@@ -736,8 +736,8 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "９回裏",
-      "commentary": "12:50開始。",
+      "game_status": "試合終了",
+      "commentary": "12:50開始。14:53終了。",
       "team1": "神港橘",
       "team2": "県立尼崎",
       "innings1": [
@@ -766,7 +766,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T05:50:15",
+      "last_changed": "2026-07-11T05:54:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1124,5 +1124,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T05:52:14"
+  "last_updated": "2026-07-11T05:54:14"
 }
