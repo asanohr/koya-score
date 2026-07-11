@@ -288,8 +288,8 @@
       "region": "明　石",
       "round": "第3試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "15：00開始予定。",
+      "game_status": "１回表",
+      "commentary": "14：58試合開始。",
       "team1": "伊丹北",
       "team2": "神戸国際大附",
       "innings1": [
@@ -329,9 +329,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=45",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-11T05:34:08",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-11T06:00:15",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -624,7 +624,7 @@
       "region": "姫　路",
       "round": "第3試合",
       "venue": "姫路",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "14:30試合開始。",
       "team1": "芦屋",
       "team2": "加古川東",
@@ -647,7 +647,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -667,7 +667,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=47",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T05:56:14",
+      "last_changed": "2026-07-11T06:00:15",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -848,7 +848,7 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "試合開始13:49",
       "team1": "豊岡",
       "team2": "高砂南",
@@ -891,7 +891,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T05:56:14",
+      "last_changed": "2026-07-11T06:00:15",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1124,5 +1124,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T05:58:15"
+  "last_updated": "2026-07-11T06:00:15"
 }
