@@ -624,7 +624,7 @@
       "region": "姫　路",
       "round": "第3試合",
       "venue": "姫路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "14:30試合開始。",
       "team1": "芦屋",
       "team2": "加古川東",
@@ -646,7 +646,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -667,7 +667,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=47",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T05:36:14",
+      "last_changed": "2026-07-11T05:46:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1124,5 +1124,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T05:44:14"
+  "last_updated": "2026-07-11T05:46:14"
 }
