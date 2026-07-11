@@ -121,7 +121,7 @@
       "round": "第3試合",
       "venue": "尼崎",
       "game_status": "１回表",
-      "commentary": "14:33試合開始予定。",
+      "commentary": "14:33試合開始。",
       "team1": "武庫荘総合",
       "team2": "西宮今津",
       "innings1": [
@@ -624,12 +624,12 @@
       "region": "姫　路",
       "round": "第3試合",
       "venue": "姫路",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "14:30試合開始。",
       "team1": "芦屋",
       "team2": "加古川東",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -665,9 +665,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=47",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-11T05:34:08",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-11T05:36:14",
       "game_date": "2026-07-10",
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
@@ -1124,5 +1124,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T05:34:08"
+  "last_updated": "2026-07-11T05:36:14"
 }
