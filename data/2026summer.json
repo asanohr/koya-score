@@ -120,7 +120,7 @@
       "region": "尼　崎",
       "round": "第3試合",
       "venue": "尼崎",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "14:33試合開始。",
       "team1": "武庫荘総合",
       "team2": "西宮今津",
@@ -144,7 +144,7 @@
       "innings2": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=41",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T06:08:15",
+      "last_changed": "2026-07-11T06:16:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -288,7 +288,7 @@
       "region": "明　石",
       "round": "第3試合",
       "venue": "明石",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "14：58試合開始。",
       "team1": "伊丹北",
       "team2": "神戸国際大附",
@@ -310,7 +310,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -327,11 +327,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=45",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T06:08:15",
+      "last_changed": "2026-07-11T06:16:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -904,7 +904,7 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "５回裏",
+      "game_status": "６回表",
       "commentary": "試合開始13:49",
       "team1": "豊岡",
       "team2": "高砂南",
@@ -947,7 +947,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-11T06:12:14",
+      "last_changed": "2026-07-11T06:16:14",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-11T06:14:14"
+  "last_updated": "2026-07-11T06:16:14"
 }
