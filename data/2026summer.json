@@ -64,7 +64,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "６回表",
+      "game_status": "６回裏",
       "commentary": "9:57試合開始。",
       "team1": "報徳学園",
       "team2": "育英",
@@ -74,7 +74,7 @@
         "0",
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -107,7 +107,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T02:17:36",
+      "last_changed": "2026-07-12T02:35:36",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -176,7 +176,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "11：13試合開始。",
       "team1": "尼崎稲園",
       "team2": "関西学院",
@@ -198,7 +198,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -215,11 +215,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T02:20:36",
+      "last_changed": "2026-07-12T02:35:36",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T02:32:36"
+  "last_updated": "2026-07-12T02:35:36"
 }
