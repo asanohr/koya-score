@@ -64,7 +64,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "８回表",
+      "game_status": "８回裏",
       "commentary": "12:08試合開始。",
       "team1": "三田学園",
       "team2": "上郡",
@@ -76,7 +76,7 @@
         "2",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -107,7 +107,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T05:05:29",
+      "last_changed": "2026-07-12T05:14:29",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -344,8 +344,8 @@
       "region": "明　石",
       "round": "第3試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "14：10試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "14：12試合開始。",
       "team1": "夢野台",
       "team2": "市立姫路",
       "innings1": [
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=45",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T04:29:36",
+      "last_changed": "2026-07-12T05:14:29",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -512,7 +512,7 @@
       "region": "高　砂",
       "round": "第3試合",
       "venue": "高砂",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "14:05試合開始。",
       "team1": "彩星工科",
       "team2": "有馬",
@@ -534,7 +534,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -555,7 +555,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=46",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T05:08:29",
+      "last_changed": "2026-07-12T05:14:29",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -960,7 +960,7 @@
       "region": "豊　岡",
       "round": "第2試合",
       "venue": "豊岡",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "13:35試合開始",
       "team1": "長田",
       "team2": "姫路商業",
@@ -1003,7 +1003,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=28",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T05:11:29",
+      "last_changed": "2026-07-12T05:14:29",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T05:11:29"
+  "last_updated": "2026-07-12T05:14:29"
 }
