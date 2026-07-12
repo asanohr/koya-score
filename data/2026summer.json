@@ -232,7 +232,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "８回表",
+      "game_status": "８回裏",
       "commentary": "11：13試合開始。",
       "team1": "尼崎稲園",
       "team2": "関西学院",
@@ -244,7 +244,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -275,7 +275,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T04:02:36",
+      "last_changed": "2026-07-12T04:11:36",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T04:08:36"
+  "last_updated": "2026-07-12T04:11:36"
 }
