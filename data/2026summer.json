@@ -736,13 +736,13 @@
       "region": "姫　路",
       "round": "第3試合",
       "venue": "姫路",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "14:48試合開始。",
       "team1": "宝塚北",
       "team2": "兵庫工業",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -779,7 +779,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_3.php?kind=47",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T05:59:36",
+      "last_changed": "2026-07-12T06:02:36",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T05:59:36"
+  "last_updated": "2026-07-12T06:02:36"
 }
