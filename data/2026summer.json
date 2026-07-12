@@ -456,7 +456,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "４回表",
+      "game_status": "４回裏",
       "commentary": "11:54試合開始。",
       "team1": "尼崎工業",
       "team2": "滝川",
@@ -464,7 +464,7 @@
         "1",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -499,7 +499,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T03:38:36",
+      "last_changed": "2026-07-12T03:44:36",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T03:41:36"
+  "last_updated": "2026-07-12T03:44:36"
 }
