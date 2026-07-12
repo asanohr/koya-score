@@ -120,7 +120,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "8：56試合開始。",
       "team1": "淡路三原",
       "team2": "明石商業",
@@ -144,7 +144,7 @@
       "innings2": [
         "2",
         "1",
-        "",
+        "1",
         "",
         "",
         "",
@@ -159,11 +159,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "3",
+      "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T00:29:38",
+      "last_changed": "2026-07-12T00:32:38",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -232,14 +232,14 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "２回裏",
+      "game_status": "３回裏",
       "commentary": "8:57試合開始。",
       "team1": "龍野北",
       "team2": "神戸高専",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -255,7 +255,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -275,7 +275,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T00:20:38",
+      "last_changed": "2026-07-12T00:32:38",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -288,7 +288,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:24 開始。",
       "team1": "明石北",
       "team2": "明石清水",
@@ -310,7 +310,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T00:29:38",
+      "last_changed": "2026-07-12T00:32:38",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T00:29:38"
+  "last_updated": "2026-07-12T00:32:38"
 }
