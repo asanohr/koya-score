@@ -736,8 +736,8 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "６回裏",
-      "commentary": "11:43 開始。",
+      "game_status": "コールド終了",
+      "commentary": "11:43 開始。13:46 終了。",
       "team1": "松陰",
       "team2": "姫路西",
       "innings1": [
@@ -747,7 +747,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -763,8 +763,8 @@
         "2",
         "2",
         "1",
-        "",
-        "",
+        "3",
+        "x",
         "",
         "",
         "",
@@ -775,11 +775,11 @@
         ""
       ],
       "total1": "1",
-      "total2": "5",
+      "total2": "8",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-12T04:26:36",
+      "last_changed": "2026-07-12T04:46:51",
       "game_date": "2026-07-11",
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-12T04:44:29"
+  "last_updated": "2026-07-12T04:46:51"
 }
