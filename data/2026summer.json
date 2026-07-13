@@ -400,8 +400,8 @@
       "round": "第2試合",
       "venue": "姫路",
       "game_status": "試合終了",
-      "commentary": "13:51試合開始。16:13試合終了。",
-      "team1": "津名",
+      "commentary": "13:51試合開始。16:13試合終了。\n（延長10回タイブレーク）",
+      "team1": "津　名",
       "team2": "市西宮",
       "innings1": [
         "0",
@@ -442,7 +442,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T07:15:30",
+      "last_changed": "2026-07-13T07:21:30",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1853,5 +1853,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T07:19:30"
+  "last_updated": "2026-07-13T07:21:30"
 }
