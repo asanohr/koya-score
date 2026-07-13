@@ -1,6 +1,4 @@
 {
-  "tournament_id": "2026summer",
-  "tournament_name": "2026年夏季大会",
   "games": [
     {
       "id": "bf3d7740",
@@ -56,7 +54,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "92d495ac",
@@ -112,7 +111,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "1aabe569",
@@ -168,7 +168,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "e666811f",
@@ -224,7 +225,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "f42d0421",
@@ -280,7 +282,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "cd128285",
@@ -336,7 +339,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "d8e8c5c0",
@@ -392,7 +396,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "7051a3a4",
@@ -448,7 +453,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "a040b966",
@@ -504,7 +510,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "494c6056",
@@ -560,7 +567,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "927511fe",
@@ -616,7 +624,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "399a7ce2",
@@ -672,10 +681,9 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
-    }
-  ],
-  "saved_games": [
+      "note": "",
+      "_tid": "2026summer"
+    },
     {
       "id": "71917998",
       "region": "明　石",
@@ -730,63 +738,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
-    },
-    {
-      "id": "1d9597b9",
-      "region": "神　戸",
-      "round": "第1試合",
-      "venue": "神戸",
-      "game_status": "試合終了",
-      "commentary": "9:55試合開始、11:42試合終了",
-      "team1": "須磨東",
-      "team2": "神戸学院大附",
-      "innings1": [
-        "0",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "0",
-        "0",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "innings2": [
-        "0",
-        "2",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "0",
-        "X",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "total1": "1",
-      "total2": "2",
-      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
-      "is_new": false,
-      "is_updated": true,
-      "last_changed": "2026-07-13T02:57:55",
-      "game_date": "2026-07-13",
-      "game_date_label": "7月13日",
-      "confirmed_snapshot": null,
-      "tournament_name": "2026年夏季大会",
-      "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "77c144cd",
@@ -842,7 +795,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "d4be6930",
@@ -898,7 +852,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "eed0033a",
@@ -954,7 +909,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "f1bd4d78",
@@ -1010,7 +966,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "30d6e594",
@@ -1066,7 +1023,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "0dea5939",
@@ -1122,7 +1080,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "9b463153",
@@ -1178,7 +1137,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "96fd8063",
@@ -1234,7 +1194,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "735347bb",
@@ -1290,7 +1251,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "3ce3c357",
@@ -1346,7 +1308,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "ccd66603",
@@ -1402,7 +1365,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "de4842ff",
@@ -1458,7 +1422,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "6109b95d",
@@ -1514,7 +1479,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "b3985bf2",
@@ -1570,7 +1536,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "0ee141d5",
@@ -1626,7 +1593,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "91a2b833",
@@ -1682,7 +1650,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "19bef6c1",
@@ -1738,7 +1707,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "c848e589",
@@ -1794,7 +1764,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     },
     {
       "id": "0f8b1f27",
@@ -1850,8 +1821,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
       "extra_info": "7月13日",
-      "note": ""
+      "note": "",
+      "_tid": "2026summer"
     }
-  ],
-  "last_updated": "2026-07-13T07:45:30"
+  ]
 }
