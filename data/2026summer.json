@@ -175,7 +175,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "13：10試合開始。",
       "team1": "川西北陵",
       "team2": "飾磨工業",
@@ -204,7 +204,7 @@
         "1",
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -218,7 +218,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T06:08:53",
+      "last_changed": "2026-07-13T06:16:53",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1853,5 +1853,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T06:14:53"
+  "last_updated": "2026-07-13T06:16:53"
 }
