@@ -432,8 +432,16 @@ async function toggleGroup(header) {
     for (const id of unloaded) {
       try {
         const data = await fetchJson('data/' + encodeURIComponent(id) + '.json');
-        // _tid を付加してどの tournament ファイル由来かを記録
-        loadedGames[id] = (data.games || []).map(g => ({ ...g, _tid: id }));
+        // games（当日分）と saved_games（履歴）を結合し _tid を付加
+        const allGames = [
+          ...(data.games       || []),
+          ...(data.saved_games || []),
+        ];
+        // ID重複除去（旧形式との互換性対策）
+        const seen = new Set();
+        loadedGames[id] = allGames
+          .filter(g => { if (seen.has(g.id)) return false; seen.add(g.id); return true; })
+          .map(g => ({ ...g, _tid: id }));
       } catch(e) {
         loadedGames[id] = [];
       }

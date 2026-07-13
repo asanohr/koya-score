@@ -742,8 +742,8 @@ async function fetchAndUpdate() {
     !_deletedIds.has(g.id) &&
     ((g.game_status || '').includes('終了') || (g.innings1 || []).some(v => v !== '' && v != null))
   );
-  // savedGames = 既存履歴 + 新規自動保存（削除済み・重複除外）
-  const savedById = Object.fromEntries(oldSavedGames.filter(g => !_deletedIds.has(g.id)).map(g => [g.id, g]));
+  // savedGames = 既存履歴 + 新規自動保存（削除済み・displayGamesと重複するID除外）
+  const savedById = Object.fromEntries(oldSavedGames.filter(g => !_deletedIds.has(g.id) && !currentIds.has(g.id)).map(g => [g.id, g]));
   newlySaved.forEach(g => { if (!savedById[g.id]) savedById[g.id] = g; });
   const savedGames = Object.values(savedById);
 
@@ -777,16 +777,16 @@ async function fetchAndUpdate() {
   }
   setGhStatus('pending', '📤 GitHub書き込み中...');
   try {
-    // GitHub には今日の試合＋履歴をすべて保存
-    const allGamesForGitHub = [...displayGames, ...savedGames];
+    // GitHub には今日の試合と履歴を別キーで保存（読み取り時の混在・重複を防ぐ）
     const data = {
       tournament_id:   tournamentId,
       tournament_name: session.tournament_name || '',
-      games:           enrichGamesWithMeta(allGamesForGitHub, session),
+      games:           enrichGamesWithMeta(displayGames, session),       // 当日分のみ
+      saved_games:     enrichGamesWithMeta(savedGames, session),         // 履歴（日をまたいだ蓄積）
       last_updated:    now,
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
-    await updateTournamentIndex(session, allGamesForGitHub.length, now);
+    await updateTournamentIndex(session, displayGames.length + savedGames.length, now);
     const _now = new Date();
     const _date = _now.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/');
     const _time = _now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
@@ -831,15 +831,23 @@ async function refreshDisplay() {
       if (res.ok) {
         const data = await res.json();
         const deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
-        const allGames = (data.games || []).filter(g => !deletedIds.has(g.id));
-        // 当日分のみモニター表示用、他日は履歴として保持（トップ画面に出さない）
-        const todayDate = session.game_date || '';
+        const todayDate  = session.game_date || '';
+        // GitHub の games（当日分）と saved_games（履歴）を別キーで読み取る
+        // 旧形式（saved_gamesキーなし）との互換性のため games の日付フィルタも維持
+        const rawDisplay = (data.games || []).filter(g => !deletedIds.has(g.id));
+        const rawSaved   = (data.saved_games || []).filter(g => !deletedIds.has(g.id));
         const displayGames = todayDate
-          ? allGames.filter(g => g.game_date === todayDate)
-          : allGames;
-        const savedGames = todayDate
-          ? allGames.filter(g => g.game_date !== todayDate)
+          ? rawDisplay.filter(g => g.game_date === todayDate)
+          : rawDisplay;
+        const spillOver    = todayDate
+          ? rawDisplay.filter(g => g.game_date !== todayDate)  // 旧形式の日付違いを履歴へ
           : [];
+        // 重複IDを除去してから savedGames を確定
+        const displayIds  = new Set(displayGames.map(g => g.id));
+        const savedGames  = [
+          ...spillOver.filter(g => !displayIds.has(g.id)),
+          ...rawSaved.filter(g => !displayIds.has(g.id)),
+        ].filter((g, i, arr) => arr.findIndex(x => x.id === g.id) === i); // ID重複除去
         autoConfirmNew(displayGames);
         saveCurrentData({
           games:       displayGames,
