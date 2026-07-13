@@ -68,7 +68,7 @@
       "team1": "須磨学園",
       "team2": "小野工業",
       "innings1": [
-        "1",
+        "2",
         "",
         "",
         "",
@@ -101,12 +101,12 @@
         "",
         ""
       ],
-      "total1": "1",
+      "total1": "2",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-13T03:40:39",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-13T03:42:46",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -120,7 +120,7 @@
       "round": "第1試合",
       "venue": "明石",
       "game_status": "コールド終了",
-      "commentary": "9：58試合開始。\n12:16試合終了。",
+      "commentary": "9：58試合開始。\n12:16試合終了。\n（8回コールド）",
       "team1": "市立尼崎",
       "team2": "神戸第一",
       "innings1": [
@@ -1795,5 +1795,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T03:40:39"
+  "last_updated": "2026-07-13T03:42:46"
 }
