@@ -11,7 +11,7 @@
       "game_status": "試合終了",
       "commentary": "9:55試合開始、11:42試合終了",
       "team1": "須磨東",
-      "team2": "神戸学院大学附属",
+      "team2": "神戸学院大附",
       "innings1": [
         "0",
         "0",
@@ -51,7 +51,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:45:55",
+      "last_changed": "2026-07-13T02:57:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -232,7 +232,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "10:00試合開始。",
       "team1": "市川",
       "team2": "須磨翔風",
@@ -259,7 +259,7 @@
         "2",
         "1",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -275,7 +275,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:49:55",
+      "last_changed": "2026-07-13T02:57:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -290,8 +290,8 @@
       "venue": "淡路",
       "game_status": "試合終了",
       "commentary": "9:57 開始。11:54 終了。",
-      "team1": "東灘",
-      "team2": "龍野",
+      "team1": "東　灘",
+      "team2": "龍　野",
       "innings1": [
         "0",
         "0",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:55:55",
+      "last_changed": "2026-07-13T02:57:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -346,8 +346,8 @@
       "venue": "春日/城山",
       "game_status": "試合終了",
       "commentary": "9:53 試合開始\n11:43 試合終了",
-      "team1": "兵庫",
-      "team2": "白陵",
+      "team1": "兵　庫",
+      "team2": "白　陵",
       "innings1": [
         "0",
         "0",
@@ -387,7 +387,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:45:55",
+      "last_changed": "2026-07-13T02:57:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T02:55:55"
+  "last_updated": "2026-07-13T02:57:55"
 }
