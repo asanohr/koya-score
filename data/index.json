@@ -4,8 +4,8 @@
       "id": "2026summer",
       "name": "2026年夏季大会",
       "date": "2026-07-11",
-      "game_count": 19,
-      "last_updated": "2026-07-12T06:53:29"
+      "game_count": 6,
+      "last_updated": "2026-07-13T01:14:40"
     },
     {
       "id": "2026spring",
@@ -15,5 +15,5 @@
       "last_updated": "2026-07-04T03:47:04"
     }
   ],
-  "last_updated": "2026-07-12T06:53:29"
+  "last_updated": "2026-07-13T01:14:40"
 }
