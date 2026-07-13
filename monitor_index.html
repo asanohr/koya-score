@@ -826,10 +826,22 @@ async function refreshDisplay() {
       if (res.ok) {
         const data = await res.json();
         const deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
-        const games = (data.games || []).filter(g => !deletedIds.has(g.id));
-        autoConfirmNew(games); // 初回出現ゲームをこのPCで自動確認
-        saveCurrentData({ games, last_updated: data.last_updated || null,
-          crawl_status: 'ok', error: null, game_count: games.length });
+        const allGames = (data.games || []).filter(g => !deletedIds.has(g.id));
+        // 当日分のみモニター表示用、他日は履歴として保持（トップ画面に出さない）
+        const todayDate = session.game_date || '';
+        const displayGames = todayDate
+          ? allGames.filter(g => g.game_date === todayDate)
+          : allGames;
+        const savedGames = todayDate
+          ? allGames.filter(g => g.game_date !== todayDate)
+          : [];
+        autoConfirmNew(displayGames);
+        saveCurrentData({
+          games:       displayGames,
+          saved_games: savedGames,
+          last_updated: data.last_updated || null,
+          crawl_status: 'ok', error: null, game_count: displayGames.length
+        });
       }
     } catch(e) { console.warn('表示更新失敗:', e); }
   }
