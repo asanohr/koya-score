@@ -623,7 +623,7 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "12:36試合開始。",
       "team1": "明石南",
       "team2": "星陵",
@@ -650,7 +650,7 @@
         "1",
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -666,7 +666,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T04:58:53",
+      "last_changed": "2026-07-13T05:02:53",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1853,5 +1853,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T05:00:53"
+  "last_updated": "2026-07-13T05:02:53"
 }
