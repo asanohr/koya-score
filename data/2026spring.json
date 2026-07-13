@@ -1,64 +1,5 @@
 {
-  "tournament_id": "2026spring",
-  "tournament_name": "2026年春季大会",
-  "game_date": "2026-05-23",
   "games": [
-    {
-      "id": "ccd66603",
-      "region": "尼　崎",
-      "round": "第1試合",
-      "venue": "尼崎",
-      "game_status": "試合終了",
-      "commentary": "9:54  試合開始　\n12:08 試合終了",
-      "team1": "篠山鳳鳴・氷上西",
-      "team2": "北条",
-      "innings1": [
-        "0",
-        "1",
-        "0",
-        "0",
-        "1",
-        "0",
-        "0",
-        "1",
-        "0",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "innings2": [
-        "0",
-        "5",
-        "0",
-        "0",
-        "0",
-        "1",
-        "0",
-        "1",
-        "X",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "total1": "3",
-      "total2": "7",
-      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-04T03:34:54",
-      "game_date": "2026-05-23",
-      "game_date_label": "5月23日",
-      "confirmed_snapshot": null,
-      "tournament_name": "2026年春季大会",
-      "extra_info": "5月23日",
-      "note": ""
-    },
     {
       "id": "de4842ff",
       "region": "尼　崎",
@@ -113,7 +54,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "d4be6930",
@@ -169,7 +111,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "eed0033a",
@@ -225,7 +168,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "f1bd4d78",
@@ -281,7 +225,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "9b463153",
@@ -337,7 +282,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "735347bb",
@@ -393,7 +339,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "3ce3c357",
@@ -449,7 +396,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "c848e589",
@@ -505,7 +453,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "0f8b1f27",
@@ -561,7 +510,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "4712804e",
@@ -617,7 +567,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     },
     {
       "id": "767f8c76",
@@ -673,8 +624,8 @@
       "confirmed_snapshot": null,
       "tournament_name": "2026年春季大会",
       "extra_info": "5月23日",
-      "note": ""
+      "note": "",
+      "_tid": "2026spring"
     }
-  ],
-  "last_updated": "2026-07-04T03:47:04"
+  ]
 }
