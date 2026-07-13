@@ -288,8 +288,8 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "９回表",
-      "commentary": "9:57 開始。",
+      "game_status": "試合終了",
+      "commentary": "9:57 開始。11:54 終了。",
       "team1": "東灘",
       "team2": "龍野",
       "innings1": [
@@ -301,7 +301,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -318,7 +318,7 @@
         "1",
         "0",
         "1",
-        "",
+        "×",
         "",
         "",
         "",
@@ -331,7 +331,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:49:55",
+      "last_changed": "2026-07-13T02:55:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T02:53:55"
+  "last_updated": "2026-07-13T02:55:55"
 }
