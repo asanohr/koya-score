@@ -457,7 +457,7 @@
       "round": "第2試合",
       "venue": "春日/城山",
       "game_status": "試合開始前",
-      "commentary": "11:35 試合開始予定",
+      "commentary": "12:35 試合開始予定",
       "team1": "明石南",
       "team2": "星陵",
       "innings1": [
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T02:59:55"
+  "last_updated": "2026-07-13T03:01:55"
 }
