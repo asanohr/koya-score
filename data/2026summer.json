@@ -1,7 +1,7 @@
 {
   "tournament_id": "2026summer",
   "tournament_name": "2026年夏季大会",
-  "game_date": "2026-07-11",
+  "game_date": "2026-07-13",
   "games": [
     {
       "id": "1d9597b9",
@@ -52,11 +52,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -108,11 +108,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -164,11 +164,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -220,11 +220,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -276,11 +276,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -332,11 +332,11 @@
       "is_new": false,
       "is_updated": true,
       "last_changed": "2026-07-13T01:14:40",
-      "game_date": "2026-07-11",
-      "game_date_label": "7月11日",
+      "game_date": "2026-07-13",
+      "game_date_label": "7月13日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -392,7 +392,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -448,7 +448,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -504,7 +504,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -560,7 +560,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -616,7 +616,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -672,7 +672,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -728,7 +728,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -784,7 +784,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -840,7 +840,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -896,7 +896,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -952,7 +952,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -1008,7 +1008,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -1064,7 +1064,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -1120,7 +1120,7 @@
       "game_date_label": "7月11日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     },
     {
@@ -1176,9 +1176,9 @@
       "game_date_label": "7月10日",
       "confirmed_snapshot": null,
       "tournament_name": "2026年夏季大会",
-      "extra_info": "7月11日",
+      "extra_info": "7月13日",
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T01:14:40"
+  "last_updated": "2026-07-13T01:14:57"
 }
