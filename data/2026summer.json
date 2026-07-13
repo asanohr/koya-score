@@ -63,7 +63,7 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "８回表",
+      "game_status": "８回裏",
       "commentary": "12:35試合開始、",
       "team1": "須磨学園",
       "team2": "小野工業",
@@ -75,7 +75,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -106,7 +106,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T05:12:53",
+      "last_changed": "2026-07-13T05:18:53",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1853,5 +1853,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T05:16:53"
+  "last_updated": "2026-07-13T05:18:53"
 }
