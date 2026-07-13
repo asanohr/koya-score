@@ -696,18 +696,23 @@ async function fetchAndUpdate() {
   const oldData          = loadCurrentData();
   const oldDisplayGames  = oldData.games        || [];
   const oldSavedGames    = oldData.saved_games  || [];
-  // 既存の全ゲームを ID でまとめて検索できるようにする（マージ比較用）
-  const oldById = Object.fromEntries([...oldDisplayGames, ...oldSavedGames].map(g => [g.id, g]));
+  // マージ比較は「今日の表示ゲーム」だけを対象にする
+  // （過去履歴を含めると別日の試合が同一試合と誤認識されスコアが流入する危険がある）
+  const oldById = Object.fromEntries(oldDisplayGames.map(g => [g.id, g]));
 
   const merged = newGames.map(ng => {
     const old = oldById[ng.id];
 
-    // イニング退行防止: 新クロールがイニング空でも既存に実績があれば保持
+    // イニング退行防止: 元サイトが一時的に空を返した場合のみ保持
+    // ※ 同じ日付の試合に限定する（日付未設定時は適用しない）
     if (old) {
-      const oldHasInnings = (old.innings1 || []).some(v => v !== '' && v != null);
-      const newHasInnings = (ng.innings1 || []).some(v => v !== '' && v != null);
-      if (!newHasInnings && oldHasInnings && !(ng.game_status || '').includes('終了')) {
-        ng = { ...ng, innings1: old.innings1, innings2: old.innings2, total1: old.total1, total2: old.total2 };
+      const sameDate = (ng.game_date || '') !== '' && (ng.game_date || '') === (old.game_date || '');
+      if (sameDate) {
+        const oldHasInnings = (old.innings1 || []).some(v => v !== '' && v != null);
+        const newHasInnings = (ng.innings1 || []).some(v => v !== '' && v != null);
+        if (!newHasInnings && oldHasInnings && !(ng.game_status || '').includes('終了')) {
+          ng = { ...ng, innings1: old.innings1, innings2: old.innings2, total1: old.total1, total2: old.total2 };
+        }
       }
     }
 
