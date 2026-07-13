@@ -571,8 +571,9 @@ async function fetchHtml(url) {
   }
   return utf8;
 }
-function makeId(region, round, url) {
-  const s = region + '|' + round + '|' + url;
+function makeId(region, round, url, date) {
+  // 日付を含めることで同じURLでも試合日が異なれば別IDになる
+  const s = region + '|' + round + '|' + url + '|' + (date || '');
   let h = 0;
   for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
   return (h >>> 0).toString(16).padStart(8, '0');
@@ -684,17 +685,24 @@ async function fetchAndUpdate() {
       if (game) {
         game.game_date       = session.game_date       || '';
         game.game_date_label = session.game_date_label || '';
+        // 日付込みIDに更新（同じURLでも日付が変われば別試合）
+        game.id = makeId(link.region, link.round, link.url, game.game_date);
         newGames.push(game);
       }
     } catch(e) { console.warn('取得失敗:', link.url, e); }
   }
 
-  const oldById = Object.fromEntries((loadCurrentData().games || []).map(g => [g.id, g]));
-  const merged  = newGames.map(ng => {
-    const old  = oldById[ng.id];
+  // 旧データ: displayGames（今日の表示用）と saved_games（履歴）を別管理
+  const oldData          = loadCurrentData();
+  const oldDisplayGames  = oldData.games        || [];
+  const oldSavedGames    = oldData.saved_games  || [];
+  // 既存の全ゲームを ID でまとめて検索できるようにする（マージ比較用）
+  const oldById = Object.fromEntries([...oldDisplayGames, ...oldSavedGames].map(g => [g.id, g]));
 
-    // ① イニング退行防止: 新クロールがイニング空でも既存に実績があれば保持
-    //    （元サイトが一時的に空を返した場合に「試合中」→「NEW」に退行するのを防ぐ）
+  const merged = newGames.map(ng => {
+    const old = oldById[ng.id];
+
+    // イニング退行防止: 新クロールがイニング空でも既存に実績があれば保持
     if (old) {
       const oldHasInnings = (old.innings1 || []).some(v => v !== '' && v != null);
       const newHasInnings = (ng.innings1 || []).some(v => v !== '' && v != null);
@@ -707,7 +715,6 @@ async function fetchAndUpdate() {
     if (!old) return { ...ng, is_new:true, is_updated:false, confirmed_snapshot:null, last_changed:now };
     const confirmedSnap = old.confirmed_snapshot ?? null;
     let result;
-    // スコアまたは試合状態が変わった場合は更新フラグを立てる
     if (snap !== scoreSnapshot(old) || (ng.game_status||'') !== (old.game_status||'')) {
       result = { ...ng, is_new:false, is_updated:true, last_changed:now };
     } else {
@@ -720,25 +727,33 @@ async function fetchAndUpdate() {
 
   // ブラックリストに登録済みのゲームは復活させない
   const _deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
-  const filteredMerged = merged.filter(g => !_deletedIds.has(g.id));
+  // displayGames = 今日のクロール分のみ（モニタートップに表示）
+  const displayGames = merged.filter(g => !_deletedIds.has(g.id));
 
-  // ② 試合終了・実績ある試合を自動保持
-  //    元サイトから消えた試合（終了または途中経過あり）をデータに残し続ける
-  const newIds = new Set(filteredMerged.map(g => g.id));
-  const autoSaved = (loadCurrentData().games || []).filter(g =>
-    !newIds.has(g.id) &&
+  // 自動保存: 旧displayGamesから今日のクロールに含まれなくなった実績ある試合を履歴へ
+  const currentIds  = new Set(displayGames.map(g => g.id));
+  const newlySaved  = oldDisplayGames.filter(g =>
+    !currentIds.has(g.id) &&
     !_deletedIds.has(g.id) &&
     ((g.game_status || '').includes('終了') || (g.innings1 || []).some(v => v !== '' && v != null))
   );
-  if (autoSaved.length > 0) filteredMerged.push(...autoSaved);
+  // savedGames = 既存履歴 + 新規自動保存（削除済み・重複除外）
+  const savedById = Object.fromEntries(oldSavedGames.filter(g => !_deletedIds.has(g.id)).map(g => [g.id, g]));
+  newlySaved.forEach(g => { if (!savedById[g.id]) savedById[g.id] = g; });
+  const savedGames = Object.values(savedById);
 
-  autoConfirmNew(filteredMerged); // 初回出現ゲームをこのPCで自動確認
-  saveCurrentData({ games:filteredMerged, last_updated:now, crawl_status:'ok', error:null, game_count:filteredMerged.length });
+  autoConfirmNew(displayGames); // 初回出現ゲームをこのPCで自動確認
+  saveCurrentData({
+    games:       displayGames,   // モニター表示用（今日分のみ）
+    saved_games: savedGames,     // 履歴（日をまたいで蓄積）
+    last_updated: now, crawl_status:'ok', error:null, game_count: displayGames.length
+  });
 
-  // スコアに変化がなければ GitHub 書き込みをスキップ（不要なコミット＝Pages deployを抑制）
-  const hasChanges = filteredMerged.some(g => g.is_new || g.is_updated)
-                  || filteredMerged.length !== (Object.keys(oldById).length)
-                  || autoSaved.length > 0;
+  // スコアに変化がなければ GitHub 書き込みをスキップ
+  const hasChanges = displayGames.some(g => g.is_new || g.is_updated)
+                  || displayGames.length !== oldDisplayGames.length
+                  || newlySaved.length > 0
+                  || savedGames.length !== oldSavedGames.filter(g => !_deletedIds.has(g.id)).length;
   if (!hasChanges) {
     setGhStatus('ok', '変更なし');
     return;
@@ -757,15 +772,16 @@ async function fetchAndUpdate() {
   }
   setGhStatus('pending', '📤 GitHub書き込み中...');
   try {
+    // GitHub には今日の試合＋履歴をすべて保存
+    const allGamesForGitHub = [...displayGames, ...savedGames];
     const data = {
       tournament_id:   tournamentId,
       tournament_name: session.tournament_name || '',
-      game_date:       session.game_date       || '',
-      games:           enrichGamesWithMeta(filteredMerged, session), // メタ情報（大会名・その他情報）を付加
+      games:           enrichGamesWithMeta(allGamesForGitHub, session),
       last_updated:    now,
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
-    await updateTournamentIndex(session, merged.length, now);
+    await updateTournamentIndex(session, allGamesForGitHub.length, now);
     const _now = new Date();
     const _date = _now.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/');
     const _time = _now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});

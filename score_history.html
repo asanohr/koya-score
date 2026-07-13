@@ -112,6 +112,17 @@
     .copy-btn:hover{opacity:.85;} .copy-btn.copied{background:var(--win);}
     .id-note{margin-top:6px;font-size:11px;color:var(--text-dim);}
 
+    /* 日付グループ */
+    .date-group{border-top:1px solid var(--border);}
+    .date-group:first-child{border-top:none;}
+    .date-group-header{
+      padding:8px 16px;font-size:13px;font-weight:700;
+      background:var(--surface2);color:var(--accent);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;gap:8px;
+    }
+    .date-group-count{font-size:11px;font-weight:normal;color:var(--text-dim);}
+
     /* 空状態・エラー */
     .empty{text-align:center;padding:60px 20px;color:var(--text-dim);font-size:15px;line-height:2.2;}
     .loading{text-align:center;padding:40px 20px;color:var(--text-dim);}
@@ -473,86 +484,104 @@ function buildScoreTable(g) {
     + '</table></div>';
 }
 
+// 1試合分のHTMLを組み立てる
+function buildGameRow(g) {
+  const tid      = g._tid || '';
+  const isEnd    = (g.game_status || '').includes('終了');
+  const isManual = tid.startsWith('m_');
+
+  const tn = g.tournament_name || '';
+  const ei = g.extra_info || '';
+  const titleParts = [];
+  if (tn) titleParts.push(tn);
+  if (ei) titleParts.push(ei);
+  if (!titleParts.length) {
+    if (g.game_date_label) titleParts.push(g.game_date_label);
+    if (g.venue)           titleParts.push(g.venue);
+    if (g.round)           titleParts.push(g.round);
+  }
+  if (g.team1 && g.team2) titleParts.push(g.team1 + ' vs ' + g.team2);
+  const titleStr = titleParts.join('　') || g.round || '試合';
+  const scoreStr = (g.total1 !== '' && g.total1 != null && g.total2 !== '' && g.total2 != null)
+    ? g.total1 + '－' + g.total2 : '';
+
+  const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tid);
+  const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : (g.round || '');
+  const hSafeId    = (g.id || tid).replace(/[^a-zA-Z0-9_-]/g, '_');
+  const iframeCode = '<iframe id="ks-' + hSafeId + '" src="' + widgetUrl + '" width="100%" height="160" scrolling="no" frameborder="0" style="border:none;border-radius:10px;display:block;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>\n<script>(function(){var f=document.getElementById(\'ks-' + hSafeId + '\');if(!f)return;window.addEventListener(\'message\',function(e){if(e.data&&e.data.type===\'koya-resize\'&&e.source===f.contentWindow)f.style.height=e.data.height+\'px\';});})();<\\/script>';
+
+  const delBtn = manageMode
+    ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tid) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
+    : '';
+
+  const scoreTable = buildScoreTable(g);
+  const noteHtml = g.note
+    ? '<div style="padding:6px 2px 8px;font-size:12px;color:var(--text-dim);line-height:1.7;">'
+      + esc(g.note).replace(/\n/g, '<br>') + '</div>'
+    : '';
+  const editBtn = isManual
+    ? '<a href="score_creator.html?edit=' + encodeURIComponent(tid) + '" class="btn sub"'
+      + ' style="font-size:11px;padding:4px 10px;margin-top:8px;display:inline-block;">✏️ 編集</a>'
+    : '';
+
+  return '<div class="game-row">'
+    + '<div class="game-summary" onclick="toggleGame(this)">'
+    + '<span class="g-title">⚾ ' + esc(titleStr) + '</span>'
+    + (isEnd ? '<span class="badge-end">終了</span>' : '')
+    + (scoreStr ? '<span class="g-score">' + esc(scoreStr) + '</span>' : '')
+    + delBtn
+    + '<span class="g-arrow">▼</span>'
+    + '</div>'
+    + '<div class="embed-detail">'
+    + scoreTable
+    + noteHtml
+    + '<label style="margin-top:4px;">埋め込みコード（他サイトに貼り付けて使用）</label>'
+    + '<code>' + esc(iframeCode) + '</code>'
+    + '<button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>'
+    + editBtn
+    + '<div class="id-note">🔑 試合ID: <b>' + esc(g.id) + '</b>　大会ID: <b>' + esc(tid) + '</b></div>'
+    + '</div>'
+    + '</div>';
+}
+
+// 日付グループ内の地区別セクション
+function buildRegionSection(games) {
+  const byRegion = {};
+  for (const g of games) {
+    const k = (g._tid || '').startsWith('m_') ? 'カスタム' : (g.region || '不明');
+    if (!byRegion[k]) byRegion[k] = [];
+    byRegion[k].push(g);
+  }
+  return Object.entries(byRegion).map(([region, gs]) => {
+    const regionIcon = region === 'カスタム' ? '📝' : '🏟';
+    return '<div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--text-dim);">'
+      + regionIcon + ' ' + esc(region) + '</div>'
+      + gs.map(buildGameRow).join('');
+  }).join('');
+}
+
 function renderGames(body, games) {
   if (!games.length) {
     body.innerHTML = '<div class="empty" style="padding:20px;">試合データがありません。</div>';
     return;
   }
-  const byRegion = {};
+
+  // 日付でグループ化（降順）
+  const byDate = {};
   for (const g of games) {
-    // 手動作成スコア（m_xxx）は「カスタム」として分類
-    const k = (g._tid || '').startsWith('m_') ? 'カスタム' : (g.region || '不明');
-    if (!byRegion[k]) byRegion[k] = [];
-    byRegion[k].push(g);
+    const dk = g.game_date || '';
+    if (!byDate[dk]) byDate[dk] = [];
+    byDate[dk].push(g);
   }
-  body.innerHTML = Object.entries(byRegion).map(([region, gs]) => {
-    const rows = gs.map(g => {
-      const tid      = g._tid || '';
-      const isEnd    = (g.game_status||'').includes('終了');
-      const isManual = tid.startsWith('m_');
+  const dateEntries = Object.entries(byDate).sort((a, b) => b[0].localeCompare(a[0]));
 
-      // タイトル組み立て
-      const tn = g.tournament_name || '';
-      const ei = g.extra_info || '';
-      const titleParts = [];
-      if (tn) titleParts.push(tn);
-      if (ei) titleParts.push(ei);
-      if (!titleParts.length) {
-        if (g.game_date_label) titleParts.push(g.game_date_label);
-        if (g.venue)           titleParts.push(g.venue);
-        if (g.round)           titleParts.push(g.round);
-      }
-      if (g.team1 && g.team2) titleParts.push(g.team1 + ' vs ' + g.team2);
-      const titleStr = titleParts.join('　') || g.round || '試合';
-      const scoreStr = (g.total1 !== '' && g.total1 != null && g.total2 !== '' && g.total2 != null)
-        ? g.total1 + '－' + g.total2 : '';
-
-      const widgetUrl  = base + 'score_widget.html?id=' + encodeURIComponent(g.id) + '&tournament=' + encodeURIComponent(tid);
-      const teamLabel  = (g.team1 && g.team2) ? g.team1 + ' vs ' + g.team2 : (g.round || '');
-      const hSafeId    = (g.id || tid).replace(/[^a-zA-Z0-9_-]/g, '_');
-      const iframeCode = '<iframe id="ks-' + hSafeId + '" src="' + widgetUrl + '" width="100%" height="160" scrolling="no" frameborder="0" style="border:none;border-radius:10px;display:block;" loading="lazy" title="' + teamLabel + ' スコア"></iframe>\n<script>(function(){var f=document.getElementById(\'ks-' + hSafeId + '\');if(!f)return;window.addEventListener(\'message\',function(e){if(e.data&&e.data.type===\'koya-resize\'&&e.source===f.contentWindow)f.style.height=e.data.height+\'px\';});})();<\\/script>';
-
-      const delBtn = manageMode
-        ? '<button class="del-btn sm" onclick="deleteGame(\'' + esc(tid) + '\',\'' + esc(g.id) + '\',event)">削除</button>'
-        : '';
-
-      // スコアテーブル
-      const scoreTable = buildScoreTable(g);
-
-      // ノート（テキスト追加済みの場合）
-      const noteHtml = g.note
-        ? '<div style="padding:6px 2px 8px;font-size:12px;color:var(--text-dim);line-height:1.7;">'
-          + esc(g.note).replace(/\n/g, '<br>') + '</div>'
-        : '';
-
-      // 編集ボタン（手動スコアのみ）
-      const editBtn = isManual
-        ? '<a href="score_creator.html?edit=' + encodeURIComponent(tid) + '" class="btn sub"'
-          + ' style="font-size:11px;padding:4px 10px;margin-top:8px;display:inline-block;">✏️ 編集</a>'
-        : '';
-
-      return '<div class="game-row">'
-        + '<div class="game-summary" onclick="toggleGame(this)">'
-        + '<span class="g-title">⚾ ' + esc(titleStr) + '</span>'
-        + (isEnd ? '<span class="badge-end">終了</span>' : '')
-        + (scoreStr ? '<span class="g-score">' + esc(scoreStr) + '</span>' : '')
-        + delBtn
-        + '<span class="g-arrow">▼</span>'
-        + '</div>'
-        + '<div class="embed-detail">'
-        + scoreTable
-        + noteHtml
-        + '<label style="margin-top:4px;">埋め込みコード（他サイトに貼り付けて使用）</label>'
-        + '<code>' + esc(iframeCode) + '</code>'
-        + '<button class="copy-btn" onclick="copyCode(this)">📋 コードをコピー</button>'
-        + editBtn
-        + '<div class="id-note">🔑 試合ID: <b>' + esc(g.id) + '</b>　大会ID: <b>' + esc(tid) + '</b></div>'
-        + '</div>'
-        + '</div>';
-    }).join('');
-    const regionIcon = region === 'カスタム' ? '📝' : '🏟';
-    return '<div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--text-dim);">'
-      + regionIcon + ' ' + esc(region) + '</div>' + rows;
+  body.innerHTML = dateEntries.map(([dateKey, dateGames]) => {
+    const dateLabel = dateKey ? fmtDate(dateKey) : '日付不明';
+    return '<div class="date-group">'
+      + '<div class="date-group-header">📅 ' + esc(dateLabel)
+      + '<span class="date-group-count">（' + dateGames.length + '試合）</span></div>'
+      + buildRegionSection(dateGames)
+      + '</div>';
   }).join('');
 }
 
