@@ -31,7 +31,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -47,11 +47,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T01:18:03",
+      "last_changed": "2026-07-13T01:21:43",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -120,14 +120,14 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "9:55試合開始。",
       "team1": "八鹿",
       "team2": "社",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -163,7 +163,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T01:18:03",
+      "last_changed": "2026-07-13T01:21:43",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -176,7 +176,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "10:00試合開始。",
       "team1": "市川",
       "team2": "須磨翔風",
@@ -198,7 +198,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "2",
         "",
         "",
         "",
@@ -215,11 +215,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T01:14:40",
+      "last_changed": "2026-07-13T01:21:43",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T01:21:03"
+  "last_updated": "2026-07-13T01:21:43"
 }
