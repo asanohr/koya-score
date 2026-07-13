@@ -288,7 +288,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "７回表",
+      "game_status": "７回裏",
       "commentary": "10:00試合開始。",
       "team1": "市川",
       "team2": "須磨翔風",
@@ -299,7 +299,7 @@
         "1",
         "0",
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -326,12 +326,12 @@
         "",
         ""
       ],
-      "total1": "1",
+      "total1": "3",
       "total2": "6",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-13T02:57:55",
+      "last_changed": "2026-07-13T03:13:55",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1180,5 +1180,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-13T03:11:55"
+  "last_updated": "2026-07-13T03:13:55"
 }
