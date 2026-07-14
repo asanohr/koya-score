@@ -9,7 +9,7 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "9:56試合開始。",
       "team1": "仁川学院",
       "team2": "宝塚東",
@@ -36,7 +36,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:09:56",
+      "last_changed": "2026-07-14T02:19:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -65,7 +65,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "9：56試合開始。",
       "team1": "科学技術",
       "team2": "西脇工業",
@@ -92,7 +92,7 @@
         "0",
         "0",
         "0",
-        "1",
+        "3",
         "",
         "",
         "",
@@ -104,11 +104,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "1",
+      "total2": "3",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:17:56",
+      "last_changed": "2026-07-14T02:19:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1911,5 +1911,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T02:17:56"
+  "last_updated": "2026-07-14T02:19:56"
 }
