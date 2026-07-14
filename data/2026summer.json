@@ -65,7 +65,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "12:54試合開始。",
       "team1": "神戸高専",
       "team2": "報徳学園",
@@ -87,7 +87,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -104,11 +104,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:58:34",
+      "last_changed": "2026-07-14T04:07:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -183,7 +183,7 @@
       "team2": "神戸弘陵",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T04:01:56",
+      "last_changed": "2026-07-14T04:07:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -289,7 +289,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "12：41試合開始。",
       "team1": "神戸甲北・神戸北・北神戸総合",
       "team2": "柏原",
@@ -312,7 +312,7 @@
       ],
       "innings2": [
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T04:01:56",
+      "last_changed": "2026-07-14T04:07:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T04:05:56"
+  "last_updated": "2026-07-14T04:07:56"
 }
