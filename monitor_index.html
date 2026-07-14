@@ -248,6 +248,9 @@
         <span class="date-badge" id="sesDateLabel" style="display:none;"></span>
       </div>
     </div>
+    <div id="sesReadOnlyNote" style="display:none;font-size:11px;color:var(--text-dim);padding:2px 4px;align-self:center;">
+      📖 読み取り専用 — 大会名・試合日は書き込みPCから自動取得
+    </div>
     <div class="legend" style="margin-left:auto;margin-bottom:0;align-self:center;">
       <div class="legend-item"><span class="badge new">NEW</span> 新たな試合</div>
       <div class="legend-item"><span class="badge playing">試合中</span> プレー中</div>
@@ -441,6 +444,16 @@ function saveGitHubConfig() {
   cfg.gh_write_enabled = document.getElementById('cfgWriteEnabled').checked;
   saveConfig(cfg);
   setCfgStatus('💾 保存しました', 'var(--win)');
+  applySessionReadOnlyMode();
+}
+
+// 読み取り専用モードでは大会名・試合日を編集不可にする
+function applySessionReadOnlyMode() {
+  const isReadOnly = loadConfig().gh_write_enabled === false;
+  document.getElementById('sesName').disabled = isReadOnly;
+  document.getElementById('sesDate').disabled = isReadOnly;
+  const note = document.getElementById('sesReadOnlyNote');
+  if (note) note.style.display = isReadOnly ? '' : 'none';
 }
 async function testGitHub() {
   saveGitHubConfig();
@@ -692,6 +705,16 @@ async function fetchAndUpdate() {
     } catch(e) { console.warn('取得失敗:', link.url, e); }
   }
 
+  // リンクはあるのに全試合の取得が失敗した場合 → CORSプロキシのレート制限等の可能性
+  // この場合は既存データを保持し、次のクロールに期待する
+  if (newGames.length === 0 && links.length > 0) {
+    const prev = loadCurrentData();
+    if ((prev.games || []).length > 0) {
+      saveCurrentData({ ...prev, crawl_status: 'error', error: '試合データの取得に失敗しました（次のクロールで再試行）', last_updated: now });
+      return;
+    }
+  }
+
   // 旧データ: displayGames（今日の表示用）と saved_games（履歴）を別管理
   const oldData          = loadCurrentData();
   const oldDisplayGames  = oldData.games        || [];
@@ -781,6 +804,8 @@ async function fetchAndUpdate() {
     const data = {
       tournament_id:   tournamentId,
       tournament_name: session.tournament_name || '',
+      game_date:       session.game_date       || '',   // 読み取り端末が自動取得するために保存
+      game_date_label: session.game_date_label || '',
       games:           enrichGamesWithMeta(displayGames, session),       // 当日分のみ
       saved_games:     enrichGamesWithMeta(savedGames, session),         // 履歴（日をまたいだ蓄積）
       last_updated:    now,
@@ -831,7 +856,29 @@ async function refreshDisplay() {
       if (res.ok) {
         const data = await res.json();
         const deletedIds = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
-        const todayDate  = session.game_date || '';
+
+        // 読み取り専用端末: 書き込みPCの大会名・試合日を自動取得して反映
+        let todayDate = session.game_date || '';
+        const cfg = loadConfig();
+        if (cfg.gh_write_enabled === false) {
+          const updSes = { ...session };
+          let sessChanged = false;
+          if (data.tournament_name && data.tournament_name !== updSes.tournament_name) {
+            updSes.tournament_name = data.tournament_name;
+            document.getElementById('sesName').value = data.tournament_name;
+            sessChanged = true;
+          }
+          if (data.game_date && data.game_date !== updSes.game_date) {
+            updSes.game_date       = data.game_date;
+            updSes.game_date_label = data.game_date_label || '';
+            document.getElementById('sesDate').value            = data.game_date;
+            document.getElementById('sesDateLabel').textContent = data.game_date_label || '';
+            document.getElementById('sesDateLabel').style.display = data.game_date ? '' : 'none';
+            todayDate = data.game_date; // 新しい日付でフィルタ
+            sessChanged = true;
+          }
+          if (sessChanged) localStorage.setItem(SESSION_KEY, JSON.stringify(updSes));
+        }
         // GitHub の games（当日分）と saved_games（履歴）を別キーで読み取る
         // 旧形式（saved_gamesキーなし）との互換性のため games の日付フィルタも維持
         const rawDisplay = (data.games || []).filter(g => !deletedIds.has(g.id));
@@ -848,6 +895,16 @@ async function refreshDisplay() {
           ...spillOver.filter(g => !displayIds.has(g.id)),
           ...rawSaved.filter(g => !displayIds.has(g.id)),
         ].filter((g, i, arr) => arr.findIndex(x => x.id === g.id) === i); // ID重複除去
+        // GitHubが空・日付不一致の場合はローカルのクロールデータを保持する
+        // （書き込み端末がまだ今日のデータを書いていないケース等）
+        if (displayGames.length === 0) {
+          const existingGames = loadCurrentData().games || [];
+          if (existingGames.length > 0) {
+            nextRefreshAt = Date.now() + 60 * 1000;
+            render();
+            return;
+          }
+        }
         autoConfirmNew(displayGames);
         saveCurrentData({
           games:       displayGames,
@@ -1560,10 +1617,16 @@ async function init() {
   // セッションを復元
   const ses = loadSession();
   document.getElementById('sesName').value = ses.tournament_name || '';
-  document.getElementById('sesId').value   = ses.tournament_id   || autoTournamentId();
-  document.getElementById('sesDate').value = ses.game_date       || new Date().toISOString().slice(0,10);
+  // 読み取り専用端末では大会IDを自動生成しない（書き込みPCのIDを手動入力させる）
+  if (cfg.gh_write_enabled === false) {
+    document.getElementById('sesId').value = ses.tournament_id || '';
+  } else {
+    document.getElementById('sesId').value = ses.tournament_id || autoTournamentId();
+    if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
+  }
+  document.getElementById('sesDate').value = ses.game_date       || (cfg.gh_write_enabled !== false ? new Date().toISOString().slice(0,10) : '');
   updateDateLabel();
-  if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
+  applySessionReadOnlyMode(); // 読み取り専用モードのUI適用
 
   render();
   loadAndRenderManualScores(); // カスタムスコアを非同期で読み込み
