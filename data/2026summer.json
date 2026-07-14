@@ -66,7 +66,7 @@
       "round": "第2試合",
       "venue": "尼崎",
       "game_status": "コールド終了",
-      "commentary": "12:54試合開始。14:04試合終了。",
+      "commentary": "12:54試合開始。14:04試合終了。\n（5回コールド）",
       "team1": "神戸高専",
       "team2": "報徳学園",
       "innings1": [
@@ -513,7 +513,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "13:11試合開始。",
       "team1": "県立農業",
       "team2": "武庫荘総合",
@@ -540,7 +540,7 @@
         "2",
         "1",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -556,7 +556,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T05:37:56",
+      "last_changed": "2026-07-14T05:48:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T05:46:45"
+  "last_updated": "2026-07-14T05:48:45"
 }
