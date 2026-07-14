@@ -625,7 +625,7 @@
       "region": "城　山／春　日",
       "round": "第1試合",
       "venue": "春日/城山",
-      "game_status": "９回表",
+      "game_status": "９回裏",
       "commentary": "9:57 試合開始",
       "team1": "三田松聖",
       "team2": "県立芦屋",
@@ -638,7 +638,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -668,7 +668,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:19:56",
+      "last_changed": "2026-07-14T03:27:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T03:25:56"
+  "last_updated": "2026-07-14T03:27:56"
 }
