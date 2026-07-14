@@ -234,7 +234,9 @@ async function load() {
     const res = await fetch(dataUrl + '?_=' + Date.now());
     if (!res.ok) throw new Error('大会データが見つかりません（' + P_TOURNAMENT + '）');
     const data = await res.json();
-    const game = (data.games || []).find(g => g.id === P_ID);
+    // games（当日）と saved_games（履歴）の両方を検索
+    const allGames = [...(data.games || []), ...(data.saved_games || [])];
+    const game = allGames.find(g => g.id === P_ID);
     if (!game) {
       setRoot(
         '<div class="wh"><span class="ti">⚾ スコアウィジェット</span></div>'
