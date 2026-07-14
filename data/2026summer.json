@@ -199,7 +199,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -216,11 +216,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:50:45",
+      "last_changed": "2026-07-14T03:56:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -569,7 +569,7 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "12:33試合開始。",
       "team1": "洲本",
       "team2": "北須磨",
@@ -592,7 +592,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -612,7 +612,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:52:45",
+      "last_changed": "2026-07-14T03:56:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T03:54:45"
+  "last_updated": "2026-07-14T03:56:45"
 }
