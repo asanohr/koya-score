@@ -289,7 +289,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "9:56試合開始。",
       "team1": "宝塚",
       "team2": "関西学院",
@@ -318,7 +318,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:27:56",
+      "last_changed": "2026-07-14T02:33:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1911,5 +1911,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T02:31:56"
+  "last_updated": "2026-07-14T02:33:56"
 }
