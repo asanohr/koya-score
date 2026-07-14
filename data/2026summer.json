@@ -513,7 +513,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "４回表",
+      "game_status": "４回裏",
       "commentary": "13:11試合開始。",
       "team1": "県立農業",
       "team2": "武庫荘総合",
@@ -521,7 +521,7 @@
         "1",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -556,7 +556,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T04:54:45",
+      "last_changed": "2026-07-14T04:59:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T04:58:45"
+  "last_updated": "2026-07-14T04:59:56"
 }
