@@ -737,7 +737,7 @@
       "region": "城　山／春　日",
       "round": "第2試合",
       "venue": "春日/城山",
-      "game_status": "６回裏",
+      "game_status": "８回表",
       "commentary": "13:17 試合開始",
       "team1": "篠山産業",
       "team2": "相生",
@@ -765,7 +765,7 @@
         "0",
         "0",
         "1",
-        "",
+        "1",
         "",
         "",
         "",
@@ -776,11 +776,11 @@
         ""
       ],
       "total1": "7",
-      "total2": "1",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=29",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T05:56:45",
+      "last_changed": "2026-07-14T06:04:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T06:02:45"
+  "last_updated": "2026-07-14T06:04:45"
 }
