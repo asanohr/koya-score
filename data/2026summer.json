@@ -121,7 +121,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "9：59試合開始。",
       "team1": "赤穂",
       "team2": "三木東・三木総合",
@@ -148,7 +148,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:21:56",
+      "last_changed": "2026-07-14T02:35:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1911,5 +1911,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T02:33:56"
+  "last_updated": "2026-07-14T02:35:56"
 }
