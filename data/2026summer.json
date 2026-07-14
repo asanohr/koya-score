@@ -177,7 +177,7 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "9:56試合開始。",
       "team1": "香寺",
       "team2": "伊丹西",
@@ -206,7 +206,7 @@
         "0",
         "0",
         "0",
-        "",
+        "3",
         "",
         "",
         "",
@@ -216,11 +216,11 @@
         ""
       ],
       "total1": "4",
-      "total2": "1",
+      "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:49:56",
+      "last_changed": "2026-07-14T03:02:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -429,7 +429,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -440,11 +440,11 @@
         ""
       ],
       "total1": "7",
-      "total2": "3",
+      "total2": "4",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=9",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T02:54:45",
+      "last_changed": "2026-07-14T03:02:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1911,5 +1911,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T02:59:56"
+  "last_updated": "2026-07-14T03:02:45"
 }
