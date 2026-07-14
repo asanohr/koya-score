@@ -289,7 +289,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "７回表",
+      "game_status": "７回裏",
       "commentary": "12：41試合開始。",
       "team1": "神戸甲北・神戸北・北神戸総合",
       "team2": "柏原",
@@ -300,7 +300,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T05:11:56",
+      "last_changed": "2026-07-14T05:17:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T05:15:56"
+  "last_updated": "2026-07-14T05:17:56"
 }
