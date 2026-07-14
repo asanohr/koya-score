@@ -177,7 +177,7 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "７回裏",
+      "game_status": "８回表",
       "commentary": "12：45試合開始",
       "team1": "神戸国際大附",
       "team2": "神戸弘陵",
@@ -205,7 +205,7 @@
         "1",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T05:27:56",
+      "last_changed": "2026-07-14T05:32:41",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T05:29:56"
+  "last_updated": "2026-07-14T05:32:41"
 }
