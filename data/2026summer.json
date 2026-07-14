@@ -289,8 +289,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "12：40試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12：41試合開始。",
       "team1": "神戸甲北・神戸北・北神戸総合",
       "team2": "柏原",
       "innings1": [
@@ -330,9 +330,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-14T03:08:25",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-14T03:41:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -458,7 +458,7 @@
       "round": "第1試合",
       "venue": "姫路",
       "game_status": "試合終了",
-      "commentary": "10:00試合開始。",
+      "commentary": "10:00試合開始。12:15試合終了。",
       "team1": "神港橘",
       "team2": "東洋大姫路",
       "innings1": [
@@ -487,7 +487,7 @@
         "0",
         "0",
         "1",
-        "x",
+        "X",
         "",
         "",
         "",
@@ -500,7 +500,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:32:28",
+      "last_changed": "2026-07-14T03:41:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -569,12 +569,12 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "12:33試合開始。",
       "team1": "洲本",
       "team2": "北須磨",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -612,7 +612,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:34:45",
+      "last_changed": "2026-07-14T03:41:56",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T03:39:56"
+  "last_updated": "2026-07-14T03:41:56"
 }
