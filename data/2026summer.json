@@ -347,7 +347,7 @@
       "venue": "高砂",
       "game_status": "試合終了",
       "commentary": "9:56試合開始。12:20試合終了。",
-      "team1": "香寺",
+      "team1": "香　寺",
       "team2": "伊丹西",
       "innings1": [
         "0",
@@ -388,7 +388,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-14T03:22:45",
+      "last_changed": "2026-07-14T04:14:45",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-14T04:12:45"
+  "last_updated": "2026-07-14T04:14:45"
 }
