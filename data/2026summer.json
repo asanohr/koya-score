@@ -289,7 +289,7 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "７回表",
+      "game_status": "７回裏",
       "commentary": "12:43試合開始。",
       "team1": "加古川西",
       "team2": "姫路",
@@ -300,7 +300,7 @@
         "0",
         "1",
         "0",
-        "",
+        "4",
         "",
         "",
         "",
@@ -327,12 +327,12 @@
         "",
         ""
       ],
-      "total1": "4",
+      "total1": "8",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T05:10:49",
+      "last_changed": "2026-07-15T05:21:32",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -401,7 +401,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "７回裏",
+      "game_status": "８回表",
       "commentary": "12:47試合開始。",
       "team1": "尼崎工業",
       "team2": "長田",
@@ -429,7 +429,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -440,11 +440,11 @@
         ""
       ],
       "total1": "3",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T05:14:49",
+      "last_changed": "2026-07-15T05:21:32",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T05:19:32"
+  "last_updated": "2026-07-15T05:21:32"
 }
