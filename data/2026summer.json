@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "9：58試合開始。",
       "team1": "明石商業",
       "team2": "明石清水",
@@ -94,7 +94,7 @@
         "0",
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T02:47:34",
+      "last_changed": "2026-07-15T02:53:34",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T02:51:34"
+  "last_updated": "2026-07-15T02:53:34"
 }
