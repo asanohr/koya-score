@@ -65,8 +65,8 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "５回裏",
-      "commentary": "13:03試合開始。",
+      "game_status": "コールド終了",
+      "commentary": "13:03試合開始。\n14:23試合終了。",
       "team1": "龍野",
       "team2": "滝川第二",
       "innings1": [
@@ -91,7 +91,7 @@
         "3",
         "4",
         "0",
-        "",
+        "1×",
         "",
         "",
         "",
@@ -104,11 +104,11 @@
         ""
       ],
       "total1": "2",
-      "total2": "11",
+      "total2": "12",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T05:19:32",
+      "last_changed": "2026-07-15T05:25:32",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T05:23:32"
+  "last_updated": "2026-07-15T05:25:32"
 }
