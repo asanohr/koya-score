@@ -9,7 +9,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "９回表",
+      "game_status": "９回裏",
       "commentary": "9:56試合開始。",
       "team1": "川西緑台",
       "team2": "彩星工科",
@@ -22,7 +22,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T03:02:39",
+      "last_changed": "2026-07-15T03:10:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -178,7 +178,7 @@
       "round": "第1試合",
       "venue": "姫路",
       "game_status": "コールド終了",
-      "commentary": "10:01試合開始。11:49試合終了。（8回コールド)",
+      "commentary": "10:01試合開始。11:49試合終了（8回コールド)。",
       "team1": "西宮東",
       "team2": "三田学園",
       "innings1": [
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T03:08:51"
+  "last_updated": "2026-07-15T03:10:51"
 }
