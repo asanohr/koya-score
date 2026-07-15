@@ -177,8 +177,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "13：05試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "13：03試合開始予定。",
       "team1": "兵庫工業",
       "team2": "兵庫",
       "innings1": [
@@ -218,9 +218,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-07-15T03:18:51",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-07-15T04:03:34",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T04:01:34"
+  "last_updated": "2026-07-15T04:03:34"
 }
