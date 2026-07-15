@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "９回表",
+      "game_status": "９回裏",
       "commentary": "9：58試合開始。",
       "team1": "明石商業",
       "team2": "明石清水",
@@ -78,7 +78,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -103,12 +103,12 @@
         "",
         ""
       ],
-      "total1": "5",
+      "total1": "6",
       "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T02:53:34",
+      "last_changed": "2026-07-15T03:04:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -123,7 +123,7 @@
       "venue": "高砂",
       "game_status": "試合終了",
       "commentary": "9:55試合開始。11:50試合終了。",
-      "team1": "小野",
+      "team1": "小　野",
       "team2": "姫路西",
       "innings1": [
         "0",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T02:51:34",
+      "last_changed": "2026-07-15T03:04:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -178,7 +178,7 @@
       "round": "第1試合",
       "venue": "姫路",
       "game_status": "コールド終了",
-      "commentary": "10:01試合開始。11:49試合終了。",
+      "commentary": "10:01試合開始。11:49試合終了。（8回コールド)",
       "team1": "西宮東",
       "team2": "三田学園",
       "innings1": [
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T03:02:39"
+  "last_updated": "2026-07-15T03:04:51"
 }
