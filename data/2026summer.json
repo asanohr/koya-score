@@ -233,7 +233,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "６回表",
+      "game_status": "６回裏",
       "commentary": "10:01試合開始。",
       "team1": "西宮東",
       "team2": "三田学園",
@@ -243,7 +243,7 @@
         "1",
         "0",
         "1",
-        "",
+        "2",
         "",
         "",
         "",
@@ -271,12 +271,12 @@
         "",
         ""
       ],
-      "total1": "2",
+      "total1": "4",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T01:56:46",
+      "last_changed": "2026-07-15T02:16:54",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T02:14:54"
+  "last_updated": "2026-07-15T02:16:54"
 }
