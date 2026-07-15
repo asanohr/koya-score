@@ -121,8 +121,8 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "９回裏",
-      "commentary": "9:55試合開始。",
+      "game_status": "試合終了",
+      "commentary": "9:55試合開始。11:50試合終了。",
       "team1": "小野",
       "team2": "姫路西",
       "innings1": [
@@ -151,7 +151,7 @@
         "0",
         "5",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T02:45:34",
+      "last_changed": "2026-07-15T02:51:34",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -233,8 +233,8 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "８回裏",
-      "commentary": "10:01試合開始。",
+      "game_status": "コールド終了",
+      "commentary": "10:01試合開始。11:49試合終了。",
       "team1": "西宮東",
       "team2": "三田学園",
       "innings1": [
@@ -262,7 +262,7 @@
         "0",
         "0",
         "0",
-        "",
+        "x",
         "",
         "",
         "",
@@ -276,7 +276,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-15T02:47:34",
+      "last_changed": "2026-07-15T02:51:34",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-15T02:49:34"
+  "last_updated": "2026-07-15T02:51:34"
 }
