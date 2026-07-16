@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "10:00試合開始。",
       "team1": "姫路工業",
       "team2": "市立尼崎",
@@ -88,7 +88,7 @@
       ],
       "innings2": [
         "1",
-        "",
+        "1",
         "",
         "",
         "",
@@ -104,11 +104,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "1",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T01:20:04",
+      "last_changed": "2026-07-16T01:30:04",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -121,7 +121,7 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "10:00試合開始。",
       "team1": "香寺",
       "team2": "三田松聖",
@@ -145,7 +145,7 @@
       "innings2": [
         "0",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T01:22:04",
+      "last_changed": "2026-07-16T01:30:04",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -177,7 +177,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "10:00試合開始。",
       "team1": "神戸商業",
       "team2": "津名",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T01:26:04",
+      "last_changed": "2026-07-16T01:30:04",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-16T01:28:04"
+  "last_updated": "2026-07-16T01:30:04"
 }
