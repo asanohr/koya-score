@@ -121,7 +121,7 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "６回裏",
+      "game_status": "７回表",
       "commentary": "10:00試合開始。",
       "team1": "香寺",
       "team2": "三田松聖",
@@ -148,7 +148,7 @@
         "0",
         "1",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T02:06:09",
+      "last_changed": "2026-07-16T02:10:09",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-16T02:08:09"
+  "last_updated": "2026-07-16T02:10:09"
 }
