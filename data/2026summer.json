@@ -183,7 +183,7 @@
       "team2": "赤穂",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T04:00:07",
+      "last_changed": "2026-07-16T04:04:07",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-16T04:02:07"
+  "last_updated": "2026-07-16T04:04:07"
 }
