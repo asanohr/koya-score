@@ -289,7 +289,7 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "12:43試合開始。",
       "team1": "社",
       "team2": "須磨翔風",
@@ -318,7 +318,7 @@
         "0",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -328,11 +328,11 @@
         ""
       ],
       "total1": "3",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-16T05:52:02",
+      "last_changed": "2026-07-16T05:58:02",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-16T05:56:02"
+  "last_updated": "2026-07-16T05:58:02"
 }
