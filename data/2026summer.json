@@ -32,7 +32,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:17:50",
+      "last_changed": "2026-07-20T01:21:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -121,13 +121,13 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "10:01試合開始。",
       "team1": "明石商",
       "team2": "報徳",
       "innings1": [
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:15:50",
+      "last_changed": "2026-07-20T01:21:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -183,7 +183,7 @@
       "team2": "東洋大姫路",
       "innings1": [
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -215,12 +215,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "2",
       "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:13:50",
+      "last_changed": "2026-07-20T01:21:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T01:19:50"
+  "last_updated": "2026-07-20T01:21:50"
 }
