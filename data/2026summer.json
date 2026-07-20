@@ -289,7 +289,7 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "９回表",
+      "game_status": "９回裏",
       "commentary": "12:52試合開始。",
       "team1": "神戸商",
       "team2": "三田松聖",
@@ -302,7 +302,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T05:23:50",
+      "last_changed": "2026-07-20T05:29:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -427,7 +427,7 @@
         "0",
         "2",
         "0",
-        "✕",
+        "X",
         "",
         "",
         "",
@@ -444,7 +444,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T05:21:50",
+      "last_changed": "2026-07-20T05:29:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T05:27:50"
+  "last_updated": "2026-07-20T05:29:50"
 }
