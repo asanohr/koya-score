@@ -866,7 +866,7 @@ async function refreshDisplay() {
             document.getElementById('sesName').value = data.tournament_name;
             sessChanged = true;
           }
-          if (data.game_date && data.game_date !== updSes.game_date) {
+          if (data.game_date && (!updSes.game_date || data.game_date > updSes.game_date)) {
             updSes.game_date       = data.game_date;
             updSes.game_date_label = data.game_date_label || '';
             document.getElementById('sesDate').value            = data.game_date;
