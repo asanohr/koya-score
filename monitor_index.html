@@ -447,11 +447,9 @@ function saveGitHubConfig() {
   applySessionReadOnlyMode();
 }
 
-// 読み取り専用モードでは大会名・試合日を編集不可にする
+// 読み取り専用モードの表示切替（大会名・試合日は編集可のまま、案内メモのみ表示）
 function applySessionReadOnlyMode() {
   const isReadOnly = loadConfig().gh_write_enabled === false;
-  document.getElementById('sesName').disabled = isReadOnly;
-  document.getElementById('sesDate').disabled = isReadOnly;
   const note = document.getElementById('sesReadOnlyNote');
   if (note) note.style.display = isReadOnly ? '' : 'none';
 }
