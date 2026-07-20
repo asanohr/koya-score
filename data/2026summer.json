@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "５回表",
+      "game_status": "５回裏",
       "commentary": "10:00試合開始。",
       "team1": "社",
       "team2": "市立尼崎",
@@ -74,7 +74,7 @@
         "0",
         "2",
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:55:50",
+      "last_changed": "2026-07-20T02:01:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -177,7 +177,7 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "10:00試合開始。",
       "team1": "加古川西",
       "team2": "東洋大姫路",
@@ -202,7 +202,7 @@
         "2",
         "0",
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -216,11 +216,11 @@
         ""
       ],
       "total1": "6",
-      "total2": "2",
+      "total2": "3",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:51:50",
+      "last_changed": "2026-07-20T02:01:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T01:59:50"
+  "last_updated": "2026-07-20T02:01:50"
 }
