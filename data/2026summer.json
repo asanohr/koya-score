@@ -77,7 +77,7 @@
         "4",
         "0",
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -103,12 +103,12 @@
         "",
         ""
       ],
-      "total1": "5",
+      "total1": "7",
       "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T05:23:50",
+      "last_changed": "2026-07-20T05:37:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T05:35:50"
+  "last_updated": "2026-07-20T05:37:50"
 }
