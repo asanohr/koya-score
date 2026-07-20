@@ -65,7 +65,7 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "５回裏",
+      "game_status": "６回表",
       "commentary": "12:45試合開始。",
       "team1": "西脇工業",
       "team2": "神戸学院大附属",
@@ -91,7 +91,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T04:55:50",
+      "last_changed": "2026-07-20T04:59:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -409,7 +409,7 @@
         "0",
         "0",
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -439,12 +439,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "2",
       "total2": "13",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T04:49:50",
+      "last_changed": "2026-07-20T04:59:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T04:57:50"
+  "last_updated": "2026-07-20T04:59:50"
 }
