@@ -1622,11 +1622,10 @@ async function init() {
     document.getElementById('sesId').value = ses.tournament_id || autoTournamentId();
     if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
   }
-  // 書き込みPCは起動時に常に今日の日付を設定（前回の残り日付をリセット）
-  // 読み取りPCはGitHubから自動取得するので既存値または空欄
+  // 書き込みPC・読み取りPCともに起動時は今日の日付をデフォルト設定
   const _d = new Date();
   const _todayLocal = _d.getFullYear() + '-' + String(_d.getMonth()+1).padStart(2,'0') + '-' + String(_d.getDate()).padStart(2,'0');
-  document.getElementById('sesDate').value = cfg.gh_write_enabled !== false ? _todayLocal : (ses.game_date || '');
+  document.getElementById('sesDate').value = _todayLocal;
   updateDateLabel();
   applySessionReadOnlyMode(); // 読み取り専用モードのUI適用
 
