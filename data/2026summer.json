@@ -177,7 +177,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "８回裏",
+      "game_status": "９回表",
       "commentary": "12:31試合開始。",
       "team1": "東播磨",
       "team2": "滝川第二",
@@ -206,7 +206,7 @@
         "0",
         "2",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T05:21:50",
+      "last_changed": "2026-07-20T05:27:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T05:25:50"
+  "last_updated": "2026-07-20T05:27:50"
 }
