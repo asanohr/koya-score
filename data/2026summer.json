@@ -121,7 +121,7 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "10:01試合開始。",
       "team1": "明石商",
       "team2": "報徳",
@@ -146,7 +146,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T02:09:50",
+      "last_changed": "2026-07-20T02:15:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T02:13:51"
+  "last_updated": "2026-07-20T02:15:51"
 }
