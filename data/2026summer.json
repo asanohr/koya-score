@@ -11,8 +11,8 @@
       "venue": "神戸",
       "game_status": "試合終了",
       "commentary": "10：00試合開始。11：54試合終了。",
-      "team1": "神戸国際大附属",
-      "team2": "小野",
+      "team1": "神戸国際大附",
+      "team2": "小　野",
       "innings1": [
         "1",
         "0",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T02:55:51",
+      "last_changed": "2026-07-20T03:09:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T03:07:51"
+  "last_updated": "2026-07-20T03:09:51"
 }
