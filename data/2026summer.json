@@ -68,7 +68,7 @@
       "game_status": "試合終了",
       "commentary": "12:45試合開始。15:02試合終了。",
       "team1": "西脇工業",
-      "team2": "神戸学院大附属",
+      "team2": "神戸学院大附",
       "innings1": [
         "0",
         "1",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T06:03:50",
+      "last_changed": "2026-07-20T06:09:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -291,7 +291,7 @@
       "venue": "高砂",
       "game_status": "試合終了",
       "commentary": "12:52試合開始、14:32試合終了。",
-      "team1": "神戸商",
+      "team1": "神戸商業",
       "team2": "三田松聖",
       "innings1": [
         "0",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T05:33:50",
+      "last_changed": "2026-07-20T06:09:51",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T06:07:50"
+  "last_updated": "2026-07-20T06:09:51"
 }
