@@ -14,7 +14,7 @@
       "team1": "神戸国際大附属",
       "team2": "小野",
       "innings1": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -47,12 +47,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:01:51",
+      "last_changed": "2026-07-20T01:09:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -121,12 +121,12 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "10:01試合開始。",
       "team1": "明石商",
       "team2": "報徳",
       "innings1": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -159,12 +159,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:01:51",
+      "last_changed": "2026-07-20T01:09:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -199,7 +199,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "2",
         "",
         "",
         "",
@@ -216,11 +216,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-20T01:03:51",
+      "last_changed": "2026-07-20T01:09:50",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T01:07:51"
+  "last_updated": "2026-07-20T01:09:50"
 }
