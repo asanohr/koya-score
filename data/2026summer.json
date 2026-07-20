@@ -178,7 +178,7 @@
       "round": "第2試合",
       "venue": "明石",
       "game_status": "試合開始前",
-      "commentary": "2:30試合開始予定。",
+      "commentary": "12:30試合開始予定。",
       "team1": "東播磨",
       "team2": "滝川第二",
       "innings1": [
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-20T03:27:51"
+  "last_updated": "2026-07-20T03:29:51"
 }
