@@ -9,8 +9,8 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "７回裏",
-      "commentary": "10時00分試合開始。",
+      "game_status": "コールド終了",
+      "commentary": "10時00分試合開始。\n11時44分試合終了。",
       "team1": "三田松聖",
       "team2": "神戸国際大附属",
       "innings1": [
@@ -37,7 +37,7 @@
         "0",
         "0",
         "3",
-        "",
+        "1×",
         "",
         "",
         "",
@@ -48,11 +48,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "6",
+      "total2": "7",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-22T02:34:35",
+      "last_changed": "2026-07-22T02:46:33",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "６回表",
+      "game_status": "６回裏",
       "commentary": "10:00試合開始。",
       "team1": "加古川西",
       "team2": "明石商業",
@@ -75,7 +75,7 @@
         "0",
         "0",
         "2",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-22T02:34:35",
+      "last_changed": "2026-07-22T02:46:33",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-22T02:44:33"
+  "last_updated": "2026-07-22T02:46:33"
 }
