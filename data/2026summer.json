@@ -65,8 +65,8 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "９回表",
-      "commentary": "12時31分試合開始。",
+      "game_status": "試合終了",
+      "commentary": "12時31分試合開始。\n14時23分試合終了。",
       "team1": "東播磨",
       "team2": "社",
       "innings1": [
@@ -78,7 +78,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -95,7 +95,7 @@
         "0",
         "0",
         "0",
-        "",
+        "x",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-22T05:18:33",
+      "last_changed": "2026-07-22T05:24:33",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-22T05:22:33"
+  "last_updated": "2026-07-22T05:24:33"
 }
