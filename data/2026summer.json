@@ -9,7 +9,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "10時00分試合開始。",
       "team1": "三田松聖",
       "team2": "神戸国際大附属",
@@ -32,7 +32,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -48,11 +48,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-22T01:18:05",
+      "last_changed": "2026-07-22T01:24:35",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-22T01:22:05"
+  "last_updated": "2026-07-22T01:24:35"
 }
