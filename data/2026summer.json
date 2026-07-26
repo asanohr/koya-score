@@ -9,8 +9,8 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "10時05分開始予定。",
+      "game_status": "１回表",
+      "commentary": "10時05分試合開始。",
       "team1": "明石商業",
       "team2": "社",
       "innings1": [
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-07-26T00:13:42",
+      "last_changed": "2026-07-26T01:06:05",
       "game_date": "2026-07-13",
       "game_date_label": "7月13日",
       "confirmed_snapshot": null,
@@ -1967,5 +1967,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-07-26T01:04:05"
+  "last_updated": "2026-07-26T01:06:05"
 }
