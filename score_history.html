@@ -306,24 +306,36 @@ async function deleteGame(tournamentId, gameId, event) {
   const btn = event.currentTarget;
   btn.textContent = '削除中...'; btn.disabled = true;
   try {
-    const newGames = (loadedGames[tournamentId] || []).filter(g => g.id !== gameId);
+    // ── 大会JSONを更新 ──
+    // 画面上のリストは games と saved_games を結合したものなので、それを書き戻すと
+    // 履歴が当日分に混ざり、大会名・試合日などの項目も失われる。
+    // GitHub上の実データを読み、該当の試合だけを取り除いて、他はそのまま残す。
+    const file = await ghRead('data/' + tournamentId + '.json');
+    if (!file) throw new Error('大会データが見つかりません（' + tournamentId + '）');
+    const data = JSON.parse(ghDecode(file.content));
 
-    // 大会JSONを更新
-    await ghWrite('data/' + tournamentId + '.json', { games: newGames }, 'Delete game: ' + gameId);
+    const before     = (data.games || []).length + (data.saved_games || []).length;
+    data.games       = (data.games       || []).filter(g => g.id !== gameId);
+    data.saved_games = (data.saved_games || []).filter(g => g.id !== gameId);
+    const remaining  = data.games.length + data.saved_games.length;
+    if (remaining === before) console.warn('削除対象が大会データに見つかりませんでした:', gameId);
+
+    await ghWrite('data/' + tournamentId + '.json', data, 'Delete game: ' + gameId);
 
     // index.json の game_count を更新
     const indexFile = await ghRead('data/index.json');
     if (indexFile) {
       const index = JSON.parse(ghDecode(indexFile.content));
       const t = (index.tournaments || []).find(t => t.id === tournamentId);
-      if (t) t.game_count = newGames.length;
+      if (t) t.game_count = remaining;
       await ghWrite('data/index.json', index, 'Update game count: ' + tournamentId);
       // allTournaments の game_count も更新
       const at = allTournaments.find(t => t.id === tournamentId);
-      if (at) at.game_count = newGames.length;
+      if (at) at.game_count = remaining;
     }
 
-    loadedGames[tournamentId] = newGames.map(g => ({ ...g, _tid: tournamentId }));
+    // 画面側のキャッシュからも取り除く（_tid はそのまま保たれる）
+    loadedGames[tournamentId] = (loadedGames[tournamentId] || []).filter(g => g.id !== gameId);
 
     // koya_current から削除済みゲームを除去（monitor_index.html と共有 localStorage）
     try {
