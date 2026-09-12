@@ -359,7 +359,7 @@ async function deleteGame(tournamentId, gameId, event) {
       const body = groupCard.querySelector('.tournament-body');
       if (body && body.classList.contains('open')) {
         const ids = (groupCard.dataset.ids || '').split(',').filter(Boolean);
-        renderGames(body, ids.flatMap(id => loadedGames[id] || []));
+        renderGames(body, mergeGroupGames(ids));
       }
     }
   } catch(e) {
@@ -459,9 +459,19 @@ async function toggleGroup(header) {
       }
     }
   }
-  // グループ内の全試合を結合して表示
-  const allGames = ids.flatMap(id => loadedGames[id] || []);
-  renderGames(body, allGames);
+  renderGames(body, mergeGroupGames(ids));
+}
+
+// グループ内の全大会の試合を結合する
+// 同じ試合が複数の大会ファイルに入っていることがあるため、試合IDで重複を取り除く
+// （過去に大会IDを付け替えた際、同じ試合が両方のファイルに残ったケースがある）
+function mergeGroupGames(ids) {
+  const seen = new Set();
+  return ids.flatMap(id => loadedGames[id] || []).filter(g => {
+    if (seen.has(g.id)) return false;
+    seen.add(g.id);
+    return true;
+  });
 }
 
 function pad(a, n) { const r = [...a]; while (r.length < n) r.push(''); return r; }

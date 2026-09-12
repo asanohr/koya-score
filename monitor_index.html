@@ -370,21 +370,37 @@ function localUpdateInfo(g, confirmed) {
   return { updated: true, prevSnap: JSON.parse(snap) };
 }
 
-// デフォルトのその他情報を生成（日付・回戦・会場）
+// 試合日（2026-07-13）から「7月13日」の形のラベルを作る
+function dateLabelFrom(iso) {
+  if (!iso) return '';
+  const p = String(iso).slice(0, 10).split('-');
+  if (p.length < 3) return '';
+  return parseInt(p[1]) + '月' + parseInt(p[2]) + '日';
+}
+
+// デフォルトのその他情報を生成（日付。回戦・会場はユーザーが自由記述）
+// 過去の試合に今日の日付が付いてしまわないよう、その試合自身の試合日を優先する
 function buildDefaultExtraInfo(g, session) {
-  // デフォルトは試合日のみ。回戦・会場はユーザーが自由記述
-  return session?.game_date_label || '';
+  return dateLabelFrom(g?.game_date)
+      || g?.game_date_label
+      || session?.game_date_label
+      || '';
 }
 
 // ゲームにメタ情報（大会名・その他情報）を付加して返す
+// 【重要】すでに大会名・その他情報を持っている試合は、現在のセッションの値で上書きしない。
+// 上書きすると、書き込みのたびに履歴の全試合が「今日の大会名・今日の日付」に
+// 塗り替えられてしまう（7月の試合が「秋季大会 9月12日」になる不具合の原因）。
 function enrichGamesWithMeta(games, session) {
   const meta = loadGameMeta();
   return games.map(g => {
     const m = meta[g.id] || {};
     return {
       ...g,
-      tournament_name: m.tournament_name !== undefined ? m.tournament_name : (session?.tournament_name || ''),
-      extra_info:      m.extra_info      !== undefined ? m.extra_info      : buildDefaultExtraInfo(g, session),
+      tournament_name: m.tournament_name !== undefined ? m.tournament_name
+                       : (g.tournament_name || session?.tournament_name || ''),
+      extra_info:      m.extra_info      !== undefined ? m.extra_info
+                       : (g.extra_info || buildDefaultExtraInfo(g, session)),
       note:            m.note            !== undefined ? m.note            : (g.note || ''),
       team1:           m.team1           !== undefined ? m.team1           : (g.team1 || ''),
       team2:           m.team2           !== undefined ? m.team2           : (g.team2 || ''),
@@ -730,6 +746,9 @@ async function fetchAndUpdate() {
       if (game) {
         game.game_date       = session.game_date       || '';
         game.game_date_label = session.game_date_label || '';
+        // 大会名も試合そのものに持たせる。こうしておくと、日をまたいで履歴に
+        // 移ったあとも「その試合が行われた大会」が分かり、後から塗り替えられない
+        game.tournament_name = session.tournament_name || '';
         // 日付込みIDに更新（同じURLでも日付が変われば別試合）
         game.id = makeId(link.region, link.round, link.url, game.game_date);
         newGames.push(game);
