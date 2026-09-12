@@ -58,7 +58,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "bf560cf7",
@@ -114,7 +115,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "bf3e5ffd",
@@ -170,7 +172,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "92d57e69",
@@ -226,7 +229,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "1aacce26",
@@ -282,7 +286,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "e66769dc",
@@ -338,7 +343,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "d8e9ae7d",
@@ -394,7 +400,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "70528c61",
@@ -450,7 +457,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "a041a223",
@@ -506,7 +514,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "494d4913",
@@ -562,7 +571,8 @@
       "tournament_name": "2026年秋季大会",
       "confirmed_snapshot": null,
       "extra_info": "9月12日",
-      "note": ""
+      "note": "",
+      "is_carried_over": true
     },
     {
       "id": "ea7b0320",
@@ -1295,5 +1305,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-12T16:23:16"
+  "last_updated": "2026-09-12T23:30:40"
 }
