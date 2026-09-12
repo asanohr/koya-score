@@ -737,7 +737,8 @@ async function fetchAndUpdate() {
   const newGames = [];
   // 取得の成否を数える（改修の効果測定と、異常の早期発見のため）
   let fetchOk = 0;
-  const failedLinks = [];
+  const failedLinks = [];   // 取得そのものに失敗した枠
+  const emptyLinks  = [];   // 取得はできたが中身が空だった枠（深夜の表示切替など）
   for (const link of links) {
     try {
       const html = await fetchHtml(link.url);
@@ -752,6 +753,11 @@ async function fetchAndUpdate() {
         // 日付込みIDに更新（同じURLでも日付が変われば別試合）
         game.id = makeId(link.region, link.round, link.url, game.game_date);
         newGames.push(game);
+      } else {
+        // ページは取れたが試合データが無い。元サイトが深夜に当日分の表示を
+        // 切り替えると終了済みの試合でもこの状態になるため、失敗と同じ扱いで
+        // 前回値を引き継ぐ（本当に試合が無い枠は引き継ぐ前回値も無いので影響しない）
+        emptyLinks.push(link);
       }
     } catch(e) {
       failedLinks.push(link);   // 前回値の引き継ぎに使うのでリンクごと控えておく
@@ -763,13 +769,15 @@ async function fetchAndUpdate() {
     total:   links.length,
     ok:      fetchOk,
     ng:      links.length - fetchOk,
-    carried: 0,   // 失敗した枠のうち前回値を引き継げた数（このあと確定する）
+    empty:   emptyLinks.length,   // 取得はできたが中身が空だった枠
+    carried: 0,   // そのうち前回値を引き継げた数（このあと確定する）
     failed:  failedLinks.map(l => l.region + ' ' + l.round),
   };
 
-  // リンクはあるのに全試合の取得が失敗した場合 → CORSプロキシのレート制限等の可能性
+  // 1ページも取得できなかった場合 → 中継やネットワークの不調
   // この場合は既存データを保持し、次のクロールに期待する
-  if (newGames.length === 0 && links.length > 0) {
+  // ※「取得はできたが中身が空」は下の引き継ぎ処理で扱うので、ここでは止めない
+  if (fetchOk === 0 && links.length > 0) {
     const prev = loadCurrentData();
     if ((prev.games || []).length > 0) {
       saveCurrentData({ ...prev, fetch_stats: fetchStats, crawl_status: 'error', error: '試合データの取得に失敗しました（次のクロールで再試行）', last_updated: now });
@@ -815,14 +823,21 @@ async function fetchAndUpdate() {
     return result;
   });
 
-  // ── 取得に失敗した枠は、前回の内容をそのまま引き継ぐ ──
-  // 中継の一時的な不調で、表示中の試合や公開データから試合が消えるのを防ぐ。
+  // ── 今回スコアを取れなかった枠は、前回の内容をそのまま引き継ぐ ──
+  // 対象は「取得に失敗した枠」と「取得はできたが中身が空だった枠」の両方。
+  // 中継の不調や、元サイトの深夜の表示切替で、表示中の試合や公開データから
+  // 試合が消えるのを防ぐ。
   // 試合IDは（地区・試合枠・URL・試合日）から決まるので、取得できなくても前回分を特定できる。
+  // 試合日が変われば別IDになるため、日付が変わった翌日に前日の試合が居座ることはない。
+  const hasContent = g => (g.innings1 || []).some(v => v !== '' && v != null)
+                       || (g.total1 !== '' && g.total1 != null)
+                       || (g.game_status || '').includes('終了');
   const byId = Object.fromEntries(merged.map(g => [g.id, g]));
-  for (const link of failedLinks) {
+  for (const link of [...failedLinks, ...emptyLinks]) {
     const prevId = makeId(link.region, link.round, link.url, session.game_date || '');
     const prev   = oldById[prevId];
-    if (prev && !byId[prevId]) {
+    // 中身のある前回値がある場合だけ引き継ぐ（空の枠を空のまま持ち回らない）
+    if (prev && !byId[prevId] && hasContent(prev)) {
       byId[prevId] = { ...prev, is_carried_over: true };
       fetchStats.carried++;
     }
@@ -1491,7 +1506,8 @@ function render() {
     const st = d.fetch_stats;
     if (st && st.total) {
       fsEl.textContent = st.total + 'ページ中 ' + st.ok + '件取得'
-        + (st.ng > 0 ? '／' + st.ng + '件失敗' : '')
+        + (st.ng    > 0 ? '／' + st.ng    + '件失敗' : '')
+        + (st.empty > 0 ? '／' + st.empty + '件は空' : '')
         + (st.carried > 0 ? '（' + st.carried + '件は前回値を表示）' : '');
       fsEl.className = 'fetch-stats' + (st.ng > 0 ? ' warn' : '');
       fsEl.title     = st.ng > 0 ? '失敗: ' + (st.failed || []).join('、') : '';
