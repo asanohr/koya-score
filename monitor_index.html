@@ -34,6 +34,13 @@
     .btn.sub{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);}
     .btn.sm{padding:3px 8px;font-size:11px;}
     .countdown{font-size:12px;color:var(--text-dim);min-width:90px;}
+    .ses-warn{margin:0 14px 10px;padding:9px 12px;border:1px solid #f0c000;border-left:3px solid #f0c000;
+      border-radius:5px;background:#fffbe6;color:#6b4e00;font-size:12.5px;line-height:1.7;}
+    .ses-warn b{color:#8a3d00;}
+    .ses-warn .acts{margin-top:7px;display:flex;gap:8px;flex-wrap:wrap;}
+    .ses-warn button{font-size:11.5px;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:inherit;
+      border:1px solid #d9ae00;background:#fff;color:#6b4e00;}
+    .ses-warn button.primary{background:#f0c000;border-color:#d9ae00;color:#3d2c00;font-weight:700;}
     .fetch-stats{font-size:12px;color:var(--text-dim);margin-left:8px;white-space:nowrap;}
     .fetch-stats.warn{color:#dc2626;font-weight:600;}
     .spinner{display:none;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
@@ -260,6 +267,7 @@
       <div class="legend-item"><span class="badge ended">終了</span> 試合終了</div>
     </div>
   </div>
+  <div id="sesIdWarn" class="ses-warn" style="display:none;"></div>
 </div>
 
 <main id="mainContent">
@@ -295,6 +303,7 @@ const MANUAL_IDS_KEY  = 'koya_manual_ids';  // 手動作成スコアID一覧
 const DELETED_IDS_KEY   = 'koya_deleted_ids';   // score_history で削除されたゲームIDブラックリスト
 const COLLAPSED_RGNS_KEY = 'koya_collapsed_rgns'; // 閉じた会場名リスト
 const SLOT_SEEN_KEY = 'koya_slot_seen'; // 枠ごとに「前回見た内容」と、それを記録した試合日
+const ID_NAMES_KEY  = 'koya_id_names';  // 大会IDごとに「その名前で実際に書き込んだ」記録
 const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 // 取得の中継（自前の Cloudflare Worker）
 // 2026-09-12 変更: 無料CORSプロキシ4本がすべて停止・仕様変更で使用不能になったため差し替え
@@ -334,6 +343,7 @@ function saveSession() {
     game_date_label: document.getElementById('sesDateLabel').textContent,
   };
   localStorage.setItem(SESSION_KEY, JSON.stringify(s));
+  renderTournamentIdWarning();
 }
 
 function loadCurrentData() {
@@ -483,6 +493,82 @@ function validateTournamentId() {
   if (!id || /^[a-zA-Z0-9_-]+$/.test(id)) { err.textContent = ''; return true; }
   err.textContent = '英数字・アンダースコア・ハイフンのみ';
   return false;
+}
+
+// ═══════════════════════════════════════════════════
+//  大会IDの付け替え忘れを警告する
+//  大会IDは試合データの保存先そのもの。名前だけ変えてIDを据え置くと、
+//  前の大会のファイルに新しい大会の試合が混ざってしまう。
+// ═══════════════════════════════════════════════════
+function loadIdNames() {
+  try { return JSON.parse(localStorage.getItem(ID_NAMES_KEY) || '{}'); } catch { return {}; }
+}
+// GitHub への書き込みが成功したときだけ記録する
+//（入力のたびに記録すると、名前を変えても差が出ず警告できない）
+function recordIdName(id, name) {
+  if (!id) return;
+  const m = loadIdNames();
+  if (m[id] === name) return;
+  m[id] = name;
+  try { localStorage.setItem(ID_NAMES_KEY, JSON.stringify(m)); } catch(e) {}
+  renderTournamentIdWarning();
+}
+// 現在のIDのまま使い続けると決めたとき（記録を今の名前に更新して警告を消す）
+function acceptTournamentId() {
+  const id   = document.getElementById('sesId').value.trim();
+  const name = document.getElementById('sesName').value.trim();
+  const m = loadIdNames();
+  m[id] = name;
+  try { localStorage.setItem(ID_NAMES_KEY, JSON.stringify(m)); } catch(e) {}
+  renderTournamentIdWarning();
+}
+// 提案されたIDを入力欄に反映する
+function applySuggestedId(sid) {
+  const el = document.getElementById('sesId');
+  if (!el) return;
+  el.value = sid;
+  validateTournamentId();
+  saveSession();
+  renderTournamentIdWarning();
+}
+// 次の大会に使えそうなIDを提案する
+function suggestTournamentId(currentId) {
+  let s = autoTournamentId();
+  if (s !== currentId) return s;
+  for (let n = 2; n <= 9; n++) if (s + '-' + n !== currentId) return s + '-' + n;
+  return s + '-2';
+}
+
+function renderTournamentIdWarning() {
+  const box = document.getElementById('sesIdWarn');
+  if (!box) return;
+  const id   = (document.getElementById('sesId')?.value   || '').trim();
+  const name = (document.getElementById('sesName')?.value || '').trim();
+  const hide = () => { box.style.display = 'none'; box.innerHTML = ''; };
+  if (!id || !name) return hide();
+
+  const recorded = loadIdNames()[id];
+  const thisYear = String(new Date().getFullYear());
+  const idYear   = (id.match(/^(\d{4})/) || [])[1];
+
+  let msg = '';
+  if (recorded !== undefined && recorded !== name) {
+    msg = '大会名を「<b>' + esc(recorded) + '</b>」から「<b>' + esc(name) + '</b>」に変えましたが、'
+        + '大会IDは <b>' + esc(id) + '</b> のままです。';
+  } else if (idYear && idYear !== thisYear) {
+    msg = '大会ID <b>' + esc(id) + '</b> は ' + esc(idYear) + '年のものです。今年は ' + thisYear + '年です。';
+  }
+  if (!msg) return hide();
+
+  const sid = suggestTournamentId(id);
+  box.innerHTML = '⚠️ ' + msg
+    + '<br>別の大会であれば新しいIDに変えてください。同じIDのままだと、'
+    + '前の大会のファイルに今回の試合が混ざります。'
+    + '<div class="acts">'
+    + '<button class="primary" onclick="applySuggestedId(\'' + esc(sid) + '\')">' + esc(sid) + ' に変える</button>'
+    + '<button onclick="acceptTournamentId()">このIDのまま続ける</button>'
+    + '</div>';
+  box.style.display = '';
 }
 
 // ═══════════════════════════════════════════════════
@@ -1104,6 +1190,8 @@ async function fetchAndUpdate() {
     };
     await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now, mergeTournamentData);
     await updateTournamentIndex(session, displayGames.length + savedGames.length, now);
+    // このIDにこの名前で書き込んだ、と記録する（次に名前だけ変えたら警告できる）
+    recordIdName(tournamentId, session.tournament_name || '');
     const _now = new Date();
     const _date = _now.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/');
     const _time = _now.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});
@@ -1992,7 +2080,8 @@ async function init() {
   const _todayLocal = _d.getFullYear() + '-' + String(_d.getMonth()+1).padStart(2,'0') + '-' + String(_d.getDate()).padStart(2,'0');
   document.getElementById('sesDate').value = _todayLocal;
   updateDateLabel();
-  applySessionReadOnlyMode(); // 読み取り専用モードのUI適用
+  applySessionReadOnlyMode();   // 読み取り専用モードのUI適用
+  renderTournamentIdWarning();  // 大会IDの付け替え忘れ警告
 
   render();
   loadAndRenderManualScores(); // カスタムスコアを非同期で読み込み
