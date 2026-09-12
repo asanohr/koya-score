@@ -294,6 +294,7 @@ const GAME_META_KEY = 'koya_game_meta'; // 試合ごとの大会名・その他�
 const MANUAL_IDS_KEY  = 'koya_manual_ids';  // 手動作成スコアID一覧
 const DELETED_IDS_KEY   = 'koya_deleted_ids';   // score_history で削除されたゲームIDブラックリスト
 const COLLAPSED_RGNS_KEY = 'koya_collapsed_rgns'; // 閉じた会場名リスト
+const SLOT_SEEN_KEY = 'koya_slot_seen'; // 枠ごとに「前回見た内容」と、それを記録した試合日
 const HIDDEN_REGIONS = []; // 全地区を表示（非表示にしたい地区があればここに追加）
 // 取得の中継（自前の Cloudflare Worker）
 // 2026-09-12 変更: 無料CORSプロキシ4本がすべて停止・仕様変更で使用不能になったため差し替え
@@ -308,6 +309,8 @@ const PROXY_LIST = [
 // ═══════════════════════════════════════════════════
 let intervalMinutes = 5;
 let nextCrawlAt = null, crawlTimer = null, countdownTimer = null, isCrawling = false;
+let crawlCount = 0;   // 何回目のクロールか（終了済み枠の再取得タイミングに使う）
+let noGameMode = false; // 今日はまだ試合が始まっていない（元サイトが前回の試合日のまま）
 let reloadTimer = null, nextRefreshAt = null;
 const openCards = new Set();
 let workingProxyIdx = 0;
@@ -339,7 +342,42 @@ function loadCurrentData() {
 function defaultData() {
   return { games: [], last_updated: null, crawl_status: 'pending', error: null, game_count: 0 };
 }
-function saveCurrentData(d) { localStorage.setItem(CURRENT_KEY, JSON.stringify(d)); }
+// 手元（ブラウザ）に保持する履歴の日数。これより古い試合日は localStorage から落とす。
+// GitHub 側は書き込み時に統合するので消えず、過去のスコア一覧からは引き続き見られる。
+const SAVED_KEEP_DAYS = 60;
+function trimSavedGames(saved) {
+  if (!Array.isArray(saved) || !saved.length) return saved || [];
+  const limit = new Date(Date.now() - SAVED_KEEP_DAYS * 86400000).toISOString().slice(0, 10);
+  const kept = saved.filter(g => !g.game_date || g.game_date >= limit);
+  return kept.length ? kept : saved;   // 全部落ちてしまう場合は触らない
+}
+
+// ブラウザの保存容量には上限（およそ5MB）がある。
+// 超えると setItem が例外を投げ、これまではクロール処理ごと静かに止まっていた。
+function saveCurrentData(d) {
+  const data = { ...d, saved_games: trimSavedGames(d.saved_games) };
+  try {
+    localStorage.setItem(CURRENT_KEY, JSON.stringify(data));
+    return;
+  } catch(e) {
+    console.warn('保存に失敗。履歴を減らして再試行します:', e);
+  }
+  // ① 履歴を半分にして再試行
+  try {
+    const s = data.saved_games || [];
+    localStorage.setItem(CURRENT_KEY, JSON.stringify({ ...data, saved_games: s.slice(-Math.ceil(s.length / 2)) }));
+    setGhStatus('error', '⚠️ 保存容量が上限に近いため、手元の履歴を一部減らしました');
+    return;
+  } catch(e2) {}
+  // ② それでも駄目なら履歴を諦める（GitHub 側には残る）
+  try {
+    localStorage.setItem(CURRENT_KEY, JSON.stringify({ ...data, saved_games: [] }));
+    setGhStatus('error', '⚠️ 保存容量超過のため手元の履歴を消しました（GitHub側は残っています）');
+  } catch(e3) {
+    console.error('ブラウザへの保存ができませんでした:', e3);
+    setGhStatus('error', '❌ ブラウザへの保存に失敗しました（⚙️設定から容量をご確認ください）');
+  }
+}
 
 // ── PC固有の確認状態（GitHubには書き込まない） ──
 function loadConfirmed() {
@@ -488,6 +526,7 @@ function setCfgStatus(msg, color) {
 }
 function setGhStatus(type, msg) {
   const el = document.getElementById('ghStatus');
+  if (!el) return;
   el.textContent = msg;
   el.style.color = type === 'ok' ? 'var(--win)' : type === 'error' ? '#dc2626' : 'var(--text-dim)';
 }
@@ -529,25 +568,77 @@ function ghDecode(b64) {
   return new TextDecoder('utf-8').decode(Uint8Array.from(bin, c => c.charCodeAt(0)));
 }
 
-async function ghWrite(path, content, msg) {
+// mergeFn(リモートの中身, これから書く中身) → 実際に書く中身
+// 指定すると、書き込み前に必ずリモートを読んで統合する。
+// これにより「手元に無いものは消える」という上書き事故を防ぐ。
+async function ghWrite(path, content, msg, mergeFn) {
   const existing = await ghRead(path);
+  const build = (remoteFile) => {
+    let payload = content;
+    if (mergeFn && remoteFile?.content) {
+      try { payload = mergeFn(JSON.parse(ghDecode(remoteFile.content)), content); }
+      catch(e) { console.warn('統合に失敗したのでそのまま書き込みます:', e); }
+    }
+    return JSON.stringify(payload, null, 2);
+  };
+  let json = build(existing);
+  warnIfLarge(path, json);
   const body = {
     message: msg || 'データ更新',
-    content: ghEncode(JSON.stringify(content, null, 2)),
+    content: ghEncode(json),
     branch:  loadConfig().gh_branch || 'main',
   };
   if (existing?.sha) body.sha = existing.sha;
   try {
     return await ghRequest('PUT', path, body);
   } catch(e) {
-    // 409: SHA競合（他のタブ/デバイスが先に書き込んだ）→ SHA再取得してリトライ
+    // 409: SHA競合（他のタブ/デバイスが先に書き込んだ）
+    // → 最新を読み直し、統合したうえで書き直す（相手の変更を消さない）
     if (e.message.includes('409')) {
       const fresh = await ghRead(path);
+      body.content = ghEncode(build(fresh));
       if (fresh?.sha) body.sha = fresh.sha;
       return await ghRequest('PUT', path, body);
     }
     throw e;
   }
+}
+
+// GitHub の Contents API は 1MB を超えるファイルを読めなくなる。
+// そこに近づいたら知らせる（黙って書き込めなくなる事態を避ける）
+const GH_SIZE_WARN_BYTES = 800 * 1024;
+function warnIfLarge(path, json) {
+  const bytes = new TextEncoder().encode(json).length;
+  if (bytes >= GH_SIZE_WARN_BYTES) {
+    console.warn('ファイルが大きくなっています:', path, bytes, 'バイト');
+    setGhStatus('error', '⚠️ ' + path + ' が ' + Math.round(bytes / 1024) + 'KB。1MBを超えると書き込めなくなります');
+  }
+}
+
+// 大会ファイルの統合ルール
+// games（当日分）は手元を正とし、saved_games（履歴）はリモートと足し合わせる。
+// 手元の履歴を減らしても、GitHub 側の過去データが消えないようにするため。
+function mergeTournamentData(remote, local) {
+  const deleted = new Set(JSON.parse(localStorage.getItem(DELETED_IDS_KEY) || '[]'));
+  const byId = {};
+  for (const g of (remote.saved_games || [])) byId[g.id] = g;
+  for (const g of (local.saved_games  || [])) byId[g.id] = g;   // 手元の内容を優先
+  const displayIds = new Set((local.games || []).map(g => g.id));
+  return {
+    ...remote,
+    ...local,
+    saved_games: Object.values(byId).filter(g => !displayIds.has(g.id) && !deleted.has(g.id)),
+  };
+}
+
+// 大会一覧の統合ルール：リモートの一覧に、今回の分を足し込む
+function mergeIndexData(remote, local) {
+  const byId = {};
+  for (const t of (remote.tournaments || [])) byId[t.id] = t;
+  for (const t of (local.tournaments  || [])) byId[t.id] = t;   // 今回の更新を優先
+  const tournaments = Object.values(byId)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  return { ...remote, ...local, tournaments };
 }
 
 async function updateTournamentIndex(session, gameCount, lastUpdated) {
@@ -568,7 +659,7 @@ async function updateTournamentIndex(session, gameCount, lastUpdated) {
   if (idx >= 0) index.tournaments[idx] = entry; else index.tournaments.push(entry);
   index.tournaments.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   index.last_updated = lastUpdated;
-  await ghWrite(path, index, '大会一覧更新');
+  await ghWrite(path, index, '大会一覧更新', mergeIndexData);
 }
 
 // ═══════════════════════════════════════════════════
@@ -578,6 +669,20 @@ async function updateTournamentIndex(session, gameCount, lastUpdated) {
 const FETCH_TIMEOUT_MS = 10000;
 // この割合まで取得できていなければ GitHub への書き込みを見送る（0.8 = 8割）
 const WRITE_MIN_SUCCESS_RATE = 0.8;
+// 1ページ取得するごとに空ける間隔（元サイトへの負荷を下げる）
+const REQUEST_GAP_MS = 300;
+// 終了した試合の枠も取得し直す頻度（12回に1度。日程変更・訂正への備え）
+const RECHECK_FINISHED_EVERY = 12;
+// 取得する時間帯。これ以外の時間は自動クロールを休む（手動更新はいつでも可能）
+const ACTIVE_HOUR_START = 6;
+const ACTIVE_HOUR_END   = 21;
+// 今日まだ試合が始まっていないときの取得間隔（分）。試合が現れたら通常の間隔に戻る
+const IDLE_INTERVAL_MINUTES = 15;
+function isActiveHour() {
+  const h = new Date().getHours();
+  return h >= ACTIVE_HOUR_START && h < ACTIVE_HOUR_END;
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 // 応答が本当にHTMLページかを確かめる
 // （中継が止まったときのエラー応答をHTMLとして解析してしまわないため）
@@ -715,6 +820,35 @@ function scoreSnapshot(g) {
 }
 
 // ═══════════════════════════════════════════════════
+//  「元サイトがまだ前回の試合日のまま」かどうかの判定
+//  元サイトの view.php は、次の試合日の内容で上書きされるまで前回の結果を
+//  表示し続ける。そのため試合のない日にクロールすると、前回の試合が
+//  「今日の試合」として新しく登録されてしまう。
+//  枠ごとに「前回見た内容」と「それを記録した試合日」を控えておき、
+//  内容が同じまま日付だけ変わった場合は、今日の試合として扱わない。
+// ═══════════════════════════════════════════════════
+function slotKeyOf(region, round, url) { return region + '|' + round + '|' + url; }
+function slotSignature(g) { return scoreSnapshot(g) + '|' + (g.game_status || ''); }
+
+function loadSlotSeen() {
+  try {
+    const raw = localStorage.getItem(SLOT_SEEN_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  // 初回のみ：いま手元にある試合データから「枠ごとの前回の内容」を組み立てる
+  // （これが無いと、導入直後の1回だけ前回の試合を取り込んでしまう）
+  const seeded = {};
+  for (const g of (loadCurrentData().games || [])) {
+    if (!g.url || !g.game_date) continue;
+    seeded[slotKeyOf(g.region, g.round, g.url)] = { sig: slotSignature(g), date: g.game_date };
+  }
+  return seeded;
+}
+function saveSlotSeen(s) {
+  try { localStorage.setItem(SLOT_SEEN_KEY, JSON.stringify(s)); } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════
 //  Fetch & Update（クロール→GitHub書き込み）
 // ═══════════════════════════════════════════════════
 async function fetchAndUpdate() {
@@ -734,17 +868,59 @@ async function fetchAndUpdate() {
     return;
   }
 
+  // 旧データ（引き継ぎと、終了済み枠のスキップ判定に使う）
+  const oldData          = loadCurrentData();
+  const oldDisplayGames  = oldData.games        || [];
+  const oldSavedGames    = oldData.saved_games  || [];
+  // マージ比較は「今日の表示ゲーム」だけを対象にする
+  // （過去履歴を含めると別日の試合が同一試合と誤認識されスコアが流入する危険がある）
+  const oldById = Object.fromEntries(oldDisplayGames.map(g => [g.id, g]));
+
+  // 何回かに1度は終了済みの枠も取得し直す（日程変更や記録訂正に備える）
+  crawlCount++;
+  const fullScan = (crawlCount % RECHECK_FINISHED_EVERY) === 1;
+
   const newGames = [];
   // 取得の成否を数える（改修の効果測定と、異常の早期発見のため）
   let fetchOk = 0;
-  const failedLinks = [];   // 取得そのものに失敗した枠
-  const emptyLinks  = [];   // 取得はできたが中身が空だった枠（深夜の表示切替など）
+  const failedLinks  = [];   // 取得そのものに失敗した枠
+  const emptyLinks   = [];   // 取得はできたが中身が空だった枠（深夜の表示切替など）
+  const skippedLinks = [];   // 終了済みのため取得を省いた枠
+  const staleLinks   = [];   // 内容が前回の試合日のままだった枠（今日はまだ試合なし）
+  const slotSeen     = loadSlotSeen();
+  let slotSeenDirty  = false;
+  const todayDate    = session.game_date || '';
+  let requested = false;
   for (const link of links) {
+    // 終了した試合は内容が変わらないので、その日のうちは取得し直さない。
+    // 試合が進むほど取得対象が減り、元サイトへの負荷も待ち時間も下がる。
+    const prevIdForLink = makeId(link.region, link.round, link.url, session.game_date || '');
+    const prevForLink   = oldById[prevIdForLink];
+    if (!fullScan && prevForLink && (prevForLink.game_status || '').includes('終了')) {
+      skippedLinks.push(link);
+      continue;
+    }
     try {
+      // 連続で叩かずに少し間を空ける
+      if (requested) await sleep(REQUEST_GAP_MS);
+      requested = true;
       const html = await fetchHtml(link.url);
       fetchOk++;   // ページの取得自体は成功
       const game = parseScorePage(html, link.region, link.round, link.url);
       if (game) {
+        // 前に記録したときと中身が同じで、その記録が別の日のものなら、
+        // 元サイトがまだ更新されていない＝今日の試合ではない
+        const sKey = slotKeyOf(link.region, link.round, link.url);
+        const sSig = slotSignature(game);
+        const seen = slotSeen[sKey];
+        if (todayDate && seen && seen.sig === sSig && seen.date && seen.date !== todayDate) {
+          staleLinks.push(link);
+          continue;
+        }
+        if (!seen || seen.sig !== sSig || seen.date !== todayDate) {
+          slotSeen[sKey] = { sig: sSig, date: todayDate };
+          slotSeenDirty = true;
+        }
         game.game_date       = session.game_date       || '';
         game.game_date_label = session.game_date_label || '';
         // 大会名も試合そのものに持たせる。こうしておくと、日をまたいで履歴に
@@ -768,16 +944,24 @@ async function fetchAndUpdate() {
   const fetchStats = {
     total:   links.length,
     ok:      fetchOk,
-    ng:      links.length - fetchOk,
-    empty:   emptyLinks.length,   // 取得はできたが中身が空だった枠
-    carried: 0,   // そのうち前回値を引き継げた数（このあと確定する）
+    ng:      failedLinks.length,
+    empty:   emptyLinks.length,    // 取得はできたが中身が空だった枠
+    skipped: skippedLinks.length,  // 終了済みのため取得しなかった枠
+    stale:   staleLinks.length,    // 内容が前回の試合日のままだった枠
+    carried: 0,   // 失敗・空だった枠のうち前回値を引き継げた数（このあと確定する）
     failed:  failedLinks.map(l => l.region + ' ' + l.round),
   };
+  // 実際に取得を試みた件数（スキップ分を除く）
+  const attempted = links.length - skippedLinks.length;
+  if (slotSeenDirty) saveSlotSeen(slotSeen);
+  // 取れた枠がすべて前回の試合日のままなら、今日はまだ試合が始まっていない
+  // → 取得間隔を広げて様子を見る（試合が現れれば自動で通常間隔に戻る）
+  noGameMode = newGames.length === 0 && staleLinks.length > 0;
 
-  // 1ページも取得できなかった場合 → 中継やネットワークの不調
+  // 取得を試みたのに1件も取れなかった場合 → 中継やネットワークの不調
   // この場合は既存データを保持し、次のクロールに期待する
-  // ※「取得はできたが中身が空」は下の引き継ぎ処理で扱うので、ここでは止めない
-  if (fetchOk === 0 && links.length > 0) {
+  // ※「取得はできたが中身が空」と「終了済みのスキップ」は下の引き継ぎ処理で扱う
+  if (attempted > 0 && fetchOk === 0) {
     const prev = loadCurrentData();
     if ((prev.games || []).length > 0) {
       saveCurrentData({ ...prev, fetch_stats: fetchStats, crawl_status: 'error', error: '試合データの取得に失敗しました（次のクロールで再試行）', last_updated: now });
@@ -785,13 +969,8 @@ async function fetchAndUpdate() {
     }
   }
 
-  // 旧データ: displayGames（今日の表示用）と saved_games（履歴）を別管理
-  const oldData          = loadCurrentData();
-  const oldDisplayGames  = oldData.games        || [];
-  const oldSavedGames    = oldData.saved_games  || [];
-  // マージ比較は「今日の表示ゲーム」だけを対象にする
-  // （過去履歴を含めると別日の試合が同一試合と誤認識されスコアが流入する危険がある）
-  const oldById = Object.fromEntries(oldDisplayGames.map(g => [g.id, g]));
+  // 旧データ（oldData / oldDisplayGames / oldSavedGames / oldById）は
+  // 終了済み枠のスキップ判定に使うため、取得ループの前で読み込み済み
 
   const merged = newGames.map(ng => {
     const old = oldById[ng.id];
@@ -842,6 +1021,12 @@ async function fetchAndUpdate() {
       fetchStats.carried++;
     }
   }
+  // 終了済みでスキップした枠は、前回の内容をそのまま持ち越す（異常ではないので数えない）
+  for (const link of skippedLinks) {
+    const prevId = makeId(link.region, link.round, link.url, session.game_date || '');
+    const prev   = oldById[prevId];
+    if (prev && !byId[prevId]) byId[prevId] = prev;
+  }
   // 元のリンク順に並べ直す（引き継ぎ分を末尾に足すと表示位置が動いてしまうため）
   const ordered = [];
   for (const link of links) {
@@ -878,7 +1063,7 @@ async function fetchAndUpdate() {
   // ── 取得成功率が低いときは GitHub 書き込みを見送る ──
   // 引き継ぎで試合は消えないが、取得できていない枠のスコアは古いままなので、
   // 半端な状態を公開データに固定してしまわないよう、次のクロールに委ねる。
-  const successRate = links.length ? fetchOk / links.length : 1;
+  const successRate = attempted ? fetchOk / attempted : 1;
   if (successRate < WRITE_MIN_SUCCESS_RATE) {
     setGhStatus('error', '⚠️ 取得成功率 ' + Math.round(successRate * 100) + '% のため書き込み見送り（次回再試行）');
     return;
@@ -917,7 +1102,7 @@ async function fetchAndUpdate() {
       saved_games:     enrichGamesWithMeta(savedGames, session),         // 履歴（日をまたいだ蓄積）
       last_updated:    now,
     };
-    await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now);
+    await ghWrite('data/' + tournamentId + '.json', data, '試合結果更新 ' + now, mergeTournamentData);
     await updateTournamentIndex(session, displayGames.length + savedGames.length, now);
     const _now = new Date();
     const _date = _now.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'/');
@@ -932,8 +1117,15 @@ async function fetchAndUpdate() {
 // ═══════════════════════════════════════════════════
 //  スケジューラー
 // ═══════════════════════════════════════════════════
-async function runCrawl() {
+async function runCrawl(force) {
   if (isCrawling) return;
+  // 夜間は元サイトも更新されないため自動クロールを休む（🔄更新ボタンはいつでも動く）
+  if (!force && !isActiveHour()) {
+    setGhStatus('ok', '🌙 休止中（' + ACTIVE_HOUR_START + '時〜' + ACTIVE_HOUR_END + '時に取得）');
+    nextCrawlAt = Date.now() + nextIntervalMs();
+    render();
+    return;
+  }
   isCrawling = true;
   const btn = document.getElementById('refreshBtn');
   const sp  = document.getElementById('spinner');
@@ -943,13 +1135,26 @@ async function runCrawl() {
   try { await fetchAndUpdate(); }
   finally {
     isCrawling = false; btn.disabled = false; sp.style.display = 'none';
-    nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
+    nextCrawlAt = Date.now() + nextIntervalMs();
     render();
   }
 }
+// 次のクロールまでの待ち時間。今日まだ試合が無いときは間隔を広げる
+function nextIntervalMs() {
+  const m = (noGameMode && intervalMinutes > 0)
+    ? Math.max(intervalMinutes, IDLE_INTERVAL_MINUTES)
+    : intervalMinutes;
+  return m * 60 * 1000;
+}
+// 間隔が状況で変わるので、一定間隔の setInterval ではなく毎回組み直す
 function startScheduler() {
-  if (crawlTimer) clearInterval(crawlTimer);
-  crawlTimer = setInterval(runCrawl, intervalMinutes * 60 * 1000);
+  if (crawlTimer) { clearTimeout(crawlTimer); crawlTimer = null; }
+  const tick = async () => {
+    crawlTimer = null;
+    await runCrawl();
+    if (intervalMinutes > 0) crawlTimer = setTimeout(tick, nextIntervalMs());
+  };
+  crawlTimer = setTimeout(tick, nextIntervalMs());
 }
 
 // 「更新なし」モード：スクレイピングせず GitHub Pages JSON を取得して再描画
@@ -1026,7 +1231,7 @@ async function refreshDisplay() {
   render();
 }
 function startReloadScheduler() {
-  if (crawlTimer) { clearInterval(crawlTimer); crawlTimer = null; }
+  if (crawlTimer) { clearTimeout(crawlTimer); crawlTimer = null; }
   if (reloadTimer) clearInterval(reloadTimer);
   nextRefreshAt = Date.now() + 60 * 1000;
   reloadTimer = setInterval(refreshDisplay, 60 * 1000);
@@ -1036,11 +1241,11 @@ function setInterval_(val) {
   intervalMinutes = parseInt(val);
   const cfg = loadConfig(); cfg.interval_minutes = intervalMinutes; saveConfig(cfg);
   if (intervalMinutes === 0) {
-    if (crawlTimer) { clearInterval(crawlTimer); crawlTimer = null; }
+    if (crawlTimer) { clearTimeout(crawlTimer); crawlTimer = null; }
     startReloadScheduler();
   } else {
     if (reloadTimer) { clearInterval(reloadTimer); reloadTimer = null; nextRefreshAt = null; }
-    nextCrawlAt = Date.now() + intervalMinutes * 60 * 1000;
+    nextCrawlAt = Date.now() + nextIntervalMs();
     startScheduler();
   }
 }
@@ -1060,7 +1265,11 @@ function startCountdown() {
     }
   }, 1000);
 }
-async function manualCrawl() { await runCrawl(); }
+// 🔄更新ボタン：夜間でも、終了済み枠も含めて必ず全件取得する
+async function manualCrawl() {
+  crawlCount = 0;   // 次の fullScan 判定が必ず true になるようにする
+  await runCrawl(true);
+}
 
 // ═══════════════════════════════════════════════════
 //  UI 描画
@@ -1294,7 +1503,7 @@ async function saveNote(gameId) {
       games:           enriched,
       saved_games:     enrichGamesWithMeta(cur.saved_games || [], session),
       last_updated:    now,
-    }, 'テキスト更新: ' + gameId);
+    }, 'テキスト更新: ' + gameId, mergeTournamentData);
     if (btn) btn.textContent = '✅ 保存しました';
     setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 2500);
   } catch(e) {
@@ -1386,7 +1595,7 @@ async function confirmMeta(event, gameId) {
       saved_games:     enrichGamesWithMeta(cur.saved_games || [], session),
       last_updated:    now,
     };
-    await ghWrite('data/' + tournamentId + '.json', data, 'ヘッダー情報更新: ' + gameId);
+    await ghWrite('data/' + tournamentId + '.json', data, 'ヘッダー情報更新: ' + gameId, mergeTournamentData);
     if (btn) { btn.textContent = '✅ 保存しました'; }
     setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = orig; } }, 2500);
   } catch(e) {
@@ -1498,7 +1707,9 @@ function render() {
   const count = games.filter(g => !HIDDEN_REGIONS.some(kw => (g.region||'').includes(kw))).length;
   document.getElementById('statusDot').className  = 'dot ' + (ok ? 'ok' : 'err');
   document.getElementById('statusText').textContent = ok
-    ? count + '試合'
+    ? (count === 0 && (d.fetch_stats?.stale || 0) > 0
+        ? '本日はまだ試合がありません'
+        : count + '試合')
     : 'エラー: ' + (d.error || '不明');
   // 取得成績（◯ページ中◯件取得）。失敗があれば赤字にし、内訳はマウスを載せると出る
   const fsEl = document.getElementById('fetchStats');
@@ -1506,11 +1717,17 @@ function render() {
     const st = d.fetch_stats;
     if (st && st.total) {
       fsEl.textContent = st.total + 'ページ中 ' + st.ok + '件取得'
-        + (st.ng    > 0 ? '／' + st.ng    + '件失敗' : '')
-        + (st.empty > 0 ? '／' + st.empty + '件は空' : '')
+        + (st.skipped > 0 ? '・' + st.skipped + '件スキップ' : '')
+        + (st.stale   > 0 ? '・' + st.stale   + '件は前回の試合日のまま' : '')
+        + (st.ng      > 0 ? '／' + st.ng      + '件失敗' : '')
+        + (st.empty   > 0 ? '／' + st.empty   + '件は空' : '')
         + (st.carried > 0 ? '（' + st.carried + '件は前回値を表示）' : '');
       fsEl.className = 'fetch-stats' + (st.ng > 0 ? ' warn' : '');
-      fsEl.title     = st.ng > 0 ? '失敗: ' + (st.failed || []).join('、') : '';
+      fsEl.title     = [
+        st.ng > 0      ? '失敗: ' + (st.failed || []).join('、') : '',
+        st.skipped > 0 ? 'スキップ: 終了済みのため取得を省いた枠（' + st.skipped + '件）' : '',
+        st.stale > 0   ? '前回の試合日のまま: 元サイトが未更新のため今日の試合として登録していない枠（' + st.stale + '件）' : '',
+      ].filter(Boolean).join('\n');
     } else {
       fsEl.textContent = '';
       fsEl.className   = 'fetch-stats';
@@ -1537,6 +1754,10 @@ function openHistory() {
 //  カスタムスコア（手動作成）
 // ═══════════════════════════════════════════════════
 let cachedManualScores = [];
+// モニターに読み込むカスタムスコアの上限（新しいものから）。
+// 全件を1件ずつ取りに行くと、作るほど起動が遅くなるため。
+const MANUAL_SCORE_LIMIT = 30;
+let manualTruncated = 0;   // 上限で読み込まなかった件数
 
 async function loadAndRenderManualScores() {
   const el = document.getElementById('custom-scores-content');
@@ -1552,9 +1773,12 @@ async function loadAndRenderManualScores() {
     const idxRes = await fetch(base + 'data/index.json?_=' + Date.now());
     if (!idxRes.ok) throw new Error('index.json が取得できません');
     const index = await idxRes.json();
-    const manualEntries = (index.tournaments || [])
+    // 全件取りに行くと年々起動が遅くなるため、新しいものから一定件数までにする
+    const manualAll = (index.tournaments || [])
       .filter(t => t.type === 'manual')
       .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const manualEntries = manualAll.slice(0, MANUAL_SCORE_LIMIT);
+    manualTruncated = manualAll.length - manualEntries.length;
 
     if (!manualEntries.length) {
       el.innerHTML = '<div style="color:var(--text-dim);font-size:13px;padding:10px 0;">'
@@ -1575,7 +1799,9 @@ async function loadAndRenderManualScores() {
   } catch(e) {
     // フォールバック：index.json が取得できない場合は localStorage のIDリストを使用
     console.warn('index.json 読み込み失敗、localStorageにフォールバック:', e);
-    const ids = loadManualIds();
+    const allIds = loadManualIds().slice().reverse();   // 新しいものから
+    const ids = allIds.slice(0, MANUAL_SCORE_LIMIT);
+    manualTruncated = allIds.length - ids.length;
     for (const id of ids) {
       try {
         const res = await fetch(base + 'data/' + encodeURIComponent(id) + '.json?_=' + Date.now());
@@ -1676,7 +1902,12 @@ function renderManualScores() {
       +'カスタムスコアはありません（データが見つかりませんでした）。</div>';
     return;
   }
-  el.innerHTML = cachedManualScores.map(({ id, game }) => buildCustomCard(id, game)).join('');
+  el.innerHTML = cachedManualScores.map(({ id, game }) => buildCustomCard(id, game)).join('')
+    + (manualTruncated > 0
+        ? '<div style="color:var(--text-dim);font-size:12px;padding:8px 0;">'
+          + '新しい' + MANUAL_SCORE_LIMIT + '件のみ表示しています（他に' + manualTruncated + '件）。'
+          + '<a href="score_history.html" style="color:var(--accent);">過去のスコア一覧</a>ですべて見られます。</div>'
+        : '');
 }
 
 function toggleCustomCard(header) {
