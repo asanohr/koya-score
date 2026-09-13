@@ -479,6 +479,33 @@ function autoTournamentId() {
   const season = m <= 2 ? 'winter' : m <= 6 ? 'spring' : m <= 8 ? 'summer' : 'autumn';
   return y + season;
 }
+// 今日の日付を YYYY-MM-DD で返す（端末のローカル時刻）
+function todayLocal() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+let lastKnownToday = todayLocal();
+
+// 日付をまたいだら試合日を自動で切り替える
+// ページを開きっぱなしにしていると init() が動かないため、前日の試合日のまま
+// 取得を続けてしまう（今日の試合が前日の試合を上書きする）。1秒ごとに確認する。
+function checkDateRollover() {
+  const today = todayLocal();
+  if (today === lastKnownToday) return;
+  const prev = lastKnownToday;
+  lastKnownToday = today;
+  const el = document.getElementById('sesDate');
+  if (!el) return;
+  // ユーザーが意図して別の日付を選んでいる場合は触らない
+  // （前日の日付が入っているときだけ、今日へ繰り上げる）
+  if (el.value && el.value !== prev) return;
+  el.value = today;
+  updateDateLabel();
+  saveSession();
+  setGhStatus('ok', '📅 日付が変わりました（試合日を ' + today + ' に更新）');
+  render();
+}
+
 function updateDateLabel() {
   const val = document.getElementById('sesDate').value;
   const el  = document.getElementById('sesDateLabel');
@@ -939,6 +966,14 @@ function saveSlotSeen(s) {
 // ═══════════════════════════════════════════════════
 async function fetchAndUpdate() {
   const now     = new Date().toISOString().slice(0, 19);
+  // 画面の試合日と保存されている試合日がずれていたら、画面の値に合わせる。
+  // クロールは画面ではなく保存値を読むため、ここがずれると今日の試合に
+  // 前日の日付が付き、前日の記録を上書きしてしまう。
+  const uiDate = document.getElementById('sesDate')?.value || '';
+  if (uiDate && uiDate !== (loadSession().game_date || '')) {
+    console.warn('試合日の保存値がずれていたため合わせます:', loadSession().game_date, '→', uiDate);
+    saveSession();
+  }
   const session = loadSession();
   const tournamentId = session.tournament_id;
 
@@ -1340,6 +1375,7 @@ function setInterval_(val) {
 function startCountdown() {
   if (countdownTimer) clearInterval(countdownTimer);
   countdownTimer = setInterval(() => {
+    checkDateRollover();   // 日をまたいだら試合日を繰り上げる
     if (intervalMinutes === 0) {
       if (!nextRefreshAt) return;
       const s = Math.max(0, Math.ceil((nextRefreshAt - Date.now()) / 1000));
@@ -2076,10 +2112,11 @@ async function init() {
     if (!ses.tournament_id) saveSession(); // 初回：自動IDを保存
   }
   // 書き込みPC・読み取りPCともに起動時は今日の日付をデフォルト設定
-  const _d = new Date();
-  const _todayLocal = _d.getFullYear() + '-' + String(_d.getMonth()+1).padStart(2,'0') + '-' + String(_d.getDate()).padStart(2,'0');
-  document.getElementById('sesDate').value = _todayLocal;
+  lastKnownToday = todayLocal();
+  document.getElementById('sesDate').value = lastKnownToday;
   updateDateLabel();
+  saveSession();   // ★必須★ 画面に入れるだけでなく保存もする。
+                   // これが無いと、クロールは前日の試合日のまま取得してしまう。
   applySessionReadOnlyMode();   // 読み取り専用モードのUI適用
   renderTournamentIdWarning();  // 大会IDの付け替え忘れ警告
 
