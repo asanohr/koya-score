@@ -178,12 +178,12 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "9：56試合開始。",
       "team1": "尼崎双星",
       "team2": "加古川西",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -221,7 +221,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:00:42",
+      "last_changed": "2026-09-13T01:03:15",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -291,12 +291,12 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "１回表",
+      "game_status": "１回裏",
       "commentary": "9:56試合開始。",
       "team1": "御影",
       "team2": "甲南",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -334,7 +334,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T00:58:08",
+      "last_changed": "2026-09-13T01:03:15",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2478,5 +2478,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T01:00:42"
+  "last_updated": "2026-09-13T01:03:15"
 }
