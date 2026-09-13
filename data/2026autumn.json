@@ -66,8 +66,8 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "２回裏",
-      "commentary": "9:53試合開始\n1回表：雲雀丘　三者凡退。1回裏：明石北　先頭打者四球。左安打で無死一三塁。二盗で捕手が二塁悪送球により三塁走者生還、1点先制。無死三塁。後続が断たれこの回1点。\n2回表：雲雀丘　三者凡退。",
+      "game_status": "３回表",
+      "commentary": "9:53試合開始\n1回表：雲雀丘　三者凡退。1回裏：明石北　先頭打者四球。左安打で無死一三塁。二盗で捕手の二塁悪送球により三塁走者生還、1点先制。無死三塁。後続が断たれこの回1点。\n2回表：雲雀丘　三者凡退。2回裏：明石北　一死から失策により出塁、四球で二死一二塁から無得点。",
       "team1": "雲雀丘",
       "team2": "明石北",
       "innings1": [
@@ -89,7 +89,7 @@
       ],
       "innings2": [
         "1",
-        "",
+        "0",
         "",
         "",
         "",
@@ -109,7 +109,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:12:53",
+      "last_changed": "2026-09-13T01:20:31",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -122,12 +122,12 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回表",
-      "commentary": "9:59試合開始",
+      "game_status": "１回裏",
+      "commentary": "9:59試合開始\n1回表神戸学院：一死後、四球、3番馬頭の左前打、四球で満塁。5番加茂の左前2点適時打で先制、一死1.2塁。6番中村の左線2塁打で1点追加、一死2.3塁。7番川﨑の左前2点適時打で追加点。一死1塁から犠打、9番長瀧の内野安打で1.3塁。1番豊富の中前打で敵失が絡み2点追加、二死2塁。2番岡本の中前打で1点追加。3番馬頭の中前打、WPで二死2.3塁。4番吉原の中前2点適時打でこの回9安打10得点。",
       "team1": "神戸学院大附属",
       "team2": "明石南",
       "innings1": [
-        "",
+        "10",
         "",
         "",
         "",
@@ -160,12 +160,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "10",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:00:42",
+      "last_changed": "2026-09-13T01:20:31",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -291,7 +291,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "9:56試合開始。",
       "team1": "御影",
       "team2": "甲南",
@@ -314,7 +314,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -334,7 +334,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:15:26",
+      "last_changed": "2026-09-13T01:20:31",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2478,5 +2478,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T01:17:58"
+  "last_updated": "2026-09-13T01:20:31"
 }
