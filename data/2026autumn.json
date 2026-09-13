@@ -291,7 +291,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:56試合開始。",
       "team1": "御影",
       "team2": "甲南",
@@ -313,7 +313,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -334,7 +334,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:03:15",
+      "last_changed": "2026-09-13T01:10:19",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2478,5 +2478,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T01:07:46"
+  "last_updated": "2026-09-13T01:10:19"
 }
