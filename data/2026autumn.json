@@ -124,7 +124,7 @@
       "venue": "神戸",
       "game_status": "試合開始前",
       "commentary": "12:45試合開始予定。",
-      "team1": "津名",
+      "team1": "津　　　名",
       "team2": "西宮苦楽園",
       "innings1": [
         "",
@@ -163,9 +163,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-13T03:13:53",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-13T03:16:22",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2476,5 +2476,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T03:13:53"
+  "last_updated": "2026-09-13T03:16:22"
 }
