@@ -66,13 +66,13 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "１回裏",
-      "commentary": "9:53試合開始\n1回表：雲雀丘　三者凡退。",
+      "game_status": "２回裏",
+      "commentary": "9:53試合開始\n1回表：雲雀丘　三者凡退。1回裏：明石北　先頭打者四球。左安打で無死一三塁。二盗で捕手が二塁悪送球により三塁走者生還、1点先制。無死三塁。後続が断たれこの回1点。\n2回表：雲雀丘　三者凡退。",
       "team1": "雲雀丘",
       "team2": "明石北",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -88,7 +88,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -105,11 +105,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T00:58:08",
+      "last_changed": "2026-09-13T01:12:53",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -178,8 +178,8 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "１回裏",
-      "commentary": "9：56試合開始。",
+      "game_status": "２回表",
+      "commentary": "9：56試合開始。\n1回裏加古西：1死後、2番藤本が中前打、3番楠田が四球で1、2塁とするが無得点。",
       "team1": "尼崎双星",
       "team2": "加古川西",
       "innings1": [
@@ -200,7 +200,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -221,7 +221,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T01:03:15",
+      "last_changed": "2026-09-13T01:12:53",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2478,5 +2478,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T01:10:19"
+  "last_updated": "2026-09-13T01:12:53"
 }
