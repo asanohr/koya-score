@@ -961,6 +961,27 @@ function saveSlotSeen(s) {
   try { localStorage.setItem(SLOT_SEEN_KEY, JSON.stringify(s)); } catch(e) {}
 }
 
+// 試合日が誤って保存されていた場合に、その日付で記録した枠の観測を正しい日付へ移す。
+// 対象は「いま試合として保持している内容と一致する枠」だけに限る。
+// 前の試合日の内容が残っている枠まで付け替えると、それを今日の試合として
+// 取り込んでしまうため、そこは元の日付のままにしておく。
+function restampSlotSeen(fromDate, toDate) {
+  if (!fromDate || !toDate || fromDate === toDate) return;
+  const seen = loadSlotSeen();
+  const held = new Set((loadCurrentData().games || []).map(g => slotSignature(g)));
+  let n = 0;
+  for (const k of Object.keys(seen)) {
+    if (seen[k] && seen[k].date === fromDate && held.has(seen[k].sig)) {
+      seen[k].date = toDate;
+      n++;
+    }
+  }
+  if (n) {
+    saveSlotSeen(seen);
+    console.warn('枠の記録', n, '件の日付を', fromDate, '→', toDate, 'に付け替えました');
+  }
+}
+
 // ═══════════════════════════════════════════════════
 //  Fetch & Update（クロール→GitHub書き込み）
 // ═══════════════════════════════════════════════════
@@ -969,10 +990,15 @@ async function fetchAndUpdate() {
   // 画面の試合日と保存されている試合日がずれていたら、画面の値に合わせる。
   // クロールは画面ではなく保存値を読むため、ここがずれると今日の試合に
   // 前日の日付が付き、前日の記録を上書きしてしまう。
-  const uiDate = document.getElementById('sesDate')?.value || '';
-  if (uiDate && uiDate !== (loadSession().game_date || '')) {
-    console.warn('試合日の保存値がずれていたため合わせます:', loadSession().game_date, '→', uiDate);
+  const uiDate    = document.getElementById('sesDate')?.value || '';
+  const savedDate = loadSession().game_date || '';
+  if (uiDate && uiDate !== savedDate) {
+    console.warn('試合日の保存値がずれていたため合わせます:', savedDate, '→', uiDate);
     saveSession();
+    // 誤った試合日で記録した「枠ごとの前回の内容」も付け替える。
+    // これをしないと、その日のうちに取得済みだった試合が「前回の試合日のまま」と
+    // 誤判定され、終了した試合がまとめて表示されなくなる。
+    restampSlotSeen(savedDate, uiDate);
   }
   const session = loadSession();
   const tournamentId = session.tournament_id;
