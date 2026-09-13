@@ -346,7 +346,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "12:54試合開始。\n1回表報徳：先頭1番佐藤が四球。犠打で2進。3番吉野の左前打に捕球エラーが絡み打者走者も生還、2点を先制。\n2回表報徳：1死後、7番天津が中前打。盗塁で2進。2死後、WPで3進するも追加点ならず。",
       "team1": "報徳学園",
       "team2": "西宮東",
@@ -370,7 +370,7 @@
       "innings2": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -389,7 +389,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T04:23:46",
+      "last_changed": "2026-09-13T04:26:15",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2474,5 +2474,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T04:23:46"
+  "last_updated": "2026-09-13T04:26:15"
 }
