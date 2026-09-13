@@ -234,12 +234,12 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "１回表",
-      "commentary": "12:29試合開始。",
+      "game_status": "１回裏",
+      "commentary": "12:29試合開始。1回表鳳鳴・氷西、先頭が内野安打で出塁。盗塁で2進。2死1､2塁となるが無得点。",
       "team1": "篠山鳳鳴・氷上西",
       "team2": "相生産業",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -277,7 +277,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T03:31:30",
+      "last_changed": "2026-09-13T03:38:57",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2475,5 +2475,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T03:36:36"
+  "last_updated": "2026-09-13T03:38:57"
 }
