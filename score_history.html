@@ -56,10 +56,6 @@
       cursor:pointer;user-select:none;
     }
     .tournament-header:hover{background:var(--surface2);}
-    .t-date{
-      background:var(--accent);color:#fff;border-radius:5px;
-      padding:3px 10px;font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;
-    }
     .t-name{font-size:15px;font-weight:700;flex:1;}
     .t-count{font-size:12px;color:var(--text-dim);white-space:nowrap;}
     .t-arrow{font-size:12px;color:var(--text-dim);flex-shrink:0;}
@@ -130,7 +126,6 @@
     @keyframes spin{to{transform:rotate(360deg);}}
 
     @media(max-width:600px){
-      .t-date{display:none;}
       .g-score{font-size:12px;}
     }
   </style>
@@ -402,7 +397,9 @@ function renderTournamentList(tournaments) {
     return;
   }
   document.getElementById('content').innerHTML = groups.map(g => {
-    const dateStr = g.latestDate ? fmtDate(g.latestDate) : '';
+    // 見出しには日付を出さない。大会は複数日にまたがるため、1つの日付では
+    // かえって分かりにくい（年と時期は大会名にあり、各試合の日付はカードを
+    // 開くと日付ごとの見出しで出る）。latestDate は並び順にのみ使う。
     const tids    = g.tournaments.map(t => t.id).join(',');
     const bodyId  = 'grp-' + nameHash(g.name);
     const delBtns = manageMode
@@ -413,7 +410,6 @@ function renderTournamentList(tournaments) {
       : '';
     return '<div class="tournament-card' + (manageMode ? ' manage-mode' : '') + '" data-ids="' + esc(tids) + '">'
       + '<div class="tournament-header" onclick="toggleGroup(this)">'
-      + (dateStr ? '<span class="t-date">' + esc(dateStr) + '</span>' : '')
       + '<span class="t-name">🏆 ' + esc(g.name) + '</span>'
       + '<span class="t-count">' + g.totalGames + '試合</span>'
       + delBtns
