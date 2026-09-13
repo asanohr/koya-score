@@ -948,12 +948,25 @@ function loadSlotSeen() {
     const raw = localStorage.getItem(SLOT_SEEN_KEY);
     if (raw) return JSON.parse(raw);
   } catch(e) {}
-  // 初回のみ：いま手元にある試合データから「枠ごとの前回の内容」を組み立てる
+  // 記録が無いときは、いま手元にある試合データから組み立てる
   // （これが無いと、導入直後の1回だけ前回の試合を取り込んでしまう）
+  return buildSlotSeenFromGames();
+}
+
+// 手元の試合データから「枠ごとの前回の内容」を組み立てる
+// 当日分だけでなく履歴も対象にする。近畿／全国大会や軟式のように毎日は
+// 行われない枠は、当日分に無くても元サイトには前回の内容が残り続けるため、
+// 当日分だけ見ていると、それを今日の試合として取り込んでしまう。
+function buildSlotSeenFromGames() {
+  const cur = loadCurrentData();
   const seeded = {};
-  for (const g of (loadCurrentData().games || [])) {
+  for (const g of [...(cur.games || []), ...(cur.saved_games || [])]) {
     if (!g.url || !g.game_date) continue;
-    seeded[slotKeyOf(g.region, g.round, g.url)] = { sig: slotSignature(g), date: g.game_date };
+    const k = slotKeyOf(g.region, g.round, g.url);
+    // 同じ枠に複数の日付がある場合は新しい方を採用する
+    if (!seeded[k] || seeded[k].date < g.game_date) {
+      seeded[k] = { sig: slotSignature(g), date: g.game_date };
+    }
   }
   return seeded;
 }
