@@ -66,8 +66,8 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "",
+      "game_status": "１回表",
+      "commentary": "9:53試合開始\n1回表：雲雀丘",
       "team1": "雲雀丘",
       "team2": "明石北",
       "innings1": [
@@ -109,7 +109,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T00:38:04",
+      "last_changed": "2026-09-13T00:55:36",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2478,5 +2478,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T00:53:02"
+  "last_updated": "2026-09-13T00:55:36"
 }
