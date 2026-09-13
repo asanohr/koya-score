@@ -122,8 +122,8 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "12:45試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:49試合開始。",
       "team1": "津　　　名",
       "team2": "西宮苦楽園",
       "innings1": [
@@ -165,7 +165,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T03:16:22",
+      "last_changed": "2026-09-13T03:51:24",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2474,5 +2474,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T03:48:55"
+  "last_updated": "2026-09-13T03:51:24"
 }
