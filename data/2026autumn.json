@@ -458,14 +458,14 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "13:28開始。1回表三田学：一死後2番浮田が中前打で出塁、二死2塁となるも無得点。1回裏神港学：先頭の服部が四球と盗塁で二進、二死となるも内野失策で1点先制。2回裏神港学：一死後7番原口が左前打で出塁、犠打で二進するも無得点。",
       "team1": "三田学園",
       "team2": "神港学園",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -501,7 +501,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-13T04:53:42",
+      "last_changed": "2026-09-13T04:58:39",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2474,5 +2474,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T04:56:11"
+  "last_updated": "2026-09-13T04:58:39"
 }
