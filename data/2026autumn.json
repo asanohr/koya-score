@@ -234,8 +234,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "12:30試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:29試合開始。",
       "team1": "篠山鳳鳴・氷上西",
       "team2": "相生産業",
       "innings1": [
@@ -275,9 +275,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-13T03:23:51",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-13T03:31:30",
       "game_date": "2026-09-12",
       "game_date_label": "9月12日",
       "tournament_name": "2026年秋季大会",
@@ -2475,5 +2475,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-13T03:28:52"
+  "last_updated": "2026-09-13T03:31:30"
 }
