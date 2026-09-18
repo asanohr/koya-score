@@ -1062,6 +1062,15 @@ async function fetchAndUpdate() {
   const slotSeen     = loadSlotSeen();
   let slotSeenDirty  = false;
   const todayDate    = session.game_date || '';
+  // 枠ごとに「これまで記録した内容と、その試合日」を集めておく。
+  // 保存済みの試合データそのものを根拠にするので、判定用の記録（slotSeen）が
+  // 失われていたり古くなっていても、前回の試合を今日の試合として取り込まない。
+  const prevBySlot = {};
+  for (const g of [...oldDisplayGames, ...oldSavedGames]) {
+    if (!g.url || !g.game_date) continue;
+    const k = slotKeyOf(g.region, g.round, g.url);
+    (prevBySlot[k] = prevBySlot[k] || []).push({ date: g.game_date, sig: slotSignature(g) });
+  }
   let requested = false;
   for (const link of links) {
     // 終了した試合は内容が変わらないので、その日のうちは取得し直さない。
@@ -1085,7 +1094,13 @@ async function fetchAndUpdate() {
         const sKey = slotKeyOf(link.region, link.round, link.url);
         const sSig = slotSignature(game);
         const seen = slotSeen[sKey];
-        if (todayDate && seen && seen.sig === sSig && seen.date && seen.date !== todayDate) {
+        // (a) 判定用の記録が「別の日に同じ内容を見た」と言っている
+        const seenOnOtherDay = !!(seen && seen.sig === sSig && seen.date && seen.date !== todayDate);
+        // (b) 保存済みの試合データに、同じ枠・より前の日付で同じ内容が既にある
+        //     （判定用の記録が失われていても、これで前回の試合の取り込みを防げる）
+        const alreadyRecordedEarlier =
+          (prevBySlot[sKey] || []).some(p => p.sig === sSig && p.date < todayDate);
+        if (todayDate && (seenOnOtherDay || alreadyRecordedEarlier)) {
           staleLinks.push(link);
           continue;
         }
