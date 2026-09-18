@@ -4,8 +4,8 @@
       "id": "2026autumn",
       "name": "2026年秋季大会",
       "date": "2026-09-18",
-      "game_count": 20,
-      "last_updated": "2026-09-18T07:58:02"
+      "game_count": 13,
+      "last_updated": "2026-09-18T08:13:37"
     },
     {
       "id": "2026summer",
@@ -15,5 +15,5 @@
       "last_updated": "2026-09-12T23:52:27"
     }
   ],
-  "last_updated": "2026-09-18T07:58:02"
+  "last_updated": "2026-09-18T08:13:37"
 }
