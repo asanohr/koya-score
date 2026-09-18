@@ -3,7 +3,8 @@
   "tournament_name": "2026年秋季大会",
   "game_date": "2026-09-18",
   "game_date_label": "9月18日",
-  "games": [
+  "games": [],
+  "saved_games": [
     {
       "id": "bf3e6003",
       "region": "神　戸",
@@ -227,9 +228,7 @@
       "confirmed_snapshot": null,
       "extra_info": "9月18日",
       "note": ""
-    }
-  ],
-  "saved_games": [
+    },
     {
       "id": "bf560cf7",
       "region": "尼　崎",
@@ -1354,5 +1353,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-18T08:15:09"
+  "last_updated": "2026-09-18T08:22:19"
 }
