@@ -289,12 +289,12 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "１回表",
-      "commentary": "13:15試合開始。",
+      "game_status": "１回裏",
+      "commentary": "13:15試合開始。\n1回表須磨学園：先頭死球、犠打で好機を作るも無得点。",
       "team1": "須磨学園",
       "team2": "滝川第二",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:16:44",
+      "last_changed": "2026-09-19T04:21:33",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T04:19:19"
+  "last_updated": "2026-09-19T04:21:33"
 }
