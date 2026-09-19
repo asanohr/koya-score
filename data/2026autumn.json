@@ -177,8 +177,8 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "試合開始前",
-      "commentary": "12：30試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12：35試合開始。",
       "team1": "龍野",
       "team2": "武庫之荘総合",
       "innings1": [
@@ -218,9 +218,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-19T02:55:23",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-19T03:36:11",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T03:33:38"
+  "last_updated": "2026-09-19T03:36:11"
 }
