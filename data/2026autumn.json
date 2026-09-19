@@ -401,8 +401,8 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "12:55試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:58試合開始。",
       "team1": "小野工業",
       "team2": "明石商業",
       "innings1": [
@@ -444,7 +444,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T03:05:41",
+      "last_changed": "2026-09-19T03:56:27",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T03:53:56"
+  "last_updated": "2026-09-19T03:56:27"
 }
