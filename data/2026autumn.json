@@ -65,7 +65,7 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "13:03試合開始。\n1回裏洲本：先頭四球、犠打で1死2塁とするも無得点。\n2回裏洲本：1死から四球と大竹の左越2塁打で先制。続く前谷の内野安打と四球で2死満塁とし、雨瀬の内野安打で2点目。",
       "team1": "篠山産業",
       "team2": "洲本",
@@ -89,7 +89,7 @@
       "innings2": [
         "0",
         "2",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:30:28",
+      "last_changed": "2026-09-19T04:32:42",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T04:30:28"
+  "last_updated": "2026-09-19T04:32:42"
 }
