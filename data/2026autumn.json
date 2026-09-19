@@ -65,8 +65,8 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "２回裏",
-      "commentary": "13:03試合開始。",
+      "game_status": "３回表",
+      "commentary": "13:03試合開始。\n1回裏洲本：先頭四球、犠打で1死2塁とするも無得点。\n2回裏洲本：1死から四球と大竹の左越2塁打で先制。続く前谷の内野安打と四球で2死満塁とし、雨瀬の内野安打で2点目。",
       "team1": "篠山産業",
       "team2": "洲本",
       "innings1": [
@@ -88,7 +88,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "2",
         "",
         "",
         "",
@@ -104,11 +104,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:16:44",
+      "last_changed": "2026-09-19T04:28:15",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -289,7 +289,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "13:15試合開始。\n1回表須磨学園：先頭死球、犠打で好機を作るも無得点。",
       "team1": "須磨学園",
       "team2": "滝川第二",
@@ -311,7 +311,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -332,7 +332,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:21:33",
+      "last_changed": "2026-09-19T04:28:15",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -401,14 +401,14 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "３回表",
+      "game_status": "３回裏",
       "commentary": "12:56試合開始。2回裏 明商:一死から四球、四球、暴投で二死一三塁と走者を進めるも無得点。",
       "team1": "小野工業",
       "team2": "明石商業",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -444,7 +444,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:23:46",
+      "last_changed": "2026-09-19T04:28:15",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T04:26:00"
+  "last_updated": "2026-09-19T04:28:15"
 }
