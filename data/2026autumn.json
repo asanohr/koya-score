@@ -66,9 +66,9 @@
       "round": "第1試合",
       "venue": "淡路",
       "game_status": "試合開始前",
-      "commentary": "",
+      "commentary": "10:00試合開始予定",
       "team1": "姫路工業",
-      "team2": "",
+      "team2": "彩星工科",
       "innings1": [
         "",
         "",
@@ -106,9 +106,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-19T00:01:26",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-19T00:03:44",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1466,5 +1466,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T00:01:26"
+  "last_updated": "2026-09-19T00:03:44"
 }
