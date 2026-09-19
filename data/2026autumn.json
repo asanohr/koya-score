@@ -1,9 +1,10 @@
 {
   "tournament_id": "2026autumn",
   "tournament_name": "2026年秋季大会",
-  "game_date": "2026-09-19",
-  "game_date_label": "9月19日",
-  "games": [
+  "game_date": "2026-09-20",
+  "game_date_label": "9月20日",
+  "games": [],
+  "saved_games": [
     {
       "id": "346a9f7a",
       "region": "尼　崎",
@@ -563,9 +564,7 @@
       "confirmed_snapshot": null,
       "extra_info": "9月19日",
       "note": ""
-    }
-  ],
-  "saved_games": [
+    },
     {
       "id": "346a9f73",
       "region": "尼　崎",
@@ -1914,5 +1913,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T07:24:32"
+  "last_updated": "2026-09-19T23:41:27"
 }
