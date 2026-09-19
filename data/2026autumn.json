@@ -177,8 +177,8 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "１回裏",
-      "commentary": "9:59試合開始。",
+      "game_status": "２回表",
+      "commentary": "9:59試合開始。1回裏 赤穂:2死から3番石井、4番横田の連続安打で1・2塁とするも無得点。",
       "team1": "星陵",
       "team2": "赤穂",
       "innings1": [
@@ -199,7 +199,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:03:54",
+      "last_changed": "2026-09-19T01:13:58",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1634,5 +1634,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T01:11:22"
+  "last_updated": "2026-09-19T01:13:58"
 }
