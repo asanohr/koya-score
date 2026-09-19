@@ -9,8 +9,8 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "１回裏",
-      "commentary": "9:56試合開始。",
+      "game_status": "２回表",
+      "commentary": "9:56試合開始。\n1回裏（県伊丹）：2死から千葉、林の連打で1，2塁の好機も無得点。",
       "team1": "高砂南",
       "team2": "県立伊丹",
       "innings1": [
@@ -31,7 +31,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:03:54",
+      "last_changed": "2026-09-19T01:11:22",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -65,7 +65,7 @@
       "region": "神　戸",
       "round": "第1試合",
       "venue": "神戸",
-      "game_status": "２回裏",
+      "game_status": "３回表",
       "commentary": "9：55試合開始。",
       "team1": "飾磨",
       "team2": "市立尼崎",
@@ -88,7 +88,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=3",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:06:11",
+      "last_changed": "2026-09-19T01:11:22",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -121,7 +121,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:58試合開始。\n1回表社：先頭1番大木が四球。犠打で2進。3番光武が左前打、送球間に2進して1死2、3塁。内野ゴロ間に先制点をあげる。",
       "team1": "社",
       "team2": "須磨翔風",
@@ -143,7 +143,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:06:11",
+      "last_changed": "2026-09-19T01:11:22",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1634,5 +1634,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T01:08:46"
+  "last_updated": "2026-09-19T01:11:22"
 }
