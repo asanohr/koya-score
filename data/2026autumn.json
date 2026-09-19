@@ -233,7 +233,7 @@
       "region": "淡　路",
       "round": "第1試合",
       "venue": "淡路",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:56試合開始\n1回表姫路工：1番山下が初球中安打で出塁。野選で無死1.2塁とし、2死後、5番小林中安打で2死満塁とするも無得点。",
       "team1": "姫路工業",
       "team2": "彩星工科",
@@ -255,7 +255,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -276,7 +276,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=10",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:06:11",
+      "last_changed": "2026-09-19T01:08:46",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1634,5 +1634,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T01:06:11"
+  "last_updated": "2026-09-19T01:08:46"
 }
