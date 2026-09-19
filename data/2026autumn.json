@@ -285,6 +285,62 @@
       "note": ""
     },
     {
+      "id": "70528c68",
+      "region": "姫　路",
+      "round": "第2試合",
+      "venue": "姫路",
+      "game_status": "試合開始前",
+      "commentary": "",
+      "team1": "須磨東",
+      "team2": "高砂",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-09-19T03:00:32",
+      "game_date": "2026-09-19",
+      "game_date_label": "9月19日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "9月19日",
+      "note": ""
+    },
+    {
       "id": "a041a22a",
       "region": "淡　路",
       "round": "第1試合",
@@ -1690,5 +1746,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T02:57:57"
+  "last_updated": "2026-09-19T03:00:32"
 }
