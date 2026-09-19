@@ -65,12 +65,12 @@
       "region": "尼　崎",
       "round": "第2試合",
       "venue": "尼崎",
-      "game_status": "１回表",
-      "commentary": "13:03開始。",
+      "game_status": "１回裏",
+      "commentary": "13:03試合開始。",
       "team1": "篠山産業",
       "team2": "洲本",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=21",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:04:06",
+      "last_changed": "2026-09-19T04:06:37",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -513,8 +513,8 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "１回裏",
-      "commentary": "12：44試合開始\n1回表須磨東：3番岡田死球で出塁し、2死1塁。続く4番綱島遊撃への内野安打で2死1.2塁。5番柴尾の中安打で1点先制。",
+      "game_status": "２回表",
+      "commentary": "12：44試合開始\n1回表須磨東：3番岡田死球で出塁し、2死1塁。続く4番綱島遊撃への内野安打で2死1.2塁。5番柴尾の中安打で1点先制。\n1回裏高砂：3番竹内、敵失により2死1塁。4番紀、右安打で2死1.2塁とするも無得点。",
       "team1": "須磨東",
       "team2": "高砂",
       "innings1": [
@@ -535,7 +535,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -556,7 +556,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T03:59:03",
+      "last_changed": "2026-09-19T04:06:37",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T04:04:06"
+  "last_updated": "2026-09-19T04:06:37"
 }
