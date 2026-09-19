@@ -401,7 +401,7 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "３回裏",
+      "game_status": "４回表",
       "commentary": "12:56試合開始。2回裏 明商:一死から四球、四球、暴投で二死一三塁と走者を進めるも無得点。",
       "team1": "小野工業",
       "team2": "明石商業",
@@ -425,7 +425,7 @@
       "innings2": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -444,7 +444,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:28:15",
+      "last_changed": "2026-09-19T04:34:57",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -513,7 +513,7 @@
       "region": "淡　路",
       "round": "第2試合",
       "venue": "淡路",
-      "game_status": "４回表",
+      "game_status": "４回裏",
       "commentary": "12：44試合開始\n1回表須磨東：3番岡田死球で出塁し、2死1塁。続く4番綱島遊撃への内野安打で2死1.2塁。5番柴尾の中安打で1点先制。\n1回裏高砂：3番竹内、敵失により2死1塁。4番紀、右安打で2死1.2塁とするも無得点。\n2回表須磨東：8番大﨑がﾊﾞﾝﾄﾋｯﾄで出塁。1ｺﾞﾛの間に進塁。2死2塁とするも無得点。\n3回表須磨東：2番福永、左安打で出塁。盗塁成功により1死2塁とするも無得点。\n3回裏高砂：1番中垣が中安打。1死1塁。盗塁成功により1死2塁とするも無得点。",
       "team1": "須磨東",
       "team2": "高砂",
@@ -521,7 +521,7 @@
         "1",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -556,7 +556,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=30",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T04:30:28",
+      "last_changed": "2026-09-19T04:34:57",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T04:32:42"
+  "last_updated": "2026-09-19T04:34:57"
 }
