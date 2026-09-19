@@ -177,13 +177,13 @@
       "region": "神　戸",
       "round": "第2試合",
       "venue": "神戸",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "12：35試合開始。\n1回表龍野：先頭の近藤が内野安打で出塁。犠打と内野ｺﾞﾛで2死3塁のﾁｬﾝｽを作るも後続が断たれ無得点。\n1回裏武庫之荘総合：1死から2番志賀のﾚﾌﾄ前ﾋｯﾄと四球、さらに送球ｴﾗｰで2，3塁となってｽｸｲｽﾞを試みるが失敗。後続も断たれ無得点。",
       "team1": "龍野",
       "team2": "武庫之荘総合",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=23",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T03:51:23",
+      "last_changed": "2026-09-19T03:53:56",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1914,5 +1914,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T03:51:23"
+  "last_updated": "2026-09-19T03:53:56"
 }
