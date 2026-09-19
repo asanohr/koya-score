@@ -5,6 +5,62 @@
   "game_date_label": "9月19日",
   "games": [
     {
+      "id": "346a9f7a",
+      "region": "尼　崎",
+      "round": "第1試合",
+      "venue": "尼崎",
+      "game_status": "試合開始前",
+      "commentary": "10:00開始予定。",
+      "team1": "高砂南",
+      "team2": "県立伊丹",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-09-19T00:18:54",
+      "game_date": "2026-09-19",
+      "game_date_label": "9月19日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "9月19日",
+      "note": ""
+    },
+    {
       "id": "bf3e6004",
       "region": "神　戸",
       "round": "第1試合",
@@ -1522,5 +1578,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T00:16:18"
+  "last_updated": "2026-09-19T00:18:54"
 }
