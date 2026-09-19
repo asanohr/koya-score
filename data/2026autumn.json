@@ -9,8 +9,8 @@
       "region": "尼　崎",
       "round": "第1試合",
       "venue": "尼崎",
-      "game_status": "２回裏",
-      "commentary": "9:56試合開始。\n1回表高砂南：先頭四球出塁も後続断たれる。\n1回裏県伊丹：2死から千葉、林の連打で1，2塁の好機も無得点。",
+      "game_status": "３回表",
+      "commentary": "9:56試合開始。\n1回表高砂南：先頭四球出塁も後続断たれる。\n1回裏県伊丹：2死から千葉、林の連打で1，2塁の好機も無得点。\n2回裏県伊丹：杉谷のランニングホームランで先制。さらに2連打するが無得点。",
       "team1": "高砂南",
       "team2": "県立伊丹",
       "innings1": [
@@ -32,7 +32,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -48,11 +48,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=1",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-19T01:16:33",
+      "last_changed": "2026-09-19T01:24:19",
       "game_date": "2026-09-19",
       "game_date_label": "9月19日",
       "tournament_name": "2026年秋季大会",
@@ -1634,5 +1634,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-19T01:21:44"
+  "last_updated": "2026-09-19T01:24:19"
 }
