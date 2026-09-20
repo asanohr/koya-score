@@ -122,7 +122,7 @@
       "round": "第1試合",
       "venue": "姫路",
       "game_status": "試合開始前",
-      "commentary": "10:00試合開始予定。",
+      "commentary": "9:56試合開始。",
       "team1": "尼崎工業",
       "team2": "小野",
       "innings1": [
@@ -2082,5 +2082,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T00:55:03"
+  "last_updated": "2026-09-20T00:57:39"
 }
