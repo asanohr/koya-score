@@ -70,7 +70,7 @@
       "team1": "神戸弘陵",
       "team2": "御影",
       "innings1": [
-        "８",
+        "8",
         "",
         "",
         "",
@@ -103,12 +103,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "8",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T03:53:54",
+      "last_changed": "2026-09-20T03:56:27",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -177,13 +177,13 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "２回表",
-      "commentary": "12:32試合開始。1回表 加古西:2番藤本が中前打で出塁するも無得点。1回裏 神院附:2死から3番馬頭が中前打、4番吉原の右前適時2塁打、5番加茂の左前適時打で2点先制。",
+      "game_status": "２回裏",
+      "commentary": "12:32試合開始。\n1回表 加古西:2番藤本が中前打で出塁するも無得点。\n1回裏 神院附:2死から3番馬頭が中前打、4番吉原の右前適時2塁打、5番加茂の左前適時打で2点先制。\n2回表 加古西:先頭4番小松原が四球。5番森井の犠打に送球ｴﾗｰが絡み無死1、3塁。1死後、7番八十の左犠飛で1点をかえす。",
       "team1": "加古川西",
       "team2": "神戸学院大附属",
       "innings1": [
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -215,12 +215,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "2",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T03:46:10",
+      "last_changed": "2026-09-20T03:56:27",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -2250,5 +2250,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T03:53:54"
+  "last_updated": "2026-09-20T03:56:27"
 }
