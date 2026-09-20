@@ -289,8 +289,8 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "１回裏",
-      "commentary": "12:45試合開始。",
+      "game_status": "２回表",
+      "commentary": "12:45試合開始。1回裏 苦楽園:先頭の1番中村が内野安打、犠打、暴投、一死三塁から3番首藤の中前適時打で先制。一死一塁から4番橋原の右線三塁打で1点追加。二死三塁から暴投でさらに1点追加。",
       "team1": "龍野北",
       "team2": "西宮苦楽園",
       "innings1": [
@@ -311,7 +311,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "3",
         "",
         "",
         "",
@@ -328,11 +328,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "3",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T03:51:19",
+      "last_changed": "2026-09-20T04:01:34",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -2250,5 +2250,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T03:59:01"
+  "last_updated": "2026-09-20T04:01:34"
 }
