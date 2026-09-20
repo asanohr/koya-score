@@ -177,12 +177,12 @@
       "region": "高　砂",
       "round": "第2試合",
       "venue": "高砂",
-      "game_status": "１回表",
-      "commentary": "12:32試合開始。",
+      "game_status": "１回裏",
+      "commentary": "12:32試合開始。1回表 加古西:2番藤本が中前打で出塁するも無得点。",
       "team1": "加古川西",
       "team2": "神戸学院大附属",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=26",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T03:33:21",
+      "last_changed": "2026-09-20T03:41:00",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -2250,5 +2250,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T03:38:26"
+  "last_updated": "2026-09-20T03:41:00"
 }
