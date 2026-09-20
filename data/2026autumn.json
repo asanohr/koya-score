@@ -9,13 +9,13 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "２回表",
-      "commentary": "9:57試合開始。\n1回表：松聖　三者凡退。1回裏：東洋　1番弥吉 死球。犠打で一死2塁。右飛で二死2塁。パスボールで二死3塁。一邪飛で無得点。",
+      "game_status": "２回裏",
+      "commentary": "9:57試合開始。\n1回表：松聖　三者凡退。1回裏：東洋　1番弥吉 死球。犠打で一死2塁。右飛で二死2塁。パスボールで二死3塁。一邪飛で無得点。\n2回表：松聖　二死から6番中島 右中間二塁打。三失で二死1，3塁。三振で無得点。",
       "team1": "三田松聖",
       "team2": "東洋大姫路",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T01:10:41",
+      "last_changed": "2026-09-20T01:15:52",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -121,13 +121,13 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "9:56試合開始。1回表 尼工：先頭が失策、犠打、一死二塁と走者を進めるも攻撃終了。1回裏 小野：先頭大達が中前打、2番藤田右が前打で無死一三塁、併殺打の間に先制。二死から失策で出塁するも攻撃終了。",
       "team1": "尼崎工業",
       "team2": "小野",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -164,7 +164,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T01:10:41",
+      "last_changed": "2026-09-20T01:15:52",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -2082,5 +2082,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T01:13:16"
+  "last_updated": "2026-09-20T01:15:52"
 }
