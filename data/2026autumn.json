@@ -65,13 +65,13 @@
       "region": "高　砂",
       "round": "第1試合",
       "venue": "高砂",
-      "game_status": "２回表",
-      "commentary": "9:57試合開始。1回裏　報徳:四球、犠打、3番吉野の左翼線適時3塁打、4番横井の左越適時2塁打で2点先制。",
+      "game_status": "２回裏",
+      "commentary": "9:57試合開始。1回裏　報徳:四球、犠打、3番吉野の左翼線適時3塁打、4番横井の左越適時2塁打で2点先制。2回表 相生産:先頭の山本が左越2塁打で出塁するも無得点。",
       "team1": "相生産業",
       "team2": "報徳学園",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=6",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-20T01:13:16",
+      "last_changed": "2026-09-20T01:21:05",
       "game_date": "2026-09-20",
       "game_date_label": "9月20日",
       "tournament_name": "2026年秋季大会",
@@ -2082,5 +2082,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-20T01:18:29"
+  "last_updated": "2026-09-20T01:21:05"
 }
