@@ -61,6 +61,62 @@
       "note": ""
     },
     {
+      "id": "e66769fa",
+      "region": "明　石",
+      "round": "第2試合",
+      "venue": "明石",
+      "game_status": "試合開始前",
+      "commentary": "12:50開始予定",
+      "team1": "彩星工科",
+      "team2": "星陵",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-09-21T03:09:04",
+      "game_date": "2026-09-21",
+      "game_date_label": "9月21日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "9月21日",
+      "note": ""
+    },
+    {
       "id": "d8e9ae9b",
       "region": "姫　路",
       "round": "第1試合",
@@ -2418,5 +2474,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-21T03:06:30"
+  "last_updated": "2026-09-21T03:09:04"
 }
