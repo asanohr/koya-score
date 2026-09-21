@@ -293,7 +293,7 @@
 //  定数
 // ═══════════════════════════════════════════════════
 // このファイルの版。Console から作業するときに、新しい版が読み込まれているかの確認に使う
-const APP_VERSION = '2026-09-18c';
+const APP_VERSION = '2026-09-21a';
 const BASE_URL    = 'http://www.hyogo-koyaren.or.jp';
 const INDEX_URL   = BASE_URL + '/taikai/result.php';
 const CONFIG_KEY    = 'koya_config';
@@ -767,14 +767,26 @@ async function updateTournamentIndex(session, gameCount, lastUpdated) {
   if (existing?.content) {
     try { index = JSON.parse(ghDecode(existing.content)); } catch(e) {}
   }
+  const idx  = index.tournaments.findIndex(t => t.id === session.tournament_id);
+  const prev = idx >= 0 ? index.tournaments[idx] : null;
   const entry = {
+    ...(prev || {}),   // type など既存の項目は残す
     id:           session.tournament_id,
     name:         session.tournament_name || session.tournament_id,
     date:         session.game_date || '',
     game_count:   gameCount,
     last_updated: lastUpdated,
   };
-  const idx = index.tournaments.findIndex(t => t.id === session.tournament_id);
+  // 最終更新時刻以外が前回と同じなら書き込まない。
+  // 毎回書くと、試合結果の更新と合わせて短時間に2つのコミットができ、
+  // GitHub Pages の公開処理が重なって先に走ったほうが失敗扱いになる
+  // （メールで失敗通知が届く原因。公開内容そのものに影響はない）。
+  const unchanged = prev
+    && prev.name       === entry.name
+    && prev.date       === entry.date
+    && prev.game_count === entry.game_count;
+  if (unchanged) return;
+
   if (idx >= 0) index.tournaments[idx] = entry; else index.tournaments.push(entry);
   index.tournaments.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
   index.last_updated = lastUpdated;
@@ -984,6 +996,21 @@ function buildSlotSeenFromGames() {
   }
   return seeded;
 }
+// 同じ枠に、まったく同じ内容の試合が別の日付で入っていないか点検する。
+// 過去の「いつの試合か」の取り違いの名残を見つけるためのもの。
+// どちらが正しいかは機械的に決められないので、自動では消さず、画面で知らせるだけにする。
+function findCrossDateDuplicates(games) {
+  const bySlotSig = {};
+  for (const g of (games || [])) {
+    if (!g.url || !g.game_date) continue;
+    const k = g.region + ' ' + g.round + '\u0001' + slotSignature(g);
+    (bySlotSig[k] = bySlotSig[k] || new Set()).add(g.game_date);
+  }
+  return Object.entries(bySlotSig)
+    .filter(([, dates]) => dates.size > 1)
+    .map(([k, dates]) => k.split('\u0001')[0] + '（' + [...dates].sort().join(' / ') + '）');
+}
+
 function saveSlotSeen(s) {
   try { localStorage.setItem(SLOT_SEEN_KEY, JSON.stringify(s)); } catch(e) {}
 }
@@ -1240,6 +1267,10 @@ async function fetchAndUpdate() {
   const savedById = Object.fromEntries(oldSavedGames.filter(g => !_deletedIds.has(g.id) && !currentIds.has(g.id)).map(g => [g.id, g]));
   newlySaved.forEach(g => { if (!savedById[g.id]) savedById[g.id] = g; });
   const savedGames = Object.values(savedById);
+
+  // 同じ内容の試合が別の日付にまぎれていないか点検（見つけたら画面で知らせる）
+  fetchStats.dupes = findCrossDateDuplicates([...displayGames, ...savedGames]);
+  if (fetchStats.dupes.length) console.warn('同じ内容が別の日付にある試合:', fetchStats.dupes);
 
   autoConfirmNew(displayGames); // 初回出現ゲームをこのPCで自動確認
   saveCurrentData({
@@ -1914,11 +1945,14 @@ function render() {
         + (st.ng      > 0 ? '／' + st.ng      + '件失敗' : '')
         + (st.empty   > 0 ? '／' + st.empty   + '件は空' : '')
         + (st.carried > 0 ? '（' + st.carried + '件は前回値を表示）' : '');
-      fsEl.className = 'fetch-stats' + (st.ng > 0 ? ' warn' : '');
+      const dupes = st.dupes || [];
+      if (dupes.length) fsEl.textContent += '／⚠️ 日付重複 ' + dupes.length + '件';
+      fsEl.className = 'fetch-stats' + (st.ng > 0 || dupes.length ? ' warn' : '');
       fsEl.title     = [
         st.ng > 0      ? '失敗: ' + (st.failed || []).join('、') : '',
         st.skipped > 0 ? 'スキップ: 終了済みのため取得を省いた枠（' + st.skipped + '件）' : '',
         st.stale > 0   ? '前回の試合日のまま: 元サイトが未更新のため今日の試合として登録していない枠（' + st.stale + '件）' : '',
+        dupes.length   ? '同じ内容の試合が別の日付にもあります（要確認）:\n  ' + dupes.join('\n  ') : '',
       ].filter(Boolean).join('\n');
     } else {
       fsEl.textContent = '';
