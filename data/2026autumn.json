@@ -59,6 +59,62 @@
       "confirmed_snapshot": null,
       "extra_info": "9月21日",
       "note": ""
+    },
+    {
+      "id": "d8e9ae9b",
+      "region": "姫　路",
+      "round": "第1試合",
+      "venue": "姫路",
+      "game_status": "試合開始前",
+      "commentary": "10:00試合開始予定。",
+      "team1": "淡路三原",
+      "team2": "雲雀丘学園",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-09-21T00:41:59",
+      "game_date": "2026-09-21",
+      "game_date_label": "9月21日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "9月21日",
+      "note": ""
     }
   ],
   "saved_games": [
@@ -2306,5 +2362,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-21T00:39:24"
+  "last_updated": "2026-09-21T00:41:59"
 }
