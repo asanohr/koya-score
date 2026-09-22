@@ -65,12 +65,12 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "１回表",
-      "commentary": "9:59試合開始。",
+      "game_status": "１回裏",
+      "commentary": "9:59試合開始。\n1回表尼工：2死から3番田中が右前打。4番内田が四球で1、2塁。次打者の内野ｺﾞﾛ捕球ｴﾗｰ間に先制点。",
       "team1": "尼崎工業",
       "team2": "東洋大姫路",
       "innings1": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -103,12 +103,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-22T01:00:45",
+      "last_changed": "2026-09-22T01:07:28",
       "game_date": "2026-09-22",
       "game_date_label": "9月22日",
       "tournament_name": "2026年秋季大会",
@@ -2586,5 +2586,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-22T01:05:14"
+  "last_updated": "2026-09-22T01:07:28"
 }
