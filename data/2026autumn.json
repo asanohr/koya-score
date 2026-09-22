@@ -178,7 +178,7 @@
       "round": "第2試合",
       "venue": "姫路",
       "game_status": "試合開始前",
-      "commentary": "12:50試合終了。",
+      "commentary": "12:50試合開始予定",
       "team1": "洲本",
       "team2": "社",
       "innings1": [
@@ -2698,5 +2698,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-22T03:11:15"
+  "last_updated": "2026-09-22T03:13:48"
 }
