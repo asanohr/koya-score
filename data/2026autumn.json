@@ -65,8 +65,8 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "10:00開始予定。",
+      "game_status": "１回表",
+      "commentary": "9:59試合開始。",
       "team1": "尼崎工業",
       "team2": "東洋大姫路",
       "innings1": [
@@ -106,9 +106,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-22T00:54:00",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-22T01:00:45",
       "game_date": "2026-09-22",
       "game_date_label": "9月22日",
       "tournament_name": "2026年秋季大会",
@@ -2586,5 +2586,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-22T00:58:30"
+  "last_updated": "2026-09-22T01:00:45"
 }
