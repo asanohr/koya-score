@@ -65,8 +65,8 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "試合開始前",
-      "commentary": "12：40試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12：41試合開始。\n1回表武庫総：",
       "team1": "武庫之荘総合",
       "team2": "明石商業",
       "innings1": [
@@ -106,9 +106,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-22T03:00:58",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-22T03:41:55",
       "game_date": "2026-09-22",
       "game_date_label": "9月22日",
       "tournament_name": "2026年秋季大会",
@@ -2698,5 +2698,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-22T03:39:20"
+  "last_updated": "2026-09-22T03:41:55"
 }
