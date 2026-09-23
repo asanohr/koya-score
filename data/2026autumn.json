@@ -9,7 +9,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回裏",
+      "game_status": "２回表",
       "commentary": "9:58試合開始。",
       "team1": "報徳学園",
       "team2": "西宮苦楽園",
@@ -31,7 +31,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-23T01:02:20",
+      "last_changed": "2026-09-23T01:04:55",
       "game_date": "2026-09-23",
       "game_date_label": "9月23日",
       "tournament_name": "2026年秋季大会",
@@ -2810,5 +2810,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-23T01:02:20"
+  "last_updated": "2026-09-23T01:04:55"
 }
