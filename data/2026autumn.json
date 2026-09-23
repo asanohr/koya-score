@@ -177,8 +177,8 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "試合開始前",
-      "commentary": "12:30試合開始予定。",
+      "game_status": "１回表",
+      "commentary": "12:30試合開始。",
       "team1": "神戸国際大附属",
       "team2": "彩星工科",
       "innings1": [
@@ -218,9 +218,9 @@
       "total1": "0",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
-      "is_new": true,
-      "is_updated": false,
-      "last_changed": "2026-09-23T02:35:56",
+      "is_new": false,
+      "is_updated": true,
+      "last_changed": "2026-09-23T03:32:24",
       "game_date": "2026-09-23",
       "game_date_label": "9月23日",
       "tournament_name": "2026年秋季大会",
@@ -2922,5 +2922,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-23T03:29:51"
+  "last_updated": "2026-09-23T03:32:24"
 }
