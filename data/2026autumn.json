@@ -9,7 +9,7 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "５回裏",
+      "game_status": "６回表",
       "commentary": "9:58試合開始。\n2回表報徳：四球、犠打で1死二塁とし2死後8番廣田の右前打で1点を先制。\n3回表報徳：1番天津の右前打、2番佐藤の内野安打、犠打で1死二・三塁と攻め、犠飛で1点を追加。\n5回表、苦楽園は投手塚本に継投。",
       "team1": "報徳学園",
       "team2": "西宮苦楽園",
@@ -35,7 +35,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-23T01:54:16",
+      "last_changed": "2026-09-23T01:56:52",
       "game_date": "2026-09-23",
       "game_date_label": "9月23日",
       "tournament_name": "2026年秋季大会",
@@ -2810,5 +2810,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-23T01:54:16"
+  "last_updated": "2026-09-23T01:56:52"
 }
