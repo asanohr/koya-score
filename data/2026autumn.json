@@ -177,13 +177,13 @@
       "region": "姫　路",
       "round": "第2試合",
       "venue": "姫路",
-      "game_status": "２回表",
+      "game_status": "２回裏",
       "commentary": "12：25試合開始。1回表報徳:先頭が四球で出塁。犠打で1死2塁とするも無得点。",
       "team1": "報徳学園",
       "team2": "神戸学院大附属",
       "innings1": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -220,7 +220,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=27",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-27T03:36:21",
+      "last_changed": "2026-09-27T03:38:57",
       "game_date": "2026-09-27",
       "game_date_label": "9月27日",
       "tournament_name": "2026年秋季大会",
@@ -3146,5 +3146,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-27T03:36:21"
+  "last_updated": "2026-09-27T03:38:57"
 }
