@@ -9,12 +9,12 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回表",
-      "commentary": "9:45試合開始。",
+      "game_status": "１回裏",
+      "commentary": "9:45試合開始。\n1回表社：先頭1番大木が四球。内野ゴロ間で2進するも無得点。",
       "team1": "社",
       "team2": "明石商業",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -52,7 +52,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-27T00:47:26",
+      "last_changed": "2026-09-27T00:55:18",
       "game_date": "2026-09-27",
       "game_date_label": "9月27日",
       "tournament_name": "2026年秋季大会",
@@ -3034,5 +3034,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-27T00:52:43"
+  "last_updated": "2026-09-27T00:55:18"
 }
