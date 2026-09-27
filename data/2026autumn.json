@@ -3,7 +3,64 @@
   "tournament_name": "2026年秋季大会",
   "game_date": "2026-09-27",
   "game_date_label": "9月27日",
-  "games": [],
+  "games": [
+    {
+      "id": "d8e9aea1",
+      "region": "姫　路",
+      "round": "第1試合",
+      "venue": "姫路",
+      "game_status": "試合開始前",
+      "commentary": "9:45試合開始予定。",
+      "team1": "須磨学園",
+      "team2": "東洋大姫路",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-09-27T00:13:40",
+      "game_date": "2026-09-27",
+      "game_date_label": "9月27日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "9月27日",
+      "note": ""
+    }
+  ],
   "saved_games": [
     {
       "id": "1aacce46",
@@ -2921,5 +2978,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-26T23:42:43"
+  "last_updated": "2026-09-27T00:13:40"
 }
