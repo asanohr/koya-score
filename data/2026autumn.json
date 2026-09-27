@@ -9,8 +9,8 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回裏",
-      "commentary": "9:45試合開始。\n1回表社：先頭1番大木が四球。内野ゴロ間で2進するも無得点。",
+      "game_status": "２回表",
+      "commentary": "9:45試合開始。\n1回表社：先頭1番大木が四球。内野ゴロ間で2進するも無得点。\n1回裏明商：先頭1番米田が死球。次打者の犠打に捕球ｴﾗｰが絡み無死1、2塁。（社は投手松下に交代）3番福島も四球で満塁。2死後、6番中田の左前打で1点を先制。",
       "team1": "社",
       "team2": "明石商業",
       "innings1": [
@@ -31,7 +31,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -48,11 +48,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-27T00:55:18",
+      "last_changed": "2026-09-27T01:10:54",
       "game_date": "2026-09-27",
       "game_date_label": "9月27日",
       "tournament_name": "2026年秋季大会",
@@ -3034,5 +3034,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-27T01:08:20"
+  "last_updated": "2026-09-27T01:10:54"
 }
