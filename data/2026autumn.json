@@ -65,13 +65,13 @@
       "region": "姫　路",
       "round": "第1試合",
       "venue": "姫路",
-      "game_status": "２回表",
-      "commentary": "9:44試合開始。1回裏東洋:2番新が四球で出塁。3番椙森の右線安打で1死1・3塁とするも後続続かず。",
+      "game_status": "２回裏",
+      "commentary": "9:44試合開始。1回裏東洋:2番新が四球で出塁。3番椙森の右線安打で1死1・3塁とするも後続続かず。2回表須磨:先頭木下の右中間2塁打、進塁打で1死3塁。6番浅田の右前適時打で1点先制。",
       "team1": "須磨学園",
       "team2": "東洋大姫路",
       "innings1": [
         "0",
-        "",
+        "1",
         "",
         "",
         "",
@@ -103,12 +103,12 @@
         "",
         ""
       ],
-      "total1": "0",
+      "total1": "1",
       "total2": "0",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=7",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-27T01:00:30",
+      "last_changed": "2026-09-27T01:05:43",
       "game_date": "2026-09-27",
       "game_date_label": "9月27日",
       "tournament_name": "2026年秋季大会",
@@ -3034,5 +3034,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-27T01:03:09"
+  "last_updated": "2026-09-27T01:05:43"
 }
