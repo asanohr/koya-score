@@ -65,14 +65,14 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "２回裏",
+      "game_status": "３回裏",
       "commentary": "13:03試合開始。1回表神国附、先頭が中前打で出塁。2死1、2塁まで攻めるが無得点。2回表神国附、1死後中前打で出塁。犠打で2進。四死球が続き2死満塁も無得点。",
       "team1": "神戸国際大付属",
       "team2": "市立尼崎",
       "innings1": [
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -88,7 +88,7 @@
       ],
       "innings2": [
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-09-27T04:24:35",
+      "last_changed": "2026-09-27T04:31:54",
       "game_date": "2026-09-27",
       "game_date_label": "9月27日",
       "tournament_name": "2026年秋季大会",
@@ -3146,5 +3146,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-09-27T04:29:41"
+  "last_updated": "2026-09-27T04:31:54"
 }
