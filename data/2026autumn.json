@@ -9,12 +9,12 @@
       "region": "明　石",
       "round": "第1試合",
       "venue": "明石",
-      "game_status": "１回裏",
-      "commentary": "9:59試合開始。\n1回表明商：1死後、2番田中が四球。犠打で2進。WPで3進。4番大塚が四球で1、3塁とするが無得点。",
+      "game_status": "２回表",
+      "commentary": "9:59試合開始。\n1回表明商：1死後、2番田中が四球。犠打で2進。WPで3進。4番大塚が四球で1、3塁とするが無得点。\n1回裏東洋：先頭1番弥吉が四球。犠打で2進。2死後、4番瀬口が四球で1、2塁。5番原田の右前適時打で先制。",
       "team1": "明石商業",
       "team2": "東洋大姫路",
       "innings1": [
-        "",
+        "0",
         "",
         "",
         "",
@@ -31,7 +31,7 @@
         ""
       ],
       "innings2": [
-        "",
+        "1",
         "",
         "",
         "",
@@ -48,11 +48,11 @@
         ""
       ],
       "total1": "0",
-      "total2": "0",
+      "total2": "1",
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-10-03T01:07:01",
+      "last_changed": "2026-10-03T01:14:46",
       "game_date": "2026-10-03",
       "game_date_label": "10月3日",
       "tournament_name": "2026年秋季大会",
@@ -3258,5 +3258,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-10-03T01:12:11"
+  "last_updated": "2026-10-03T01:14:46"
 }
