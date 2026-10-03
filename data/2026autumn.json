@@ -65,7 +65,7 @@
       "region": "明　石",
       "round": "第2試合",
       "venue": "明石",
-      "game_status": "４回裏",
+      "game_status": "５回表",
       "commentary": "13:03試合開始。1回表報徳1死2.3塁のﾁｬﾝｽを作るも無得点。2回表報徳1死後7番吉野左前安打で出塁。8番廣田が左前安打で続き1死1.2塁。犠打で2死2.3塁。ここで1番天津が中前適時打を放ち2点を先制。",
       "team1": "報徳学園",
       "team2": "市立尼崎",
@@ -90,7 +90,7 @@
         "0",
         "0",
         "0",
-        "",
+        "0",
         "",
         "",
         "",
@@ -108,7 +108,7 @@
       "url": "http://www.hyogo-koyaren.or.jp/baseball/view_2.php?kind=25",
       "is_new": false,
       "is_updated": true,
-      "last_changed": "2026-10-03T04:44:38",
+      "last_changed": "2026-10-03T04:49:47",
       "game_date": "2026-10-03",
       "game_date_label": "10月3日",
       "tournament_name": "2026年秋季大会",
@@ -3314,5 +3314,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-10-03T04:47:13"
+  "last_updated": "2026-10-03T04:49:47"
 }
