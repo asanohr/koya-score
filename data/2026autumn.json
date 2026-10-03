@@ -66,7 +66,7 @@
       "round": "第2試合",
       "venue": "明石",
       "game_status": "試合開始前",
-      "commentary": "13:15試合開始予定。",
+      "commentary": "13:05試合開始予定。",
       "team1": "報徳学園",
       "team2": "市立尼崎",
       "innings1": [
@@ -3314,5 +3314,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-10-03T03:16:50"
+  "last_updated": "2026-10-03T03:19:28"
 }
