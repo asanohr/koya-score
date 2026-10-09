@@ -1,9 +1,10 @@
 {
   "tournament_id": "2026autumn",
   "tournament_name": "2026年秋季大会",
-  "game_date": "2026-10-03",
-  "game_date_label": "10月3日",
-  "games": [
+  "game_date": "2026-10-10",
+  "game_date_label": "10月10日",
+  "games": [],
+  "saved_games": [
     {
       "id": "1ab6ce32",
       "region": "明　石",
@@ -115,9 +116,7 @@
       "confirmed_snapshot": null,
       "extra_info": "10月3日",
       "note": ""
-    }
-  ],
-  "saved_games": [
+    },
     {
       "id": "1ab6ce30",
       "region": "明　石",
@@ -3314,5 +3313,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-10-03T06:30:28"
+  "last_updated": "2026-10-09T23:59:24"
 }
