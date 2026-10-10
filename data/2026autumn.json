@@ -3,7 +3,64 @@
   "tournament_name": "2026年秋季大会",
   "game_date": "2026-10-10",
   "game_date_label": "10月10日",
-  "games": [],
+  "games": [
+    {
+      "id": "1ab6ce4e",
+      "region": "明　石",
+      "round": "第1試合",
+      "venue": "明石",
+      "game_status": "１回表",
+      "commentary": "10：00試合開始。",
+      "team1": "東洋大姫路",
+      "team2": "市立尼崎",
+      "innings1": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "innings2": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "total1": "0",
+      "total2": "0",
+      "url": "http://www.hyogo-koyaren.or.jp/baseball/view.php?kind=5",
+      "is_new": true,
+      "is_updated": false,
+      "last_changed": "2026-10-10T01:00:44",
+      "game_date": "2026-10-10",
+      "game_date_label": "10月10日",
+      "tournament_name": "2026年秋季大会",
+      "confirmed_snapshot": null,
+      "extra_info": "10月10日",
+      "note": ""
+    }
+  ],
   "saved_games": [
     {
       "id": "1ab6ce32",
@@ -3313,5 +3370,5 @@
       "note": ""
     }
   ],
-  "last_updated": "2026-10-09T23:59:24"
+  "last_updated": "2026-10-10T01:00:44"
 }
